@@ -1,11 +1,11 @@
 import React from 'react'
-import {GlobalContext} from '../context/GlobalState';
+import {GlobalContext} from '../../context/GlobalState';
 
 const Navbar = () => {
 
     return (
         <nav>
-            Navbar!!
+            Auth Navbar!!
         </nav>
     )
 }
