@@ -3,7 +3,7 @@ import React from 'react'
 export default function signup() {
     return (
         <div>
-            <div className="flex mb-4">
+            <div className="flex ">
                 <div className="w-1/2 bg-center bg-no-repeat bg-cover h-screen" style={{
                     backgroundImage: `url('/assets/img/peace-girl.jpg')`
                 }} >      
@@ -52,7 +52,7 @@ export default function signup() {
 						</div>
 
 						<div className="w-11/12">
-						<input className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-username" type="password" placeholder="******************"></input>
+						<input className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="password" type="password" placeholder="******************"></input>
 						</div>
 
 				</div>
@@ -73,7 +73,7 @@ export default function signup() {
   							
 						</div>
 						</div>
-					<div className="items-center">
+					<div className="justify-center">
 						
 						<div className="w-4/5 text-center">
 						<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
