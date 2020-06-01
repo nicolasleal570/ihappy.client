@@ -19,7 +19,7 @@ export const GlobalContext = React.createContext(initialState);
 interface GlobalProviderProps { children: React.ReactChild | Array<React.ReactChild> }
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
-    const [state, dispatch]: any = React.useReducer(AppReducer, initialState);
+    const [state, dispatch]: [any, React.Dispatch<any>] = React.useReducer(AppReducer, initialState);
 
     return (
         <GlobalContext.Provider value={{
