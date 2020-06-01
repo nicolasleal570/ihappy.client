@@ -5,7 +5,6 @@ import { GlobalContext } from '../context/GlobalState';
 
 import AuthLayout from '../components/auth/Layout';
 import PublicLayout from '../components/public/Layout';
-
 import '../styles.css';
 
 const App = ({ Component, pageProps }: AppProps) => {

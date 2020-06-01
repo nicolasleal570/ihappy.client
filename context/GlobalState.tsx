@@ -2,8 +2,14 @@ import React from 'react';
 
 import AppReducer from './AppReducer';
 
+
+const user = {
+    firstname: 'Gianluca',
+    lastname: 'Di Bella'
+}
+
 const initialState = {
-    user: null
+    user: user
 }
 
 // Create Context

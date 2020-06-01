@@ -5,7 +5,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            Auth Navbar!!
+             
         </nav>
     )
 }
