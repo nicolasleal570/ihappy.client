@@ -4,20 +4,20 @@ const PsychologistHeader = () => (
     <div className=''>
         <div className="flex px-6 pt-4">
             <img src="/assets/icons/profile.svg" className="w-32" alt="Doctors" />
-            <div className="flex-1 bg-gray-600 px-4">
+            <div className="flex-1 px-4">
                 <h3 className="font-bold capitalize text-3xl">Dr Jose Silva</h3>
                 <ul>
                     <li>
-                        <p className="text-lg font-bold">Education</p>
+                        <p className="text-lg font-bold">Education </p>
                     </li>
                     <li>
-                        <p>Item 1</p>
+                        <p>PhD en Neurociencia (Universidad de Queensland)</p>
                     </li>
                     <li>
-                        <p>Item 2</p>
+                        <p>MSc en Pediatria (Liverpool John Moores University)</p>
                     </li>
                     <li>
-                        <p>Item 3</p>
+                        <p>Medico Cirujano (Universidad Central De Venezuela)</p>
                     </li>
                 </ul>
 
