@@ -3,3 +3,11 @@
 @import 'tailwindcss/components';
 /* purgecss end ignore */
 @import 'tailwindcss/utilities';
+
+.cool {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+ .scrul {
+    overflow-y: scroll
+ } 
