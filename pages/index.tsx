@@ -1,17 +1,17 @@
 import React from 'react'
 import Header from '../components/public/home/Header'
-import { GlobalContext } from '../context/GlobalState';
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux';
 
 const index = () => {
-    const { user } = React.useContext(GlobalContext);
+    const { user } = useSelector((state: any) => state.auth);
     const router = useRouter();
 
     React.useEffect(() => {
         if (user) {
             router.push('/reviews');
         }
-    }, [])
+    }, [user])
 
     return (
         <Header />

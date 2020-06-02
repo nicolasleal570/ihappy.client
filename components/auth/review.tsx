@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../store/actions/postAction';
 
 const PsychologistHeader = () => (
     <div className=''>
@@ -27,6 +29,13 @@ const PsychologistHeader = () => (
 );
 
 export default function Reviews() {
+
+    const dispatch = useDispatch();
+    const { posts } = useSelector((state: any) => state.post);
+    React.useEffect(() => {
+        dispatch(fetchPosts())
+    }, [])
+
     return (
         <div className="flex text-gray-800">
             <div className="fixed w-1/5 bg-purple-700 h-screen">
@@ -55,10 +64,17 @@ export default function Reviews() {
                         {/* Medico Bio */}
                         <PsychologistHeader />
 
+                        <div className="bg-red-400 py-20 px-6">
+                            POSTS EXAMPLE REDUX
+                            <ul>
+                                {posts.map((element: any) => (<li>{JSON.stringify(element)}</li>))}
+                            </ul>
+                        </div>
+
                         <h1 className="font-bold capitalize text-4xl py-4 px-6 tracking-wide border-b border-400-gray leading-none">Reseñas</h1>
-                        
+
                         {/* Comentarios */}
-                        <div className='overflow-y-auto pl-6' style={{height: '318px'}}>
+                        <div className='overflow-y-auto pl-6' style={{ height: '318px' }}>
                             <div className="border-b border-gray-300 flex p-2">
                                 <img src="/assets/icons/profile.svg" alt="" className="w-16 h-16 mx-auto mr-2" />
                                 <div>
