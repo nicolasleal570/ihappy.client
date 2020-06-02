@@ -49,12 +49,16 @@ export default function Sidebar() {
                             <img src='/assets/icons/lupa.png/' className='w-8 h-8 ml-5 mt-2 cursor-pointer' />
                         </div>
                         <div className='container mx-auto mt-10 ml-5'>
+                        <Link href='/reviews'>
                             <h1 className="font-bold capitalize text-xl text-left ml-2 py-8">Online Psychologists</h1>
+                            </Link>
                             <div className='flex'>
+                                
                                 <Psychologists
                                     name='Dr. Luis Silva'
                                     imgUrl='/assets/icons/profile.svg'
                                 />
+            
                                 <Psychologists
                                     name='Dr. Luis Silva'
                                     imgUrl='/assets/icons/profile.svg'
