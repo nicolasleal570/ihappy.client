@@ -3,6 +3,7 @@ import Axios from 'axios';
 import {getRoles} from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../../../store/actions/signupAction';
+import { useRouter } from 'next/router';
 
 
 
@@ -19,7 +20,14 @@ export default function signup() {
 	const [role  , setRole] = React.useState("")
 	const [roles  , setRoles] = React.useState([])
 
-	
+	const { user } = useSelector((state: any) => state.auth);
+    const router = useRouter();
+
+	React.useEffect(() => {
+        if (user) {
+            router.push('/reviews');
+        }
+    }, [user])
 
 	React.useEffect(() => {
         Axios.get(getRoles)

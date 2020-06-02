@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../store/actions/postAction';
+import { useRouter } from 'next/router';
 
 const PsychologistHeader = () => (
     <div className=''>
@@ -28,13 +29,22 @@ const PsychologistHeader = () => (
     </div>
 );
 
-export default function Reviews() {
+export default function Reviews   ()  {
 
     const dispatch = useDispatch();
     const { posts } = useSelector((state: any) => state.post);
+
+    const { user } = useSelector((state: any) => state.auth);
+    const router = useRouter();
     React.useEffect(() => {
         dispatch(fetchPosts())
     }, [])
+
+    React.useEffect(() => {
+        if (!user) {
+            router.push('/');
+        }
+    }, [user])
 
     return (
         <div className="flex text-gray-800">
@@ -142,3 +152,4 @@ export default function Reviews() {
             </div>
     )
 }
+

@@ -61,3 +61,13 @@ export const authCheckState = () => async (dispatch: Function) => {
         dispatch(successAuth(token, user));
     }
 }
+
+export const loginCheck = () => async (dispatch: Function) => {
+    const token = localStorage.getItem("token") + '';
+    const user = JSON.parse(localStorage.getItem("user") + '');
+    if (token === undefined) {
+        return false;
+    } else {
+        return true;
+    }
+}
