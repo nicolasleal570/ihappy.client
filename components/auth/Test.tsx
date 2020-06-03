@@ -8,31 +8,16 @@ const Test = () => {
     }
 
 
-    let sexologia = 0;
     let educativo = 0;
     let clinica = 0;
     let familiar = 0;
-    let sports = 0;
-    let org = 0;
+    let sports = 0; //
+    let org = 0; //
     let socio = 0;
-    let neupsi = 0;
-
-    const resultadofinal = () => {
-
-        if (neupsi != 0) {
-            setResultado('Neuropsicologia')
-            return
-        }
-        if (sports != 0) {
-            setResultado('Psicologia del deporte')
-            return
-        }
-        if (org != 0) {
-            return
-        }
+    let neupsi = 0; //
+    let partner = 0; //
 
 
-    }
 
 
     const [suenio, setSuenio] = React.useState('null')
@@ -52,6 +37,52 @@ const Test = () => {
 
     const [resultado, setResultado] = React.useState('null')
 
+    const resultadofinal = () => {
+
+        console.log('furula')
+        if (neupsi != 0) {
+            setResultado('Neuropsicologia')
+            return
+        }
+        if (sports != 0) {
+            setResultado('Psicologia del deporte')
+            return
+        }
+        if (org != 0) {
+            setResultado('Psicologia organizacional')
+            return
+        }
+        let q = []
+        q.push(educativo)
+        q.push(clinica)
+        q.push(familiar)
+        q.push(partner)
+        q.push(socio)
+        let r = Math.max.apply(null, q)
+        let index = q.indexOf(r)
+        switch (index) {
+            case 0:
+                setResultado('Psicologia educativa')
+                break;
+            case 1:
+                setResultado('Psicologia clinica o de salud')
+                break;
+            case 2:
+                setResultado('Psicologia familiar')
+                break;
+            case 3:
+                setResultado('Psicologia de parejas')
+                break;
+            case 4:
+                setResultado('Psicologia social')
+                break;
+        }
+        console.log(resultado)
+        alert(resultado)
+
+
+    }
+
     useEffect(() => {
     })
 
@@ -67,21 +98,29 @@ const Test = () => {
                     break;
 
                 case 'Muy irregular':
-                    clinica = clinica + 2
+                    clinica = clinica + 1
                     break;
             }
             switch (String(sexo)) {
 
                 case 'Si':
-                    sexologia = sexologia + 1
+                    partner = partner + 2
                     break;
 
             }
             switch (String(arrecho)) {
 
-                case 'Si':
-                    sexologia = sexologia + 1
+
+                case 'Bastante facil de enojar':
+                    familiar = familiar + 1
+                    socio = socio + 2
+                    clinica = clinica + 1
                     break;
+
+                case 'Moderadamente enojable':
+                    socio = socio + 1
+                    break;
+
 
             }
             switch (String(social)) {
@@ -116,11 +155,15 @@ const Test = () => {
             switch (String(parejas)) {
 
                 case 'Si':
-                    sexologia = sexologia + 1
+                    partner = partner + 1
+                    break;
+
+                case 'No':
+                    partner = 0
                     break;
 
             }
-            0
+
             switch (String(trabajo)) {
 
                 case 'Muy estresante':
@@ -128,7 +171,6 @@ const Test = () => {
                     break;
 
                 case 'Moderadamente estresante':
-                    familiar = familiar + 1
                     org = org + 1
                     break;
 
@@ -149,8 +191,9 @@ const Test = () => {
                 case 'Si':
                     educativo = educativo + 1
                     if (org = 0) {
-                        educativo = educativo + 2
+                        educativo = educativo + 3
                     }
+                    educativo = 0
                     org = 0
                     break;
 
@@ -160,8 +203,7 @@ const Test = () => {
             switch (String(familia)) {
 
                 case 'Si':
-                    clinica = clinica + 1
-                    socio = socio + 1
+                    familiar = familiar + 1
                     break;
 
             }
@@ -170,6 +212,7 @@ const Test = () => {
 
                 case 'Si':
                     clinica = clinica + 1
+                    socio = socio + 1
                     break;
 
             }
@@ -188,6 +231,9 @@ const Test = () => {
 
             }
 
+            resultadofinal()
+
+
         }
     }
 
@@ -200,177 +246,188 @@ const Test = () => {
 
                 <div className="col-span-6">
                 </div>
+                <div className="grid grid-cols-6 grid-rows-5 gap-3  col-span-6 row-span-5">
+                    {resultado === 'null'
+                        ? <div className="grid grid-cols-6 grid-rows-5 gap-3 col-span-6 row-span-5">
 
-                <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
-                    <p>Al rellenar este quiz, podremos recomendarle a los profesionales mas indicados para su situacion.</p>
+                            <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
+                                <p>Al rellenar este quiz, podremos recomendarle a los profesionales mas indicados para su situacion.</p>
+                            </div>
+
+                            <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
+                                <div className="text-xl text-center">
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Practica usted algun deporte profesionalmente?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setDeporte(String(e.target.value))}>
+                                            <option selected value="null">  </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Tiene usted hijos?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setHijos(String(e.target.value))}>
+                                            <option selected value="null">  </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Tiene usted pareja?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setParejas(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">Su trabajo, responsabilidades y/o ambiente de estudio es: </p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setTrabajo(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Si">Muy estresante</option>
+                                            <option value="No">Moderadamente estresante</option>
+                                            <option value="No">Poco estresante</option>
+                                            <option value="No">Relajado</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">Su ritmo de sueño es:</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setSuenio(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Bastante regular">Bastante regular</option>
+                                            <option value="Regular">Regular</option>
+                                            <option value="Irregular">Irregular</option>
+                                            <option value="Muy irregular">Muy irregular</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Suele tener problemas al tener relaciones?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setSexo(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">Usted se considera:</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setArrechera(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Bastante facil de enojar.">Bastante facil de enojar.</option>
+                                            <option value="Moderadamente enojable.">Moderadamente enojable.</option>
+                                            <option value="Enojable en ocasiones">Enojable en ocasiones</option>
+                                            <option value="Calmado.">Calmado.</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Su familia y/o amistades le ha sugerido que reciba ayuda profesional?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setFamilia(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Se considera usted una persona violenta?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setViolento(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Tiene problemas con falta del apetito?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setMonchi(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Ha sufrido lesiones cerebrales?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setNeuro(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Es un estudiante actualmente?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setStudent(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div className="p-2">
+
+                                        <p className="pb-2">¿Tiene problemas de motivacion?</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setCaliweba(String(e.target.value))}>
+                                            <option selected value="null">   </option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+
+                                    </div>
+                                    <div className="p-2">
+
+                                        <p className="pb-2">Usted se considera:</p>
+                                        <select className="cool w-full text-center mt-1" onChange={e => setSocial(String(e.target.value))}>
+                                            <option selected value="null">    </option>
+                                            <option value="Bastante sociable">Bastante sociable</option>
+                                            <option value="Moderadamente sociable">Moderadamente sociable</option>
+                                            <option value="Poco sociable">Poco sociable</option>
+                                            <option value="Raramente sociable">Raramente sociable</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-7 gap-3 col-start-3 col-span-2">
+                                <div className=" col-start-4">
+                                    <button type="submit" className=" border-black h-10 w-24 text-center transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4">Enviar</button>
+                                </div>
+                            </div>
+                        </div> :
+                        <div className="grid grid-cols-6 grid-rows-5 gap-3 col-span-6 row-span-5">
+                            <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
+                                <p>Su resultado es:</p>
+                            </div>
+                            <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
+                                <h1>Le recomendamos que se atienda con profesionales especialistas en {resultado}</h1>
+                            </div>
+                        </div>}
                 </div>
-
-                <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
-                    <div className="text-xl text-center">
-
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Practica usted algun deporte profesionalmente?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setDeporte(String(e.target.value))}>
-                                <option selected value="null">  </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Tiene usted hijos?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setHijos(String(e.target.value))}>
-                                <option selected value="null">  </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Tiene usted pareja?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setParejas(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">Su trabajo, responsabilidades y/o ambiente de estudio es: </p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setTrabajo(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Si">Muy estresante</option>
-                                <option value="No">Moderadamente estresante</option>
-                                <option value="No">Poco estresante</option>
-                                <option value="No">Relajado</option>
-
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">Su ritmo de sueño es:</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setSuenio(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Bastante regular">Bastante regular</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Irregular">Irregular</option>
-                                <option value="Muy irregular">Muy irregular</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Suele tener problemas al tener relaciones?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setSexo(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">Usted se considera:</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setArrechera(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Bastante facil de enojar.">Bastante facil de enojar.</option>
-                                <option value="Moderadamente enojable.">Moderadamente enojable.</option>
-                                <option value="Enojable en ocasiones">Enojable en ocasiones</option>
-                                <option value="Calmado.">Calmado.</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Su familia y/o amistades le ha sugerido que reciba ayuda profesional?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setFamilia(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Se considera usted una persona violenta?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setViolento(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Tiene problemas con falta del apetito?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setMonchi(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Ha sufrido lesiones cerebrales?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setNeuro(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Es un estudiante actualmente?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setStudent(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-
-                        <div className="p-2">
-
-                            <p className="pb-2">¿Tiene problemas de motivacion?</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setCaliweba(String(e.target.value))}>
-                                <option selected value="null">   </option>
-                                <option value="Si">Si</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                        <div className="p-2">
-
-                            <p className="pb-2">Usted se considera:</p>
-                            <select className="cool w-full text-center mt-1" onChange={e => setSocial(String(e.target.value))}>
-                                <option selected value="null">    </option>
-                                <option value="Bastante sociable">Bastante sociable</option>
-                                <option value="Moderadamente sociable">Moderadamente sociable</option>
-                                <option value="Poco sociable">Poco sociable</option>
-                                <option value="Raramente sociable">Raramente sociable</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="grid grid-cols-7 gap-3 col-start-3 col-span-2">
-                    <div className=" col-start-4">
-                        <button type="submit" className=" border-black h-10 w-24 text-center 
-                     transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4">Enviar</button>
-                    </div>
-                </div>
-
             </div>
         </form>
     )
