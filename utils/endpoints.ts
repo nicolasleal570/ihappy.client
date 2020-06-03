@@ -1,7 +1,7 @@
 let url = "http://localhost:5000";
 
 if (process.env.NODE_ENV === 'production') {
-    url = '' // URL de produccion
+    url = 'https://ihappy-psychologists.herokuapp.com/' // URL de produccion
 }
 
 export const endpoint = `${url}/api`;
