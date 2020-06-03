@@ -1,13 +1,13 @@
 module.exports = {
   purge: {
-    mode: 'all',
-    content: [
-      './src/**/*.{js,jsx,ts,tsx}',
-      './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-      './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-      './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-      './node_modules/pikaday/pikaday.{js,jsx,ts,tsx}',
-    ],
+    // mode: 'all',
+    // content: [
+    //   './src/**/*.{js,jsx,ts,tsx}',
+    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
+    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
+    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
+    //   './node_modules/pikaday/pikaday.{js,jsx,ts,tsx}',
+    // ],
   },
   target: 'relaxed',
   prefix: '',

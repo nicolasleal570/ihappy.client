@@ -44,11 +44,11 @@ export const loginUser = (email: String, password: String) => async (dispatch: F
     }
 };
 
-export const signupUser = (email: String, username: String,password: String,passwordConfirm: String ,role: String) => async (dispatch: Function) => {
+export const signupUser = (email: String, username: String, password: String, passwordConfirm: String, role: String) => async (dispatch: Function) => {
     try {
         dispatch(startAuth());
 
-        const { data } = await Axios.post(signup, {email, username,password,passwordConfirm ,role });
+        const { data } = await Axios.post(signup, { email, username, password, passwordConfirm, role });
         const { token, user } = data;
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
@@ -62,9 +62,11 @@ export const signupUser = (email: String, username: String,password: String,pass
 export const logout = () => async (dispatch: Function) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    return {
+    console.log('LOGOUT');
+
+    dispatch({
         type: types.AUTH_LOGOUT
-    };
+    })
 }
 
 export const authCheckState = () => async (dispatch: Function) => {
@@ -77,8 +79,8 @@ export const authCheckState = () => async (dispatch: Function) => {
     }
 }
 
-export const updateUser = (user:any) => async (dispatch: Function) => {
+export const updateUser = (user: any) => async (dispatch: Function) => {
     const token = localStorage.getItem('token') as string;
     localStorage.setItem("user", JSON.stringify(user));
-    dispatch(successAuth(token,user));
+    dispatch(successAuth(token, user));
 }
