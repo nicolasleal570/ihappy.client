@@ -62,12 +62,8 @@ export const authCheckState = () => async (dispatch: Function) => {
     }
 }
 
-export const loginCheck = () => async (dispatch: Function) => {
-    const token = localStorage.getItem("token") + '';
-    const user = JSON.parse(localStorage.getItem("user") + '');
-    if (token === undefined) {
-        return false;
-    } else {
-        return true;
-    }
+export const updateUser = (user:any) => async (dispatch: Function) => {
+    const token = localStorage.getItem('token') + '';
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(successAuth(token,user));
 }
