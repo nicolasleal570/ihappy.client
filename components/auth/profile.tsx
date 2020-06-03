@@ -12,7 +12,6 @@ export default function Profile() {
     const [biografia, setBiografia] = React.useState('')
     const[archivo,setArchivo] = React.useState<File>()
     const {user} = useSelector((state: any) => state.auth)
-    console.log(user)
 
     useEffect( () => {
         obtenerDatos()
@@ -21,8 +20,8 @@ export default function Profile() {
         setCedula(user?.cedula)
         setDireccion(user?.address)
         setBiografia(user?.bio)
+        setArchivo(user?.avatar)
     }, [])
-    console.log(nombre)
 
     const dispatch = useDispatch();
 
@@ -91,6 +90,8 @@ export default function Profile() {
     }
 
     const onHandle = (e: React.FormEvent<HTMLInputElement>) => {
+        const formdata = new FormData()
+        formdata.append('image',archivo as any)
         enviarFoto();
     }
 
@@ -98,9 +99,9 @@ export default function Profile() {
         <div className='flex bg-gray-300 h-screen'>
             <div className='w-1/5'>
             </div>
-            <div className='w-5/5 ml-20 mt-10'>
-                <h1 className="font-bold capitalize text-xl text-center py-4">Account Overview</h1>
+            <div className='flex w-5/5 ml-20 mt-10'>
                 <form method="PUT" onSubmit={onSubmit} className='ml-10 mt-5'>
+                <h1 className="font-bold capitalize text-xl text-center py-4">Account Overview</h1>
                     <div className='flex'>
                     <div className=''>
                         <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
@@ -118,11 +119,11 @@ export default function Profile() {
                                 Cedula </label>
                             <input id='cedula' onChange={e => setCedula(e.target.value)} value={cedula} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"  type="number" placeholder={cedula} />
                         </div>
-                        <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
+                        {/* <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
                                 Carga tu avatar </label>
                             <input id='avatar' onChange={e => setArchivo(e.target.files![0])} size={20} className=""  type="file" />
-                        </div>
+                        </div> */}
                         <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
                                 Direccion </label>
@@ -160,14 +161,16 @@ export default function Profile() {
                     <button type='submit' className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">Guardar</button>
                     </div>
                 </form>
+                <div className='mt-40'>
                 <form encType='multipart/form-data' onHandle={onHandle} method="PUT">
                 <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-imagen">
                                 Carga tu avatar </label>
-                            <input id='avatar' onChange={e => setArchivo(e.target.files![0])} size={20} className=""  type="file" />
+                            <input id='image' onChange={e => setArchivo(e.target.files![0])} size={20} className=""  type="file" />
                         </div>
-                        <button type='button' onClick={(e)=>onHandle} className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">Guardar foto</button>
+                        <button type='submit' className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 mt-2 ml-2 px-4 rounded-full">Guardar foto</button>
                 </form>
+                </div>
             </div>
         </div>
 
