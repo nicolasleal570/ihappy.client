@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../store/actions/authAction';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import Link from 'next/Link';
 
 export default function login() {
     const [email, setEmail] = React.useState('')
@@ -56,7 +56,7 @@ export default function login() {
                                     type="text"
                                     placeholder="Email"
                                     onChange={e => setEmail(e.target.value)}
-                                    value= {
+                                    value={
                                         email
                                     }
                                 />
@@ -74,7 +74,7 @@ export default function login() {
                                     type="password"
                                     placeholder="******************"
                                     onChange={e => setPassword(e.target.value)}
-                                    value ={
+                                    value={
                                         password
                                     }
                                 />

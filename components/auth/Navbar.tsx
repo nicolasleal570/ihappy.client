@@ -1,38 +1,38 @@
 import React from 'react'
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/Link';
 
 const Navbar = () => {
-    const {user} = useSelector((state: any) => state.auth)
-    
+    const { user } = useSelector((state: any) => state.auth)
+
     return (
         <nav>
-<div className="flex">
-            <div className="fixed w-1/5 bg-purple-700 h-screen">
-                <div className="flex-col pt-10 bg-purple-700">
-                    <img className='mx-auto' src={user.avatar} alt='profile' height="200" width="200" />
-                    <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
-                    <h1 className="font-bold capitalize text-xl text-center text-white pb-4">{user.first_name}</h1>
-                    <hr className='border-solid border-1' ></hr>
-                    <Link href='/profile'>
-                    <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
-                    </Link>
-                    <h2 className="font-semibold capitalize text-l text-center text-white py-4">My Payments</h2>
-                    <h2 className="font-semibold capitalize text-l text-center text-white py-4">Make an Appointment</h2>
-                    <div className='absolute bottom-0 h-10 pl-10'>
-                        <div className='flex flex-auto'>
-                            <h4 className="font-bold capitalize text-l text-white">Help</h4>
-                            <div className='flex flex-align ml-40'>
-                                <div className='flex content-around'>
-                                    <img className='mr-3' src='/assets/icons/discord.png/' height='25' width='25' />
-                                    <img className='mr-32' src='/assets/icons/gmail.webp/' height='25' width='30' />
+            <div className="flex">
+                <div className="fixed w-1/5 bg-purple-700 h-screen">
+                    <div className="flex-col pt-10 bg-purple-700">
+                        <img className='mx-auto' src={user.avatar} alt='profile' height="200" width="200" />
+                        <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
+                        <h1 className="font-bold capitalize text-xl text-center text-white pb-4">{user.first_name}</h1>
+                        <hr className='border-solid border-1' ></hr>
+                        <Link href='/profile'>
+                            <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
+                        </Link>
+                        <h2 className="font-semibold capitalize text-l text-center text-white py-4">My Payments</h2>
+                        <h2 className="font-semibold capitalize text-l text-center text-white py-4">Make an Appointment</h2>
+                        <div className='absolute bottom-0 h-10 pl-10'>
+                            <div className='flex flex-auto'>
+                                <h4 className="font-bold capitalize text-l text-white">Help</h4>
+                                <div className='flex flex-align ml-40'>
+                                    <div className='flex content-around'>
+                                        <img className='mr-3' src='/assets/icons/discord.png/' height='25' width='25' />
+                                        <img className='mr-32' src='/assets/icons/gmail.webp/' height='25' width='30' />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* <div className="w-4/5 ml-5 bg-white h-screen"> */}
+                {/* <div className="w-4/5 ml-5 bg-white h-screen"> */}
                 {/* <div className='flex flex-column'>
                     <div className='container mx-auto'>
                         <div className='flex flex-align mt-10'>
@@ -69,8 +69,8 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div> */}
-            {/* </div> */}
-            {/* <div className="w-1/5"> */}
+                {/* </div> */}
+                {/* <div className="w-1/5"> */}
                 {/* <div className='bg-gray-300 mt-10 mr-5'>
                     <h1 className="font-bold capitalize text-xl text-center ">Activities of the Week</h1>
                     <hr className='border border-solid'></hr>
@@ -86,8 +86,8 @@ const Navbar = () => {
                 {/* </div> */}
 
 
-            {/* </div> */}
-        </div>
+                {/* </div> */}
+            </div>
         </nav>
     )
 }

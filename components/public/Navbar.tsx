@@ -1,6 +1,5 @@
 import React from 'react'
-import Link from 'next/link';
-
+import Link from 'next/Link';
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
 

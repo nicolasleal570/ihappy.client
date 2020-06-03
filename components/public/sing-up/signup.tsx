@@ -2,9 +2,9 @@ import React from 'react';
 import Axios from 'axios';
 import { getRoles } from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
-import { signupUser } from '../../../store/actions/signupAction';
 import { useRouter } from 'next/router';
 import Link from 'next/dist/client/link';
+import { signupUser } from '../../../store/actions/authAction';
 
 
 
