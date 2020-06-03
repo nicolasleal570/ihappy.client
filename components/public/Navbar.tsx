@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/Link';
+import Link from 'next/link';
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = React.useState(false);
 
@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <nav className={`absolute left-0 top-0 z-40 flex items-center justify-between flex-wrap py-4 px-6 w-full ${navbarOpen ? 'bg-gray-800' : ''}`}>
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="font-bold text-xl tracking-tight">LOOGO</span>
+                <Link href="/"><span className="cursor-pointer font-bold text-xl tracking-tight">LOOGO</span></Link>
             </div>
             <div className="block lg:hidden">
                 <button className="flex items-center px-3 py-2 border rounded text-white border-purple-400 hover:text-purple-500 hover:border-white bg-purple-600 outline-none" onClick={toggleNavbar}>

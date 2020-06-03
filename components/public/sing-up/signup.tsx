@@ -22,7 +22,7 @@ export default function signup() {
 	const router = useRouter();
 
 	React.useEffect(() => {
-        dispatch(authCheckState())
+		dispatch(authCheckState())
 		if (user) {
 			router.push('/reviews');
 		}
@@ -35,7 +35,6 @@ export default function signup() {
 
 				console.log(data_role);
 				setRoles(data_role);
-
 
 			})
 			.catch(e => {
@@ -53,6 +52,7 @@ export default function signup() {
 		e.preventDefault();
 
 		dispatch(signupUser(email, username, password, confirm_password, role));
+		router.push('/reviews');
 
 	}
 

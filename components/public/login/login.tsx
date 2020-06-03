@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, authCheckState } from '../../../store/actions/authAction';
 import { useRouter } from 'next/router';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 export default function login() {
     const [email, setEmail] = React.useState('')
@@ -17,13 +17,13 @@ export default function login() {
         if (user) {
             router.push('/reviews');
         }
-    }, [])
-
+    }, [user])
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         dispatch(loginUser(email, password));
+        router.push('/reviews');
     }
 
     return (

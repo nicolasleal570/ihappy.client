@@ -1,7 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../../store/actions/postAction';
-import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const PsychologistHeader = () => (
     <div className=''>
@@ -29,9 +27,7 @@ const PsychologistHeader = () => (
     </div>
 );
 
-export default function Reviews   ()  {
-    
-    const { user } = useSelector((state: any) => state.auth);
+export default function Reviews() {
 
     return (
         <div className="flex text-gray-800">
@@ -65,7 +61,7 @@ export default function Reviews   ()  {
                                 {posts.map((element: any) => (<li>{JSON.stringify(element)}</li>))}
                             </ul>
                         </div> */}
-                       
+
                         <div className='mt-10'>
                             <hr></hr>
                             <h1 className="font-bold capitalize text-4xl py-4 px-6 tracking-wide border-b border-400-gray leading-none">Reseñas</h1>
@@ -132,11 +128,11 @@ export default function Reviews   ()  {
                                 <textarea className="flex-1 inline-block p-2 transition duration-300 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded"></textarea>
                                 <button className="inline-block px-4 py-2 transition duration-300 ease-in-out bg-purple-600 text-white border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 rounded cursor-pointer ml-2">Comentar</button>
                             </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     )
 }
 

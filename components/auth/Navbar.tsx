@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import Link from 'next/Link';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { authCheckState } from '../../store/actions/authAction';
+import { authCheckState, logout } from '../../store/actions/authAction';
 
 const Navbar = () => {
-    
+
     const { user } = useSelector((state: any) => state.auth)
     const dispatch = useDispatch();
     const router = useRouter();
@@ -14,29 +14,39 @@ const Navbar = () => {
         dispatch(authCheckState())
     }, [])
 
+    const handleLogout = () => {
+        dispatch(logout());
+        router.push('/');
+    }
+
     return (
         <nav>
             <div className="flex">
                 <div className="fixed w-1/5 bg-purple-700 h-screen">
-                    <div className="flex-col pt-10 bg-purple-700">
-                        <img className='mx-auto' src={user.avatar || ''} alt='profile' height="200" width="200" />
+                    <div className="relative h-full flex-col pt-10 bg-purple-700">
+                        <div className="mx-auto bg-blue-400 rounded-full overflow-hidden w-32 h-32">
+                            <img className='w-full' src={user?.avatar || ''} alt='profile' />
+                        </div>
                         <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
-                        <h1 className="font-bold capitalize text-xl text-center text-white pb-4">{user.first_name || user.username}</h1>
+                        <h1 className="font-base capitalize text-xl text-center text-white pb-4">{user?.first_name || user?.username}</h1>
+                        <div className="w-full mb-2">
+                            <button
+                                onClick={handleLogout}
+                                type="button"
+                                className="text-sm py-2 px-3 bg-red-600 rounded text-white text-center mx-auto block"
+                            >Cerrar Sesión</button>
+                        </div>
                         <hr className='border-solid border-1' ></hr>
                         <Link href='/profile'>
                             <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
                         </Link>
                         <h2 className="font-semibold capitalize text-l text-center text-white py-4">My Payments</h2>
                         <h2 className="font-semibold capitalize text-l text-center text-white py-4">Make an Appointment</h2>
-                        <div className='absolute bottom-0 h-10 pl-10'>
-                            <div className='flex flex-auto'>
-                                <h4 className="font-bold capitalize text-l text-white">Help</h4>
-                                <div className='flex flex-align ml-40'>
-                                    <div className='flex content-around'>
-                                        <img className='mr-3' src='/assets/icons/discord.png/' height='25' width='25' />
-                                        <img className='mr-32' src='/assets/icons/gmail.webp/' height='25' width='30' />
-                                    </div>
-                                </div>
+                        <div className='absolute bottom-0 left-0 px-6 py-4 w-full flex justify-between'>
+                            <h4 className="font-bold capitalize text-l text-white">Help</h4>
+                            <div className='flex'>
+                                <img className='mr-3' src='/assets/icons/discord.png/' height='25' width='25' />
+                                <img className='' src='/assets/icons/gmail.webp/' height='25' width='30' />
                             </div>
                         </div>
                     </div>

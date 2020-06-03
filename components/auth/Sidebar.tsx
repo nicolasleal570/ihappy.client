@@ -1,5 +1,5 @@
 import 'react';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 interface Psychologists {
     name: String;

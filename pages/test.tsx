@@ -1,10 +1,10 @@
 import React from 'react'
-import Test from '../components/auth/test'
+import Test from '../components/auth/Test'
 
-export default function test(){
+export default function test() {
     return (
         <div>
-            <Test/>
+            <Test />
         </div>
     )
 }
