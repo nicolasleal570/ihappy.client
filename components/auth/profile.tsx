@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { updateUser } from '../../store/actions/authAction'
+import { profile, avatar, getUsers } from '../../utils/endpoints';
 
 export default function Profile() {
     const [equipo, setEquipo] = React.useState(null)
@@ -32,7 +33,7 @@ export default function Profile() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
-        axios.put('http://localhost:5000/api/users/profile', {
+        axios.put(profile, {
             'first_name': nombre,
             'last_name': apellido,
             'cedula': cedula,
@@ -57,7 +58,7 @@ export default function Profile() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
-        axios.put('http://localhost:5000/api/users/avatar', formData, config
+        axios.put(avatar, formData, config
         )
             .then((res) => {
                 console.log(res.data);
@@ -69,7 +70,7 @@ export default function Profile() {
     }
 
     const obtenerDatos = async () => {
-        const res = await axios.get('http://localhost:5000/api/users', {
+        const res = await axios.get(getUsers, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
             }

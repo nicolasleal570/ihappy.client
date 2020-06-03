@@ -17,13 +17,13 @@ export default function login() {
         if (user) {
             router.push('/reviews');
         }
-    }, [])
-
+    }, [user])
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         dispatch(loginUser(email, password));
+        router.push('/reviews');
     }
 
     return (

@@ -17,9 +17,6 @@ const Test = () => {
     let neupsi = 0; //
     let partner = 0; //
 
-
-
-
     const [suenio, setSuenio] = React.useState('null')
     const [sexo, setSexo] = React.useState('null')
     const [arrecho, setArrechera] = React.useState('null')

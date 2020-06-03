@@ -19,9 +19,9 @@ const Navbar = () => {
             <div className="flex">
                 <div className="fixed w-1/5 bg-purple-700 h-screen">
                     <div className="flex-col pt-10 bg-purple-700">
-                        <img className='mx-auto' src={user.avatar || ''} alt='profile' height="200" width="200" />
+                        <img className='mx-auto' src={user?.avatar || ''} alt='profile' height="200" width="200" />
                         <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
-                        <h1 className="font-bold capitalize text-xl text-center text-white pb-4">{user.first_name || user.username}</h1>
+                        <h1 className="font-bold capitalize text-xl text-center text-white pb-4">{user?.first_name || user?.username}</h1>
                         <hr className='border-solid border-1' ></hr>
                         <Link href='/profile'>
                             <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
