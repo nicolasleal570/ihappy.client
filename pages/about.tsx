@@ -1,10 +1,11 @@
 import React from 'react'
+import PublicLayout from '../components/public/Layout';
 
 const about = () => {
     return (
-        <div>
+        <PublicLayout>
             About page
-        </div>
+        </PublicLayout>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../../store/actions/authAction';
+import { loginUser, authCheckState } from '../../../store/actions/authAction';
 import { useRouter } from 'next/router';
 import Link from 'next/Link';
 
@@ -10,20 +10,20 @@ export default function login() {
 
     const { user } = useSelector((state: any) => state.auth);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
+        dispatch(authCheckState())
         if (user) {
             router.push('/reviews');
         }
-    }, [user])
+    }, [])
 
-    const dispatch = useDispatch();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         dispatch(loginUser(email, password));
-
     }
 
     return (
@@ -51,7 +51,7 @@ export default function login() {
                             </div>
                             <div className="lg:w-2/5 w-full text-center">
                                 <input
-                                    className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+                                    className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                                     id="email"
                                     type="text"
                                     placeholder="Email"
@@ -69,7 +69,7 @@ export default function login() {
                             </div>
                             <div className="lg:w-2/5 w-full text-center">
                                 <input
-                                    className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+                                    className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                                     id="password"
                                     type="password"
                                     placeholder="******************"

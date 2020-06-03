@@ -3,7 +3,7 @@ import { updateObject } from '../utility';
 
 const initialState = {
     token: null,
-    user: null,
+    user: '',
     loading: false,
     error: null
 }
@@ -30,14 +30,14 @@ const failAuth = (state: typeof initialState, action: any) => {
         loading: false,
         error: action.error,
         token: null,
-        user: null
+        user: ''
     })
 }
 
 const logoutAuth = (state: typeof initialState, action: any) => {
     return updateObject(state, {
         token: null,
-        username: ''
+        user: ''
     });
 };
 

@@ -18,13 +18,13 @@ const Navbar = () => {
             <div className={`w-full block flex-grow ${navbarOpen ? '' : 'hidden'} lg:flex lg:items-center lg:w-auto`}>
                 <div className="lg:flex-grow">
                     <Link href="/">
-                        <span className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Inicio </span>
+                        <span className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Inicio </span>
                     </Link>
                     <Link href="/">
-                        <span className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Nosotros </span>
+                        <span className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Nosotros </span>
                     </Link>
                     <Link href="/">
-                        <span className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Ayuda </span>
+                        <span className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Ayuda </span>
                     </Link>
 
                 </div>

@@ -9,9 +9,9 @@ const Layout = ({ children }: LayoutProps) => {
     return (
         <>
             <Navbar />
-            <div>
+            <>
                 {children}
-            </div>
+            </>
         </>
     )
 }

@@ -93,7 +93,7 @@ export default function Profile() {
     }
 
     return (
-        <div className='flex bg-gray-300 h-screen'>
+        <div className='flex bg-gray-300'>
             <div className='w-1/5'>
             </div>
             <div className='flex w-5/5 ml-20 mt-10'>

@@ -30,21 +30,8 @@ const PsychologistHeader = () => (
 );
 
 export default function Reviews   ()  {
-
-    const dispatch = useDispatch();
-    const { posts } = useSelector((state: any) => state.post);
-
+    
     const { user } = useSelector((state: any) => state.auth);
-    const router = useRouter();
-    React.useEffect(() => {
-        dispatch(fetchPosts())
-    }, [])
-
-    React.useEffect(() => {
-        if (!user) {
-            router.push('/');
-        }
-    }, [user])
 
     return (
         <div className="flex text-gray-800">

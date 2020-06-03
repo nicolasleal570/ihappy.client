@@ -4,7 +4,7 @@ import { getRoles } from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/dist/client/link';
-import { signupUser } from '../../../store/actions/authAction';
+import { signupUser, authCheckState } from '../../../store/actions/authAction';
 
 
 
@@ -22,6 +22,7 @@ export default function signup() {
 	const router = useRouter();
 
 	React.useEffect(() => {
+        dispatch(authCheckState())
 		if (user) {
 			router.push('/reviews');
 		}
@@ -74,7 +75,7 @@ export default function signup() {
 					<form className="flex flex-col justify-center bg-white h-screen" method="POST" onSubmit={onSubmit}>
 
 						<p className="block text-gray-800 text-3xl lg:text-5xl text-center mb-4 lg:mb-50 px-4 py-2 capitalize">
-							Unase a la familia que le cambiara la vida
+							Unase a la familia que le cambiará la vida
 						</p>
 
 						<div className="text-gray-700 px-6 lg:px-4 py-2">
@@ -85,7 +86,7 @@ export default function signup() {
 								</div>
 								<div className="lg:w-2/5 w-full text-center">
 									<input
-										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 										id="username"
 										type="text"
 										placeholder="username"
@@ -100,7 +101,7 @@ export default function signup() {
 								</div>
 								<div className="lg:w-2/5 w-full text-center">
 									<input
-										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 										id="email"
 										type="text"
 										placeholder="email"
@@ -117,7 +118,7 @@ export default function signup() {
 
 								<div className="lg:w-2/5 w-full text-center">
 									<input
-										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 										id="password"
 										type="password"
 										placeholder="******************"
@@ -134,7 +135,7 @@ export default function signup() {
 
 								<div className="lg:w-2/5 w-full text-center">
 									<input
-										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 										id="confirm_password"
 										type="password"
 										placeholder="******************"
@@ -151,7 +152,7 @@ export default function signup() {
 
 								<div className="lg:w-2/5 w-full text-center">
 									<select
-										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 capitalize"
+										className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 										id="role"
 										onChange={e => setRole(e.target.value)}
 									>

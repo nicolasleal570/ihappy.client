@@ -68,9 +68,9 @@ export const logout = () => async (dispatch: Function) => {
 }
 
 export const authCheckState = () => async (dispatch: Function) => {
-    const token = localStorage.getItem("token") + '';
-    const user = JSON.parse(localStorage.getItem("user") + '');
-    if (token === undefined) {
+    const token = localStorage.getItem("token") as string;
+    const user = JSON.parse(localStorage.getItem("user") as string);
+    if (token === undefined && !user) {
         dispatch(logout());
     } else {
         dispatch(successAuth(token, user));
@@ -78,7 +78,7 @@ export const authCheckState = () => async (dispatch: Function) => {
 }
 
 export const updateUser = (user:any) => async (dispatch: Function) => {
-    const token = localStorage.getItem('token') + '';
+    const token = localStorage.getItem('token') as string;
     localStorage.setItem("user", JSON.stringify(user));
     dispatch(successAuth(token,user));
 }

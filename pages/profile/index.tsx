@@ -1,8 +1,11 @@
 import React from 'react';
 import Profile from '../../components/auth/profile';
+import AuthLayout from '../../components/auth/Layout';
 
-export default function profile(){
-return(
-    <Profile/>
-)
+export default function profile() {
+    return (
+        <AuthLayout>
+            <Profile />
+        </AuthLayout>
+    )
 }
