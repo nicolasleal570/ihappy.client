@@ -3,3 +3,45 @@
 @import 'tailwindcss/components';
 /* purgecss end ignore */
 @import 'tailwindcss/utilities';
+
+.cool {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+ .scrul {
+    overflow-y: scroll
+ } 
+
+ /* scroll*/
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: auto;
+}
+::-webkit-scrollbar-button {
+  width: 3px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #9f7aea;
+  border: 17px none #9e3bab;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 9px none #9f45bf;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-track:active {
+  background: #9f7aea;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
