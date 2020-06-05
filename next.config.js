@@ -2,7 +2,7 @@ const withOffline = require('next-offline');
 
 const nextConfig = {
     workboxOpts: {
-        swDest: '/public/static/service-worker.js',
+        swDest: '/public/service-worker.js',
         runtimeCaching: [
             {
                 urlPattern: /^https?.*/,
