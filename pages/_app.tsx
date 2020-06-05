@@ -2,8 +2,6 @@ import React from 'react'
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import AuthLayout from '../components/auth/Layout';
-import PublicLayout from '../components/public/Layout';
 import '../styles.css';
 
 import { Provider } from 'react-redux';

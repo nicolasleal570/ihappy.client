@@ -2,6 +2,10 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "main": "app/background.js",
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -14,6 +18,7 @@
     "@types/react-redux": "^7.1.9",
     "axios": "^0.19.2",
     "next": "^9.4.1",
+    "next-offline": "^5.0.2",
     "next-redux-wrapper": "^6.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -48,6 +53,46 @@
     "autoprefixer": "^9.8.0",
     "postcss-cli": "^7.1.1",
     "postcss-import": "^12.0.1",
-    "tailwindcss": "^1.4.6"
+    "tailwindcss": "^1.4.6",
+    "@babel/core": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
+    "babel-plugin-emotion": "^10.0.33",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-config-xo-react": "^0.23.0",
+    "eslint-config-xo-typescript": "^0.27.0",
+    "xo": "^0.29.1"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "browser"
+    ],
+    "extends": [
+      "xo-typescript",
+      "xo-react"
+    ],
+    "rules": {
+      "import/no-unassigned-import": "off",
+      "import/extensions": "off",
+      "unicorn/string-content": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "@typescript-eslint/no-unsafe-call": "off"
+    },
+    "settings": {
+      "react": {
+        "version": "16.13"
+      }
+    },
+    "extensions": [
+      "tsx",
+      "ts"
+    ],
+    "ignores": [
+      "babel.config.js",
+      "next.config.js"
+    ]
   }
 }
