@@ -19,7 +19,8 @@ const nextConfig = {
                     }
                 }
             }
-        ]
+        ],
+        "scope": "/app/"
     },
     reactStrictMode: true,
     experimental: {
