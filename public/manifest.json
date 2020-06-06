@@ -3,19 +3,20 @@
   "short_name": "iHappy",
   "icons": [
     {
-      "src": "example/manifest-icon-192.jpg",
+      "src": "/example/manifest-icon-192.jpg",
       "sizes": "192x192",
       "type": "image/jpg",
       "purpose": "maskable any"
     },
     {
-      "src": "example/manifest-icon-512.jpg",
+      "src": "/example/manifest-icon-512.jpg",
       "sizes": "512x512",
       "type": "image/jpg",
       "purpose": "maskable any"
     }
   ],
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#212121",
