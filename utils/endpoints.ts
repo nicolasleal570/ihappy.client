@@ -17,3 +17,4 @@ export const avatar = `${endpoint}/users/avatar/`
 
 export const getUsers = `${endpoint}/users/`
 export const getRoles = `${endpoint}/roles`
+export const getSpecialty = `${endpoint}/specialities/`
