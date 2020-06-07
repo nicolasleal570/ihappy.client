@@ -8,14 +8,14 @@ export default function login() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
-    const { user } = useSelector((state: any) => state.auth);
+    const { loading, user } = useSelector((state: any) => state.auth);
     const router = useRouter();
     const dispatch = useDispatch();
 
     React.useEffect(() => {
         dispatch(authCheckState())
         if (user) {
-            router.push('/reviews');
+            router.push('/dashboard');
         }
     }, [user])
 
@@ -23,7 +23,7 @@ export default function login() {
         e.preventDefault();
 
         dispatch(loginUser(email, password));
-        router.push('/reviews');
+        router.push('/dashboard');
     }
 
     return (
@@ -85,8 +85,13 @@ export default function login() {
 
                         <div className="w-full">
                             <button
-                                className="w-full lg:w-auto mx-auto block shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold text-white py-2 px-4 rounded"
                                 type="submit"
+                                className={`
+                                    w-full lg:w-auto mx-auto block shadow focus:outline-none py-2 px-4 rounded
+                                    ${loading ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                        : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                                    `}
+                                disabled={loading}
                             > Iniciar Sesion </button>
                         </div>
                     </div>

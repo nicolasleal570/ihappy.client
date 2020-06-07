@@ -12,6 +12,9 @@ export default function Profile() {
     const [direccion, setDireccion] = React.useState('')
     const [biografia, setBiografia] = React.useState('')
     const [archivo, setArchivo] = React.useState<File>()
+    const [sendingPhoto, setSendingPhoto] = React.useState(false)
+    const [sendingInfo, setSendingInfo] = React.useState(false)
+
     const { user } = useSelector((state: any) => state.auth)
 
     useEffect(() => {
@@ -33,6 +36,7 @@ export default function Profile() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
+        setSendingInfo(true);
         axios.put(profile, {
             'first_name': nombre,
             'last_name': apellido,
@@ -40,15 +44,18 @@ export default function Profile() {
             'address': direccion,
             'bio': biografia
 
-        }, config
-        )
-            .then((res) => {
-                console.log(res.data);
-                dispatch(updateUser(res.data.data))
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        }, config).then((res) => {
+
+            console.log(res.data);
+            dispatch(updateUser(res.data.data))
+            setSendingInfo(false);
+
+        }).catch((err) => {
+
+            console.log(err);
+            setSendingInfo(false);
+
+        })
     }
 
     const enviarFoto = async (formData: any) => {
@@ -58,14 +65,17 @@ export default function Profile() {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }
+        setSendingPhoto(true);
         axios.put(avatar, formData, config
         )
             .then((res) => {
                 console.log(res.data);
                 dispatch(updateUser(res.data.data))
+                setSendingPhoto(false);
             })
             .catch((err) => {
                 console.log(err);
+                setSendingPhoto(false);
             })
     }
 
@@ -94,84 +104,70 @@ export default function Profile() {
     }
 
     return (
-        <div className='flex bg-gray-300'>
-            <div className='w-1/5'>
-            </div>
-            <div className='flex w-5/5 ml-20 mt-10'>
-                <form method="PUT" onSubmit={onSubmit} className='ml-10 mt-5'>
-                    <h1 className="font-bold capitalize text-xl text-center py-4">Account Overview</h1>
-                    <div className='flex'>
-                        <div className=''>
-                            <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
-                                    First Name </label>
-                                <input id='Nombre' onChange={e => setNombre(e.target.value)} value={nombre} size={50} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" />
-                            </div>
-                            <div className="w-full py-1 md:w-1/2 px-2">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
-                                    Last Name </label>
-                                <input id='Apellido' onChange={e => setApellido(e.target.value)} value={apellido} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder={apellido} />
-                            </div>
-                            <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
-                                    Cedula </label>
-                                <input id='cedula' onChange={e => setCedula(e.target.value)} value={cedula} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="number" placeholder={cedula} />
-                            </div>
-                            {/* <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
-                                Carga tu avatar </label>
-                            <input id='avatar' onChange={e => setArchivo(e.target.files![0])} size={20} className=""  type="file" />
-                        </div> */}
-                            <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
-                                    Direccion </label>
-                                {/* <input id='direccion' onChange={e => setDireccion(e.target.value)} value={direccion} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 mb-3 px-2 leading-tight focus:outline-none focus:bg-white"  type="text" placeholder={direccion} /> */}
-                                <textarea id='direccion' onChange={e => setDireccion(e.target.value)} value={direccion} className="flex inline-block p-2 transition h-50 bg-gray-200 h-40 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded" placeholder={direccion}></textarea>
-                            </div>
-                            {/* <div className="ml-2 mr-56 py-1">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">Role</label>
-                            <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                <option>Elige</option>
-                                {
-                                localStorage.getItem('role')
-                                }
-                            <option></option>
-                            </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
-                        </div> */}
-                            {/* <div className="ml-2 mr-56 py-1">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">Especialidad</label>
-                            <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                <option>Elige</option>
-                                <option></option>
-                            </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
-                        </div> */}
-                        </div>
-                        <div className="w-full md:w-1/2 py-3 px-2 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-bio">
-                                Biografia </label>
-                            <textarea id='Biografia' onChange={e => setBiografia(e.target.value)} value={biografia} className="flex inline-block p-2 transition h-full ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded" placeholder={biografia}></textarea>
-                        </div>
-
-                    </div>
-                    <div className='mt-10 ml-64'>
-                        <button type='submit' className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">Guardar</button>
-                    </div>
-                </form>
-                <div className='mt-40'>
-                    <form encType='multipart/form-data' onSubmit={onHandle} method="PUT">
+        <div className='flex'>
+            <form method="PUT" onSubmit={onSubmit} className='p-6'>
+                <h1 className="font-bold capitalize text-xl text-center py-4">Account Overview</h1>
+                <div className='flex'>
+                    <div className=''>
                         <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-imagen">
-                                Carga tu avatar </label>
-                            <input id='image' onChange={e => setArchivo(e.target.files![0])} size={20} className="" type="file" />
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+                                First Name </label>
+                            <input id='Nombre' onChange={e => setNombre(e.target.value)} value={nombre} size={50} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" />
                         </div>
-                        <button type='submit' className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 mt-2 ml-2 px-4 rounded-full">Guardar foto</button>
-                    </form>
+                        <div className="w-full py-1 md:w-1/2 px-2">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+                                Last Name </label>
+                            <input id='Apellido' onChange={e => setApellido(e.target.value)} value={apellido} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder={apellido} />
+                        </div>
+                        <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
+                                Cedula </label>
+                            <input id='cedula' onChange={e => setCedula(e.target.value)} value={cedula} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="number" placeholder={cedula} />
+                        </div>
+                        <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
+                                Direccion </label>
+                            <textarea id='direccion' onChange={e => setDireccion(e.target.value)} value={direccion} className="flex inline-block p-2 transition h-50 bg-gray-200 h-40 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded" placeholder={direccion}></textarea>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/2 py-3 px-2 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-bio">
+                            Biografia </label>
+                        <textarea id='Biografia' onChange={e => setBiografia(e.target.value)} value={biografia} className="flex inline-block p-2 transition h-full ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded" placeholder={biografia}></textarea>
+                    </div>
+
                 </div>
+                <div className='mt-10 ml-64'>
+                    <button
+                        type='submit'
+                        className={`
+                            inline-block px-6 py-2 transition duration-300 ease-in-out rounded cursor-pointer mt-4
+                            ${sendingInfo ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                            `}
+                        disabled={sendingInfo}
+                    >Guardar</button>
+                </div>
+            </form>
+            <div className='mt-40'>
+                <form encType='multipart/form-data' onSubmit={onHandle} method="PUT">
+                    <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-imagen">
+                            Carga tu avatar </label>
+                        <input id='image' onChange={e => setArchivo(e.target.files![0])} size={20} className="" type="file" />
+                    </div>
+
+                    <button
+                        type='submit'
+                        className={`
+                            inline-block px-3 py-1 transition duration-300 ease-in-out rounded cursor-pointer text-sm mt-4
+                            ${sendingPhoto ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                            `}
+                        disabled={sendingPhoto}
+                    >Guardar foto</button>
+                </form>
             </div>
         </div>
-
-
     )
 }

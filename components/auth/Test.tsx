@@ -251,7 +251,7 @@ const Test = () => {
                                 <p>Al rellenar este quiz, podremos recomendarle a los profesionales mas indicados para su situacion.</p>
                             </div>
 
-                            <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
+                            <div className="col-start-2 col-span-4 row-span-3 cool scrul custom-scroll p-10 rounded">
                                 <div className="text-xl text-center">
 
                                     <div className="p-2">

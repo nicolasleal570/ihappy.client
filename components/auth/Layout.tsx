@@ -7,12 +7,22 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <>
-            <Navbar />
-            <>
-                {children}
-            </>
-        </>
+        <div>
+
+            <div className="flex">
+                <div className="fixed w-1/6 bg-purple-700 h-screen">
+                    <Navbar />
+                </div>
+            </div>
+
+            <div className="flex text-gray-800">
+                {/* Fill content */}
+                <div className="flex-none w-1/6 bg-purple-700 h-screen"></div>
+                <div className="flex-1">
+                    {children}
+                </div>
+            </div>
+        </div>
     )
 }
 
