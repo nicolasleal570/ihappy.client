@@ -18,13 +18,13 @@ export default function signup() {
 	const [role, setRole] = React.useState("")
 	const [roles, setRoles] = React.useState([])
 
-	const { user } = useSelector((state: any) => state.auth);
+	const { loading, user } = useSelector((state: any) => state.auth);
 	const router = useRouter();
 
 	React.useEffect(() => {
 		dispatch(authCheckState())
 		if (user) {
-			router.push('/reviews');
+			router.push('/dashboard');
 		}
 	}, [user])
 
@@ -44,7 +44,7 @@ export default function signup() {
 	}, [])
 
 	const option = roles.map((element: any) => (
-		<option value={element._id}>Soy un {element.public_name} </option>)
+		<option key={element._id} value={element._id}>Soy un {element.public_name} </option>)
 	)
 
 
@@ -52,7 +52,7 @@ export default function signup() {
 		e.preventDefault();
 
 		dispatch(signupUser(email, username, password, confirm_password, role));
-		router.push('/reviews');
+		router.push('/dashboard');
 
 	}
 
@@ -165,11 +165,15 @@ export default function signup() {
 							</div>
 
 							<div className="w-full">
-
 								<button
-									className="w-full lg:w-auto mx-auto block shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold text-white py-2 px-4 rounded"
 									type="submit"
-								> Iniciar Sesion </button>
+									className={`
+                                    w-full lg:w-auto mx-auto block shadow focus:outline-none py-2 px-4 rounded
+                                    ${loading ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+											: 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                                    `}
+									disabled={loading}
+								> Regístrate </button>
 							</div>
 
 						</div>

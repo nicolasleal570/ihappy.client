@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { authCheckState, logout } from '../../store/actions/authAction';
+import { logout } from '../../store/actions/authAction';
 
 const Navbar = () => {
 
@@ -10,102 +10,57 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    React.useEffect(() => {
-        dispatch(authCheckState())
-    }, [])
-
     const handleLogout = () => {
-        dispatch(logout());
         router.push('/');
+        dispatch(logout());
     }
 
     return (
-        <nav>
-            <div className="flex">
-                <div className="fixed w-1/5 bg-purple-700 h-screen">
-                    <div className="relative h-full flex-col pt-10 bg-purple-700">
-                        <div className="mx-auto bg-blue-400 rounded-full overflow-hidden w-32 h-32">
-                            <img className='w-full' src={user?.avatar || ''} alt='profile' />
+        <nav className="relative">
+            {/* <div className="bg-red-500">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur repellat quaerat odit laboriosam sunt eaque obcaecati ratione! Sequi, quaerat? Temporibus!</p>
+            </div> */}
+            <div className="relative h-full flex-col pt-4 bg-purple-700 overflow-y-auto">
+                <div className="flex justify-center items-center mx-auto bg-purple-600 rounded-full overflow-hidden w-24 h-24">
+                    <img className='w-full h-full object-cover' src={user?.avatar} alt='profile' />
+                </div>
+                <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
+                <h1 className="font-base capitalize text-xl text-center text-white pb-4">{user?.first_name} {user?.last_name}</h1>
+
+                {/* Btn logout */}
+                <div className="w-full mb-4">
+                    <button
+                        onClick={handleLogout}
+                        type="button"
+                        className="text-sm py-2 px-3 bg-red-600 rounded text-white text-center mx-auto block cursor-pointer"
+                    >Cerrar Sesión</button>
+                </div>
+
+                <hr className='border-solid border-1' ></hr>
+
+                {/* Menu items */}
+                <div className="">
+                    <Link href='/dashboard'>
+                        <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Dashboard</span></h2>
+                    </Link>
+
+                    <Link href='/profile'>
+                        <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
+                    </Link>
+                    <h2 className="font-semibold capitalize text-l text-center text-white py-4">My Payments</h2>
+                    <h2 className="font-semibold capitalize text-l text-center text-white py-4">Make an Appointment</h2>
+                </div>
+                <div className="px-6 py-2 w-full flex justify-between items-center">
+                    <h4 className="font-bold capitalize text-l text-white">Help</h4>
+                    <div className='flex'>
+                        <div className="w-8 h-8 mr-3 overflow-hidden">
+                            <img className='w-auto h-full' src='/assets/icons/discord.png/' />
                         </div>
-                        <h1 className="font-bold capitalize text-xl text-center text-white pt-4">Welcome Back</h1>
-                        <h1 className="font-base capitalize text-xl text-center text-white pb-4">{user?.first_name || user?.username}</h1>
-                        <div className="w-full mb-2">
-                            <button
-                                onClick={handleLogout}
-                                type="button"
-                                className="text-sm py-2 px-3 bg-red-600 rounded text-white text-center mx-auto block"
-                            >Cerrar Sesión</button>
-                        </div>
-                        <hr className='border-solid border-1' ></hr>
-                        <Link href='/profile'>
-                            <h2 className="font-semibold capitalize text-l text-center text-white py-4"><span className='cursor-pointer'>Account Overview</span></h2>
-                        </Link>
-                        <h2 className="font-semibold capitalize text-l text-center text-white py-4">My Payments</h2>
-                        <h2 className="font-semibold capitalize text-l text-center text-white py-4">Make an Appointment</h2>
-                        <div className='absolute bottom-0 left-0 px-6 py-4 w-full flex justify-between'>
-                            <h4 className="font-bold capitalize text-l text-white">Help</h4>
-                            <div className='flex'>
-                                <img className='mr-3' src='/assets/icons/discord.png/' height='25' width='25' />
-                                <img className='' src='/assets/icons/gmail.webp/' height='25' width='30' />
-                            </div>
+                        <div className="w-8 h-8 overflow-hidden">
+                            <img className='w-full' src='/assets/icons/gmail.webp/' />
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-4/5 ml-5 bg-white h-screen"> */}
-                {/* <div className='flex flex-column'>
-                    <div className='container mx-auto'>
-                        <div className='flex flex-align mt-10'>
-                            <h1 className="font-bold capitalize text-xl text-left pl-6 py-2">Connect: </h1>
-                            <input className="inline-block ml-5 pr-5 py-2 transition duration-300 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded "></input>
-                            <img src='/assets/icons/lupa.png/' className='w-8 h-8 ml-5 mt-2 cursor-pointer' />
-                        </div>
-                        <div className='container mx-auto mt-10 ml-5'>
-                            <h1 className="font-bold capitalize text-xl text-left ml-2 py-8">Online Psychologists</h1>
-                            <div className='flex'>
-                                <Psychologists
-                                    name='Dr. Luis Silva'
-                                    imgUrl='/assets/icons/profile.svg'
-                                />
-                                <Psychologists
-                                    name='Dr. Luis Silva'
-                                    imgUrl='/assets/icons/profile.svg'
-                                />
-                                <Psychologists
-                                    name='Dr. Luis Silva'
-                                    imgUrl='/assets/icons/profile.svg'
-                                />
-                                <Psychologists
-                                    name='Dr. Luis Silva'
-                                    imgUrl='/assets/icons/profile.svg'
-                                />
-                            </div>
-                            <h1 className="font-bold capitalize text-xl text-left ml-2 py-8" >Charts</h1>
-                            <div className='flex'>
-                                <img src='/assets/icons/chart.png' className='w-70 h-40' />
-                                <img src='/assets/icons/chart.png' className='w-70 h-40 pl-10' />
-                                <img src='/assets/icons/chart.png' className='w-70 h-40' />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-                {/* </div> */}
-                {/* <div className="w-1/5"> */}
-                {/* <div className='bg-gray-300 mt-10 mr-5'>
-                    <h1 className="font-bold capitalize text-xl text-center ">Activities of the Week</h1>
-                    <hr className='border border-solid'></hr>
-                    <h2 className="font-bold capitalize text-xl text-left ml-5 py-5">Read</h2>
-                    <img src='/assets/img/tasty_pride.jpg' className='w-150 pd-5' />
-                    <h2 className="font-bold capitalize text-xl text-left ml-5">Excercise</h2>
-                    <div className="bg-blue-400">
-                        <h2 className="font-bold capitalize antialiased text-xl text-left ml-10 pl-10">WITH</h2>
-                    </div>
-                    <img src='/assets/img/runtastic.png' />
-                    <h2 className="font-bold capitalize antialiased text-xl text-left ml-10 pt-2">Play</h2>
-                <img src='/assets/img/cod.jpg' className='w-25 h-40' /> */}
-                {/* </div> */}
-
-
-                {/* </div> */}
             </div>
         </nav>
     )
