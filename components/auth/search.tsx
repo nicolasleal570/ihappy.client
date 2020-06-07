@@ -1,5 +1,5 @@
 import React from 'react'
-import { getSpecialty } from '../../utils/endpoints';
+import { getSpecialty, getUsers } from '../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 
@@ -22,10 +22,15 @@ const Psychologists = ({ name, imgUrl }: Psychologists) => (
 
 function search() {
 
-    const [specialty, setSpecialty] = React.useState([])
-    const [psico, setPsico] = React.useState([])
+    
+
+    const [specialty, setSpecialty] = React.useState<any>([])
+    const [psico, setPsico] = React.useState<any>([])
 
     React.useEffect(() => {
+
+        
+
 		Axios.get(getSpecialty)
 			.then(response => {
 				const data_role = response.data.data;
@@ -38,13 +43,69 @@ function search() {
 				// Podemos mostrar los errores en la consola
 				console.log(e);
 			})
+    }, [])
+    
+
+    React.useEffect(() => {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+
+		Axios.get(getUsers,config)
+			.then(response => {
+				const data_role = response.data.data;
+
+				console.log(data_role);
+				setPsico(data_role);
+
+			})
+			.catch(e => {
+				// Podemos mostrar los errores en la consola
+				console.log(e);
+			})
 	}, [])
 
     const option = specialty.map((element: any) => (
 		<option value={element._id}> {element.name} </option>)
     )
     
-   
+    const psica = psico.map((element: any) => (
+		<Psychologists
+                                    name={element.slug}
+                                    imgUrl={element.avatar}
+                                />
+    ))
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        var temp: Array <any> = []
+
+        for (let index = 0; index < psico.length; index++) {
+
+            if (psico[index].role=='5edd334b401fd83d1c53a99c') {
+
+                for (let ind = 0; index < psico[index].speciality; index++) {
+                    
+                    if (psico[index].speciality[ind]._id = specialty) {
+                        temp [temp.length] =  psico[index];
+                    }
+                    
+                }
+
+                
+            }
+
+            
+            
+        }
+
+        setPsico(temp);
+    }
 
     return (
         <div className="flex text-gray-800">
@@ -61,7 +122,7 @@ function search() {
                             <h1 className='text-center text-3xl	'>¿Que Tipo de Psicologo Estas Buscando?</h1>
                         </div>
 
-                        <form method="GET"> 
+                        <form method="GET" onSubmit={onSubmit}> 
 
                         <div className="flex justify-around mt-4 mb-8">
 
@@ -70,7 +131,8 @@ function search() {
 									<img className="w-10 h-10" src="/assets/icons/buscar.png" alt="" />
 								</div>
                                 <select 
-                                className='bg-white  border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500'>
+                                className='bg-white  border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500'
+                                onChange={e => setSpecialty(e.target.value)}>
 
                                     <option>Especialidad</option>
                                     {option}
@@ -80,7 +142,8 @@ function search() {
 
                             <div className="text-center">
                                 <button 
-                                className="w-full lg:w-auto mx-auto block shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold text-white py-2 px-4 rounded">
+                                className="w-full lg:w-auto mx-auto block shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none font-bold text-white py-2 px-4 rounded"
+                                type="submit">
                                     Enviar
                                 </button>
                             </div>
@@ -93,33 +156,11 @@ function search() {
                         
                         <div className='grid grid-cols-4 gap-4 mt-8'>
 
-                        <div>
-                            <Psychologists
-                                        name='Dr. Luis Silva'
-                                        imgUrl='/assets/icons/profile.svg'
-                                    />
-                            </div>
                         
-                            <div>
-                            <Psychologists
-                                        name='Dr. Luis Silva'
-                                        imgUrl='/assets/icons/profile.svg'
-                                    />
-                            </div>
-
-                            <div>
-                            <Psychologists
-                                        name='Dr. Luis Silva'
-                                        imgUrl='/assets/icons/profile.svg'
-                                    />
-                            </div>
-
-                            <div>
-                            <Psychologists
-                                        name='Dr. Luis Silva'
-                                        imgUrl='/assets/icons/profile.svg'
-                                    />
-                            </div>
+                            {psica}
+                            
+                        
+                            
 
                         </div>
 
