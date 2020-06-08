@@ -24,8 +24,13 @@ function search() {
 
     
 
-    const [specialty, setSpecialty] = React.useState<any>([])
-    const [psico, setPsico] = React.useState<any>([])
+    const [specialty, setSpecialty] = React.useState<any>([]) //Este trae todas las especialidades 
+    const [lookFor, setLookFor] = React.useState<any>([]) //Este indica cual es la que quiere el usuario
+    const [psico, setPsico] = React.useState<any>([])     //Este muestra los que quiere el usuario 
+    const [psicoAll, setPsicoAll] = React.useState<any>([]) //Este siempre muestra todos
+
+    
+    
 
     React.useEffect(() => {
 
@@ -57,10 +62,30 @@ function search() {
 
 		Axios.get(getUsers,config)
 			.then(response => {
-				const data_role = response.data.data;
+                const data_role = response.data.data;
+                const data_real = [];
+                
+                for (let index = 0; index < data_role.length; index++) {
 
-				console.log(data_role);
-				setPsico(data_role);
+                    if (data_role[index].role?.identification=='psicologo') {
+        
+                        console.log(data_role[index]);
+                        
+                        
+        
+                       data_real[data_real.length] = data_role[index]
+        
+                        
+                        
+                    }
+        
+                    
+                    
+                }
+
+				console.log(data_real);
+                setPsico(data_real);
+                setPsicoAll(data_real);
 
 			})
 			.catch(e => {
@@ -83,26 +108,36 @@ function search() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        var temp: Array <any> = []
+        var temp: Array <any> = [];
+        
+        console.log(temp.length);
 
-        for (let index = 0; index < psico.length; index++) {
+        for (let index = 0; index < psicoAll.length; index++) {
 
-            if (psico[index].role=='5edd334b401fd83d1c53a99c') {
+            if (psicoAll[index].role?.identification=='psicologo') {
 
-                for (let ind = 0; index < psico[index].speciality; index++) {
-                    
-                    if (psico[index].speciality[ind]._id = specialty) {
-                        temp [temp.length] =  psico[index];
+                console.log(psicoAll[index]);
+                
+                
+
+                for (let ind = 0; ind < psicoAll[index].speciality.length; ind++) {
+                    console.log('entre al for two');
+                    if (psicoAll[index].speciality[ind]._id == lookFor) {
+                        console.log(psicoAll[index]);
+                        temp [temp.length] =  psicoAll[index];
                     }
                     
                 }
 
+                
                 
             }
 
             
             
         }
+
+        console.log(temp);
 
         setPsico(temp);
     }
@@ -132,7 +167,7 @@ function search() {
 								</div>
                                 <select 
                                 className='bg-white  border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500'
-                                onChange={e => setSpecialty(e.target.value)}>
+                                onChange={e => setLookFor(e.target.value)}>
 
                                     <option>Especialidad</option>
                                     {option}
