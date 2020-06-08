@@ -1,6 +1,8 @@
-import 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import { authCheckState, logout } from '../../store/actions/authAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 interface Psychologists {
     name: String;
     imgUrl: string;
@@ -15,10 +17,28 @@ const Psychologists = ({ name, imgUrl }: Psychologists) => (
     </div>
 );
 
+
+
 export default function Sidebar() {
+    const [toggled, toggle] = useState(false)
+
+
+    const { user } = useSelector((state: any) => state.auth)
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    useEffect(() => {
+        dispatch(authCheckState())
+    }, [])
+
+    const handleLogout = () => {
+        dispatch(logout());
+        router.push('/');
+    }
+
     return (
         <div className="flex">
-            <div className="w-1/5 bg-purple-700 h-screen">
+            <div className="w-1/5">
                 {/* <div className="flex-col pt-10 bg-purple-700">
                     <img className='mx-auto' src='assets/icons/male_avatar.svg/' alt='profile' height="200" width="200" />
                     <h1 className="font-bold capitalize text-xl text-center text-white pt-8">Welcome Back</h1>
@@ -41,6 +61,16 @@ export default function Sidebar() {
                 </div> */}
             </div>
             <div className="w-4/5 ml-20 bg-white">
+                {/* <div className='absolute top-0 right-0 mr-5 mt-5'>
+                    <button onClick={() => toggle(toggled => !toggled)} className='block rounded-full overflow-hidden border-2 border-white focus:outline-none focus:border-purple-600'>
+                        <img className='mx-auto object-cover' src='assets/icons/male_avatar.svg/' alt='profile' height="40" width="40" />
+                    </button>
+                    <div className='py-2 mt-2 bg-gray-400 rounded-lg shadow-xl'> {toggled && <> <a href='#' className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Account Overview</a>
+                        <a href='#' className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Support</a>
+                        <a href='#' onClick={handleLogout} className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white cursor-pointer'>Log out</a>
+                    </>}
+                    </div>
+                </div> */}
                 <div className='flex flex-column'>
                     <div className='container mx-auto'>
                         <div className='flex flex-align mt-10'>
@@ -49,16 +79,16 @@ export default function Sidebar() {
                             <img src='/assets/icons/lupa.png/' className='w-8 h-8 ml-5 mt-2 cursor-pointer' />
                         </div>
                         <div className='container mx-auto mt-10 ml-5'>
-                        <Link href='/reviews'>
-                            <h1 className="font-bold capitalize text-xl text-left ml-2 py-8">Online Psychologists</h1>
+                            <Link href='/reviews'>
+                                <h1 className="font-bold capitalize text-xl text-left ml-2 py-8">Online Psychologists</h1>
                             </Link>
                             <div className='flex'>
-                                
+
                                 <Psychologists
                                     name='Dr. Luis Silva'
                                     imgUrl='/assets/icons/profile.svg'
                                 />
-            
+
                                 <Psychologists
                                     name='Dr. Luis Silva'
                                     imgUrl='/assets/icons/profile.svg'

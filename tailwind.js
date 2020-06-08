@@ -365,6 +365,9 @@ module.exports = {
       'right-top': 'right top',
       top: 'top',
     },
+    theme: {
+      extend: { },
+  },
     opacity: {
       '0': '0',
       '25': '0.25',
