@@ -9,11 +9,7 @@ const Layout = ({ children }: LayoutProps) => {
     return (
         <div>
 
-            <div className="flex">
-                <div className="fixed w-1/6 bg-purple-700 h-screen">
-                    <Navbar />
-                </div>
-            </div>
+            <Navbar />
 
             <div className="flex text-gray-800">
                 {/* Fill content */}
