@@ -167,8 +167,8 @@ export default function Reviews({ slug }: any) {
                         type="submit"
                         className={`
                             inline-block px-4 py-2 transition duration-300 ease-in-out rounded cursor-pointer ml-2 h-12
-                            ${sendingComment ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed' 
-                            : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                            ${sendingComment ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
                             `}
                         disabled={sendingComment}
                     >Comentar</button>
