@@ -27,7 +27,7 @@ function search() {
     const [specialty, setSpecialty] = React.useState<any>([]) //Este trae todas las especialidades 
     const [lookFor, setLookFor] = React.useState<any>([]) //Este indica cual es la que quiere el usuario
     const [psico, setPsico] = React.useState<any>([])     //Este muestra los que quiere el usuario 
-    const [psicoAll, setPsicoAll] = React.useState<any>([]) //Este siempre muestra todos
+    const [psicoAll, setPsicoAll] = React.useState<any>([]) //Este siempre tiene todos para no tener que hace mil peticiones al backend
 
     
     
