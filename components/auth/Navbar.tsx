@@ -41,7 +41,9 @@ const Navbar = () => {
             height='200' width='200'/>
                 <div className='flex flex-col'>
                     
-                        <h1 className='font-mono bold text-center text-white py-4 text-5xl'>iHappy</h1>
+                        <h1 className='font-mono bold text-center text-white  text-5xl'>iHappy</h1>
+                        <h1 className="font-bold text-l text-center text-white pb-4">Welcome back, {user?.first_name || user?.username}! </h1>
+                        
                         <h1 className='cursor-pointer text-white semi-bold hover:bg-purple-500 py-2 text-center text-lg'
                             onClick={() => toggle1(toggled1 => !toggled1)}><AccountCircleIcon style={{ fill: 'white', paddingRight: 2, marginRight: 10, fontSize: 30 }} />Account Overview {<ArrowDropDownIcon style={{paddingRight:2}}/>}</h1>
                         {toggled1 && <><ul>
@@ -102,14 +104,14 @@ const Navbar = () => {
                     </div>
                 </div>
             </div> */}
-            <div className="w-4/5 ml-20 bg-white">
-                <div className='absolute top-0 right-0 mr-5 mt-5'>
-                    <button onClick={() => toggle(toggled => !toggled)} className='block rounded-full overflow-hidden border-2 border-white focus:outline-none focus:border-purple-600'>
-                        <img className='mx-auto object-cover' src='assets/icons/male_avatar.svg/' alt='profile' height="40" width="40" />
+            <div className="z-40 w-4/5 ml-20 bg-white">
+                <div className='absolute z-40 top-0 right-0 mr-5 mt-5'>
+                    <button onClick={() => toggle(toggled => !toggled)} className='z-40 block rounded-full overflow-hidden border-2 border-white focus:outline-none focus:border-purple-600'>
+                        <img className='z-40 mx-auto object-cover' src={user?.avatar || ''} alt='profile' height="40" width="40" />
                     </button>
-                    <div className='py-2 mt-2 bg-gray-400 rounded-lg shadow-xl'> {toggled && <> <a href='/account' className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Account Overview</a>
-                        <a href='#' className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Support</a>
-                        <a href='#' onClick={handleLogout} className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white cursor-pointer'>Log out</a>
+                    <div className='z-40 py-2 mt-2 bg-gray-400 rounded-lg shadow-xl'> {toggled && <> <a href='/account' className='block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Account Overview</a>
+                        <a href='#' className='z-40 block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white'>Support</a>
+                        <a href='#' onClick={handleLogout} className='z-40 block px-4 py-2 text-gray-800 hover:bg-purple-400 hover:text-white cursor-pointer'>Log out</a>
                     </>}
                     </div>
                 </div>

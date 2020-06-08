@@ -51,7 +51,7 @@ export default function Reviews() {
                 </div> */}
             </div>
             <div className="w-screen flex">
-                <div className="w-4/5 ml-20 bg-white">
+                <div className="z-0 w-5/5 ml-10 bg-white">
                     <div className='relative h-screen flex flex-col'>
                         {/* Medico Bio */}
                         <PsychologistHeader />
