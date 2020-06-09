@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { logout } from '../../../store/actions/authAction'
-import Link from 'next/Link'
+import Link from 'next/link'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { AllScreenLoader } from '../../Loader'
 

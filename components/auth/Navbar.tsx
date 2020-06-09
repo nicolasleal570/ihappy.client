@@ -9,7 +9,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import ForumIcon from '@material-ui/icons/Forum';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 const Navbar = () => {
 

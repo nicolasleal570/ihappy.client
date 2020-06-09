@@ -1,7 +1,7 @@
 import React from 'react'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 interface SidebarDropdownProps {
     title: String;
