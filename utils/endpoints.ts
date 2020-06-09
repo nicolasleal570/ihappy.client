@@ -22,3 +22,8 @@ export const getReviews = (slug: string) => `${endpoint}/reviews/${slug}`
 export const sendReview = `${endpoint}/reviews/`
 
 export const getSpecialty = `${endpoint}/specialities/`
+
+
+// EMAIL 
+
+export const emails = `${endpoint}/emails/`
