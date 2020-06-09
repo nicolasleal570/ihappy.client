@@ -10,7 +10,7 @@ export default function reviews() {
     const { slug } = router.query
 
     return (
-        <AuthLayout>
+        <AuthLayout title="User Biography">
             <Reviews slug={slug} />
         </AuthLayout>
     )

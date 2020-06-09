@@ -4,7 +4,7 @@ import AuthLayout from '../components/auth/Layout';
 
 function search() {
     return (
-        <AuthLayout>
+        <AuthLayout title="Encuentra Médicos">
             <Search />
         </AuthLayout>
     )

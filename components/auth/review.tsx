@@ -46,7 +46,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 
                     <p className="text-center text-gray-500">@{username}</p>
 
-                    <p className="text-justify my-4">{bio}</p>
+                    <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">{bio}</p>
 
                     {/* <ul>
                         <li>
@@ -132,7 +132,7 @@ export default function Reviews({ slug }: any) {
     return (
         <div className="flex">
             {loading && <div className="w-full h-screen flex justify-center items-center overflow-hidden"><BigLoader /></div>}
-            {!loading && <div className='relative flex flex-col'>
+            {!loading && <div className='w-full relative flex flex-col'>
                 {/* Medico Bio */}
                 <PsychologistHeader psychologist={psychologist as any} />
                 {/* Comments */}

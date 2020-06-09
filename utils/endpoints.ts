@@ -15,9 +15,10 @@ export const profile = `${endpoint}/users/profile/`
 export const avatar = `${endpoint}/users/avatar/`
 
 export const getUsers = `${endpoint}/users/`
-export const getRoles = `${endpoint}/roles`
+export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`
+export const getRoles = `${endpoint}/roles/`
 
-export const getReviews = (slug: string) => `${endpoint}/reviews/${slug}` 
-export const sendReview = `${endpoint}/reviews/` 
+export const getReviews = (slug: string) => `${endpoint}/reviews/${slug}`
+export const sendReview = `${endpoint}/reviews/`
 
 export const getSpecialty = `${endpoint}/specialities/`

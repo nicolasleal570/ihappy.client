@@ -4,7 +4,7 @@ import AuthLayout from '../../components/auth/Layout';
 
 export default function profile() {
     return (
-        <AuthLayout>
+        <AuthLayout title="Account Overview">
             <Profile />
         </AuthLayout>
     )

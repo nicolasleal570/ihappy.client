@@ -4,7 +4,7 @@ import AuthLayout from '../components/auth/Layout';
 
 export default function account() {
     return (
-        <AuthLayout>
+        <AuthLayout title="Dashboard">
             <Dashboard />
         </AuthLayout>
     )
