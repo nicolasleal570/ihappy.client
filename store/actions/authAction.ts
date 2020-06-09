@@ -60,19 +60,27 @@ export const signupUser = (email: String, username: String, password: String, pa
 };
 
 export const logout = () => async (dispatch: Function) => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    console.log('LOGOUT');
+    try {
+        dispatch(startAuth());
 
-    dispatch({
-        type: types.AUTH_LOGOUT
-    })
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        console.log('LOGOUT');
+
+        dispatch({
+            type: types.AUTH_LOGOUT
+        })
+
+    } catch (err) {
+        dispatch(failAuth(err.response?.data.error));
+    }
+
 }
 
 export const authCheckState = () => async (dispatch: Function) => {
     const token = localStorage.getItem("token") as string;
     const user = JSON.parse(localStorage.getItem("user") as string);
-    if (token === undefined && !user) {
+    if (!token && !user) {
         dispatch(logout());
     } else {
         dispatch(successAuth(token, user));

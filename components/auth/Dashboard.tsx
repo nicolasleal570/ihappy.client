@@ -1,59 +1,60 @@
-import 'react';
-import Link from 'next/link';
-
-interface Psychologists {
-    name: String;
-    imgUrl: string;
-}
-
-const Psychologists = ({ name, imgUrl }: Psychologists) => (
-    <div className='container'>
-        <div className="flex flex-col">
-            <img src={imgUrl} className="w-48 ml-10" alt="Doctors" />
-            <h3 className="font-bold capitalize ml-20">{name}</h3>
-        </div>
-    </div>
-);
+import React from 'react';
+import Link from 'next/Link';
+import Axios from 'axios';
+import { getDoctors } from '../../utils/endpoints';
+import DoctorCard from './partials/DoctorCard';
+import { BigLoader } from '../Loader';
 
 export default function Dashboard() {
+    const [loading, setLoading] = React.useState(false);
+    const [doctors, setDoctors] = React.useState<Array<any>>([]);
+
+    React.useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+        setLoading(true);
+
+        const getDoctorsData = async () => {
+            const res = await Axios.get(getDoctors(4), config);
+            setDoctors(res.data.data);
+            setLoading(false);
+        }
+
+        getDoctorsData();
+        console.log(doctors);
+    }, []);
+
     return (
-        <div className='flex flex-column'>
-            <div className='container mx-auto'>
-                <div className='flex flex-align mt-10'>
-                    <h1 className="font-bold capitalize text-xl text-left pl-6 py-2">Connect: </h1>
-                    <input className="inline-block ml-5 pr-5 py-2 transition duration-300 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded "></input>
-                    <img src='/assets/icons/lupa.png/' className='w-8 h-8 ml-5 mt-2 cursor-pointer' />
+        <div className='flex flex-column bg-gray-200 h-full text-gray-800'>
+            <div className='w-full px-6'>
+                <h1 className="font-bold capitalize text-xl text-left py-8">Online Psychologists</h1>
+
+                <div className='w-full grid grid-cols-4 gap-3'>
+
+                    {loading && <div className="relative w-full h-32 bg-white rounded col-span-4 flex items-center justify-center">
+                        <BigLoader />
+                    </div>}
+
+                    {!loading && doctors.map((doctor: any) => (
+                        <DoctorCard
+                            key={doctor._id}
+                            firstName={doctor.first_name}
+                            lastName={doctor.last_name}
+                            username={doctor.username}
+                            avatar={doctor.avatar}
+                            slug={doctor.slug}
+                            specialities={doctor.specialities}
+                        />
+                    ))}
                 </div>
-                <div className='container mx-auto mt-10 ml-5'>
-                    <Link href='/reviews'>
-                        <h1 className="font-bold capitalize text-xl text-left ml-2 py-8">Online Psychologists</h1>
-                    </Link>
-                    <div className='flex'>
-
-                        <Psychologists
-                            name='Dr. Luis Silva'
-                            imgUrl='/assets/icons/profile.svg'
-                        />
-
-                        <Psychologists
-                            name='Dr. Luis Silva'
-                            imgUrl='/assets/icons/profile.svg'
-                        />
-                        <Psychologists
-                            name='Dr. Luis Silva'
-                            imgUrl='/assets/icons/profile.svg'
-                        />
-                        <Psychologists
-                            name='Dr. Luis Silva'
-                            imgUrl='/assets/icons/profile.svg'
-                        />
-                    </div>
-                    <h1 className="font-bold capitalize text-xl text-left ml-2 py-8" >Charts</h1>
-                    <div className='flex'>
-                        <img src='/assets/icons/chart.png' className='w-70 h-40' />
-                        <img src='/assets/icons/chart.png' className='w-70 h-40 pl-10' />
-                        <img src='/assets/icons/chart.png' className='w-70 h-40' />
-                    </div>
+                <h1 className="font-bold capitalize text-xl text-left py-8" >Charts</h1>
+                <div className='flex'>
+                    <img src='/assets/icons/chart.png' className='w-70 h-40' />
+                    <img src='/assets/icons/chart.png' className='w-70 h-40 pl-10' />
+                    <img src='/assets/icons/chart.png' className='w-70 h-40' />
                 </div>
             </div>
         </div>

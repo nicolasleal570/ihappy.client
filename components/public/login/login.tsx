@@ -2,19 +2,19 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, authCheckState } from '../../../store/actions/authAction';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import Link from 'next/Link';
 
 export default function login() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
-    const { loading, user } = useSelector((state: any) => state.auth);
+    const { loading, user, error } = useSelector((state: any) => state.auth);
     const router = useRouter();
     const dispatch = useDispatch();
 
     React.useEffect(() => {
         dispatch(authCheckState())
-        if (user) {
+        if (user && !error) {
             router.push('/dashboard');
         }
     }, [user])
@@ -23,7 +23,10 @@ export default function login() {
         e.preventDefault();
 
         dispatch(loginUser(email, password));
-        router.push('/dashboard');
+
+        if (user && !error) {
+            router.push('/dashboard');
+        }
     }
 
     return (

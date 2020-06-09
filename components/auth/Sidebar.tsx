@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import Link from 'next/Link';
 import { authCheckState, logout } from '../../store/actions/authAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';

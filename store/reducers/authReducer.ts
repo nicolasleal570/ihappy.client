@@ -37,7 +37,9 @@ const failAuth = (state: typeof initialState, action: any) => {
 const logoutAuth = (state: typeof initialState, action: any) => {
     return updateObject(state, {
         token: null,
-        user: ''
+        user: '',
+        loading: false,
+        error: null,
     });
 };
 
