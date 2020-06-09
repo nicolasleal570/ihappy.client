@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
 
             <div className="flex text-gray-800">
                 {/* Fill content */}
-                <div className="flex-none w-1/6 bg-purple-700 h-screen"></div>
+                <div className="flex-none lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen"></div>
                 <div className="flex-1">
                     {children}
                 </div>

@@ -29,11 +29,11 @@ const Navbar = () => {
 
     return (
         <nav>
-            <div className='fixed w-1/6 bg-purple-700 h-screen'>
+            <div className='fixed lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll'>
 
 
-                <div className='mt-10'>
-                    <img src='/assets/icons/logo1.png' className='mx-auto'
+                <div className='mt-8'>
+                    <img src='/favicon.png' className='mx-auto'
                         height='200' width='200' />
                     <div className='flex flex-col'>
 
@@ -45,6 +45,7 @@ const Navbar = () => {
                         {toggled1 && <><ul>
                             <li className='text-center px-3 pl-5 py-1 cursor-pointer text-white text-md hover:bg-purple-500 hover:text-white'> <a href='/profile'>My Account</a></li>
                         </ul></>}
+
                     </div>
                     <div className=''>
                         <h1 className='cursor-pointer text-white semi-bold hover:bg-purple-500 py-2 text-center text-lg'
