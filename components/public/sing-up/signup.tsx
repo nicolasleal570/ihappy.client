@@ -18,12 +18,12 @@ export default function signup() {
 	const [role, setRole] = React.useState("")
 	const [roles, setRoles] = React.useState([])
 
-	const { loading, user } = useSelector((state: any) => state.auth);
+	const { loading, user, error } = useSelector((state: any) => state.auth);
 	const router = useRouter();
 
 	React.useEffect(() => {
 		dispatch(authCheckState())
-		if (user) {
+		if (user && !error) {
 			router.push('/dashboard');
 		}
 	}, [user])
@@ -52,7 +52,10 @@ export default function signup() {
 		e.preventDefault();
 
 		dispatch(signupUser(email, username, password, confirm_password, role));
-		router.push('/dashboard');
+
+		if (user && !error) {
+			router.push('/dashboard');
+		}
 
 	}
 

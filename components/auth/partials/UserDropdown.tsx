@@ -19,7 +19,6 @@ const UserDropdown = () => {
 
     return (
         <>
-            {loading && <AllScreenLoader />}
             <div className='relative ml-auto'>
                 {/* Button Image */}
                 <button

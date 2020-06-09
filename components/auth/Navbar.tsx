@@ -9,6 +9,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import ForumIcon from '@material-ui/icons/Forum';
+import Link from 'next/Link';
 
 const Navbar = () => {
 
@@ -18,10 +19,13 @@ const Navbar = () => {
         <nav>
             <div className='fixed lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll'>
 
-                <div className="flex justify-around items-center bg-purple-700 px-4 pt-4 pb-10">
-                    <img src='/favicon.png' className='w-12' />
-                    <h1 className='font-mono bold text-white text-4xl'>iHappy</h1>
-                </div>
+                <Link href="/dashboard">
+                    <div className="cursor-pointer flex justify-around items-center bg-purple-700 px-4 pt-4 pb-10">
+                        <img src='/favicon.png' className='w-12' />
+                        <h1 className='font-mono bold text-white text-4xl'>iHappy</h1>
+                    </div>
+                </Link>
+
                 <div className='flex flex-col'>
 
                     <SidebarLink

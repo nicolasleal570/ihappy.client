@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from './Navbar'
 import UserDropdown from './partials/UserDropdown'
 import InfoIcon from '@material-ui/icons/Info';
+import { useSelector } from 'react-redux';
+import { AllScreenLoader } from '../Loader';
 
 interface LayoutProps {
     children: React.ReactChild | Array<React.ReactChild>;
@@ -9,9 +11,14 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, title }: LayoutProps) => {
+    const { loading } = useSelector((state: any) => state.auth)
 
     return (
-        <div>
+        <div className={`${loading ? 'overflow-hidden' : ''}`}>
+
+            {loading && <div className="">
+                <AllScreenLoader />
+            </div>}
 
             <Navbar />
 
