@@ -1,13 +1,14 @@
 module.exports = {
   purge: {
-    // mode: 'all',
-    // content: [
-    //   './src/**/*.{js,jsx,ts,tsx}',
-    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-    //   './node_modules/next/dist/pages/**/*.{js,jsx,ts,tsx}',
-    //   './node_modules/pikaday/pikaday.{js,jsx,ts,tsx}',
-    // ],
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      'components/**/*.tsx',
+      'pages/**/*.tsx',
+      'store/**/*.ts',
+      'store/**/*.tsx',
+      'utils/**/*.ts',
+      'next.config.js'
+    ]
   },
   target: 'relaxed',
   prefix: '',
