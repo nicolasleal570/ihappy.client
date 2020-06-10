@@ -16,6 +16,7 @@ export const avatar = `${endpoint}/users/avatar/`
 
 export const getUsers = `${endpoint}/users/`
 export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`
+export const getDoctorsBySpeciality = (name: String) => `${endpoint}/users/specialities/?name=${name}`
 export const getRoles = `${endpoint}/roles/`
 
 export const getReviews = (slug: string) => `${endpoint}/reviews/${slug}`

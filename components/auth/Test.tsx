@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
-import { getSpecialty, getUsers } from '../../utils/endpoints';
+import { getDoctorsBySpeciality } from '../../utils/endpoints';
 import Axios from 'axios';
+import DoctorCard from './partials/DoctorCard';
+import { BigLoader, AllScreenLoader } from '../Loader';
 
 
 const Test = () => {
@@ -46,133 +48,69 @@ const Test = () => {
     const [student, setStudent] = React.useState('null')
     const [neuro, setNeuro] = React.useState('null')
 
+    const [psico, setPsico] = React.useState<Array<any>>([])     //Este muestra los que quiere el usuario 
 
 
-    const [specialty, setSpecialty] = React.useState<any>([]) //Este trae todas las especialidades 
-    const [psico, setPsico] = React.useState<any>([])     //Este muestra los que quiere el usuario 
-
-
-    const [resultado, setResultado] = React.useState('null')
-    const [res2, setRes2] = React.useState('')
-
-    const psica = psico.map((element: any) => (
-        <Psychologists
-            name={element.slug}
-            imgUrl={element.avatar}
-        />
-    ))
-
-    const buscarPsi = () => {
-        var temp: Array<any> = [];
-
-        console.log(temp.length);
-
-        for (let index = 0; index < psico.length; index++) {
-
-            if (psico[index].role?.identification == 'psicologo') {
-
-
-
-
-                for (let ind = 0; ind < psico[index].speciality.length; ind++) {
-                    console.log(outcome);
-                    console.log('entre al for two');
-                    console.log(psico[index].speciality[ind].name);
-                    if (psico[index].speciality[ind].name === outcome) {
-                        console.log(psico[index]);
-                        temp[temp.length] = psico[index];
-                    }
-
-                }
-
-
-
-            }
-
-
-
-        }
-
-        console.log(temp);
-
-        setPsico(temp);
-    }
+    const [resultado, setResultado] = React.useState('')
+    const [isSubmited, setIsSubmited] = React.useState(false)
+    const [loading, setLoading] = React.useState(false)
 
     const resultadofinal = () => {
 
         console.log('furula')
-        if (neupsi != 0) {
-            setResultado('Neuro Pediatra')
-            setRes2('Neuro Pediatra')
-            console.log(resultado)
-            return
-        }
-        if (sports != 0) {
-            setResultado('Psicologia del deporte')
-            setRes2('Psicologia del deporte')
+        console.log({
+            neupsi,
+            sports,
+            org,
+        });
+        let result = '';
 
-            return
+        if (neupsi != 0) {
+            result = 'Neuro Pediatra';
         }
+
+        if (sports != 0) {
+            result = 'Psicologia del deporte'
+        }
+
         if (org != 0) {
-            setResultado('Psicologia organizacional')
-            setRes2('Psicologia organizacional')
-            return
+            result = 'Psicologia organizacional'
         }
+
         let q = []
         q.push(educativo)
         q.push(clinica)
         q.push(familiar)
         q.push(partner)
         q.push(socio)
+
         let r = Math.max.apply(null, q)
         let index = q.indexOf(r)
+
         switch (index) {
             case 0:
-                setResultado('Psicologia educativa')
-                setRes2('Psicologia educativa')
+                result = 'Psicologia educativa'
                 break;
             case 1:
-                setResultado('Psicologo Clinico')
-                setRes2('Psicologo Clinico')
+                result = 'Psicologo Clinico'
                 break;
             case 2:
-                setResultado('Psicologia familiar')
-                setRes2('Psicologia familiar')
+                result = 'Psicologia familiar'
                 break;
             case 3:
-                setResultado('Psicologia de parejas')
-                setRes2('Psicologia de parejas')
+                result = 'Psicologia de parejas'
                 break;
             case 4:
-                setResultado('Psicologia social')
-                setRes2('Psicologia social')
+                result = 'Psicologia social'
                 break;
         }
-        console.log(resultado)
 
-
+        setResultado(result);
     }
 
     useEffect(() => {
-    outcome = resultado;
-    })
-
-    useEffect(() => {
-        Axios.get(getSpecialty)
-            .then(response => {
-                const data_role = response.data.data;
-
-                console.log(data_role);
-                setSpecialty(data_role);
-
-            })
-            .catch(e => {
-                // Podemos mostrar los errores en la consola
-                console.log(e);
-            })
-    }, [])
-
-    useEffect(() => {
+        outcome = resultado;
+        console.log('resultadoFIn', resultado);
 
         const config = {
             headers: {
@@ -181,46 +119,35 @@ const Test = () => {
             }
         }
 
+        const getDoctors = async () => {
+            try {
+                const res = await Axios.get(getDoctorsBySpeciality(resultado), config);
+                console.log('res.data.data', res.data.data);
+                setPsico(res.data.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                setLoading(false);
+            }
+        }
 
-        Axios.get(getUsers, config)
-            .then(response => {
-                const data_role = response.data.data;
-                const data_real = [];
+        if (resultado !== '') {
+            setLoading(true);
+            getDoctors();
+        }
 
-                for (let index = 0; index < data_role.length; index++) {
-
-                    if (data_role[index].role?.identification == 'psicologo') {
-
-                        console.log(data_role[index]);
-
-
-
-                        data_real[data_real.length] = data_role[index]
-
-
-
-                    }
-
-
-
-                }
-
-                console.log(data_real);
-                setPsico(data_real);
-
-            })
-            .catch(e => {
-                // Podemos mostrar los errores en la consola
-                console.log(e);
-            })
-
-    }, [])
+    }, [isSubmited, resultado])
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
+
         if (suenio === 'null' || neuro === 'null' || social === 'null' || sexo === 'null' || arrecho === 'null' || deporte === 'null' || hijos === 'null' || parejas === 'null' || student === 'null' || trabajo === 'null' || familia === 'null' || violento === 'null' || monchi === 'null' || caliweba === 'null') {
+
             alert('Por favor responda cada pregunta.')
+
         } else {
+
             switch (String(suenio)) {
 
                 case 'Irregular':
@@ -231,6 +158,7 @@ const Test = () => {
                     clinica = clinica + 1
                     break;
             }
+
             switch (String(sexo)) {
 
                 case 'Si':
@@ -238,9 +166,8 @@ const Test = () => {
                     break;
 
             }
+
             switch (String(arrecho)) {
-
-
                 case 'Bastante facil de enojar':
                     familiar = familiar + 1
                     socio = socio + 2
@@ -251,11 +178,9 @@ const Test = () => {
                     socio = socio + 1
                     break;
 
-
             }
+
             switch (String(social)) {
-
-
                 case 'Poco sociable':
                     socio = socio + 1
                     break;
@@ -267,23 +192,18 @@ const Test = () => {
             }
 
             switch (String(deporte)) {
-
                 case 'Si':
                     sports = sports + 1
                     break;
-
             }
 
             switch (String(hijos)) {
-
                 case 'Si':
                     familiar = familiar + 1
                     break;
-
             }
 
             switch (String(parejas)) {
-
                 case 'Si':
                     partner = partner + 1
                     break;
@@ -291,11 +211,9 @@ const Test = () => {
                 case 'No':
                     partner = 0
                     break;
-
             }
 
             switch (String(trabajo)) {
-
                 case 'Muy estresante':
                     org = org + 2
                     break;
@@ -304,66 +222,53 @@ const Test = () => {
                     org = org + 1
                     break;
 
-
                 case 'Relajado':
                     familiar = familiar + 1
                     break;
             }
-            switch (String(neuro)) {
 
+            switch (String(neuro)) {
                 case 'Si':
                     neupsi = neupsi + 1
                     break;
-
             }
-            switch (String(student)) {
 
+            switch (String(student)) {
                 case 'Si':
                     educativo = educativo + 1
                     if (org = 0) {
                         educativo = educativo + 3
                     }
-                    educativo = 0
-                    org = 0
                     break;
-
-
-
             }
-            switch (String(familia)) {
 
+            switch (String(familia)) {
                 case 'Si':
                     familiar = familiar + 1
                     break;
-
             }
 
             switch (String(violento)) {
-
                 case 'Si':
                     clinica = clinica + 1
                     socio = socio + 1
                     break;
-
             }
+
             switch (String(monchi)) {
-
                 case 'Si':
                     clinica = clinica + 1
                     break;
-
             }
+
             switch (String(caliweba)) {
-
                 case 'Si':
                     clinica = clinica + 1
                     break;
-
             }
 
+            setIsSubmited(true);
             resultadofinal();
-            outcome = resultado;
-            buscarPsi();
 
         }
     }
@@ -378,7 +283,7 @@ const Test = () => {
                 <div className="col-span-6">
                 </div>
                 <div className="grid grid-cols-6 grid-rows-5 gap-3  col-span-6 row-span-5">
-                    {resultado === 'null'
+                    {resultado === ''
                         ? <div className="grid grid-cols-6 grid-rows-5 gap-3 col-span-6 row-span-5">
 
                             <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
@@ -392,7 +297,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Practica usted algun deporte profesionalmente?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setDeporte(String(e.target.value))}>
-                                            <option selected value="null">  </option>
+                                            <option value="null">  </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -403,7 +308,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Tiene usted hijos?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setHijos(String(e.target.value))}>
-                                            <option selected value="null">  </option>
+                                            <option value="null">  </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -414,7 +319,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Tiene usted pareja?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setParejas(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -425,7 +330,7 @@ const Test = () => {
 
                                         <p className="pb-2">Su trabajo, responsabilidades y/o ambiente de estudio es: </p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setTrabajo(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Si">Muy estresante</option>
                                             <option value="No">Moderadamente estresante</option>
                                             <option value="No">Poco estresante</option>
@@ -439,7 +344,7 @@ const Test = () => {
 
                                         <p className="pb-2">Su ritmo de sueño es:</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setSuenio(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Bastante regular">Bastante regular</option>
                                             <option value="Regular">Regular</option>
                                             <option value="Irregular">Irregular</option>
@@ -451,7 +356,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Suele tener problemas al tener relaciones?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setSexo(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -461,7 +366,7 @@ const Test = () => {
 
                                         <p className="pb-2">Usted se considera:</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setArrechera(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Bastante facil de enojar.">Bastante facil de enojar.</option>
                                             <option value="Moderadamente enojable.">Moderadamente enojable.</option>
                                             <option value="Enojable en ocasiones">Enojable en ocasiones</option>
@@ -473,7 +378,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Su familia y/o amistades le ha sugerido que reciba ayuda profesional?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setFamilia(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -483,7 +388,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Se considera usted una persona violenta?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setViolento(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -493,7 +398,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Tiene problemas con falta del apetito?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setMonchi(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -503,7 +408,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Ha sufrido lesiones cerebrales?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setNeuro(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -514,7 +419,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Es un estudiante actualmente?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setStudent(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -525,7 +430,7 @@ const Test = () => {
 
                                         <p className="pb-2">¿Tiene problemas de motivacion?</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setCaliweba(String(e.target.value))}>
-                                            <option selected value="null">   </option>
+                                            <option value="null">   </option>
                                             <option value="Si">Si</option>
                                             <option value="No">No</option>
                                         </select>
@@ -535,7 +440,7 @@ const Test = () => {
 
                                         <p className="pb-2">Usted se considera:</p>
                                         <select className="cool w-full text-center mt-1" onChange={e => setSocial(String(e.target.value))}>
-                                            <option selected value="null">    </option>
+                                            <option value="null">    </option>
                                             <option value="Bastante sociable">Bastante sociable</option>
                                             <option value="Moderadamente sociable">Moderadamente sociable</option>
                                             <option value="Poco sociable">Poco sociable</option>
@@ -554,9 +459,25 @@ const Test = () => {
                             <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
                                 <p>Su resultado es: {resultado} </p>
                             </div>
-                            <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
-                                {psica}
-                            </div>
+
+                            {loading && <div className="col-start-2 col-span-4 row-span-2 cool p-10 rounded">
+                                <BigLoader />
+                            </div>}
+
+                            {!loading && <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
+                                {psico.map(doctor => (
+                                    <div className="mb-4" key={doctor.slug}>
+                                        <DoctorCard
+                                            firstName={doctor.first_name}
+                                            lastName={doctor.last_name}
+                                            username={doctor.username}
+                                            avatar={doctor.avatar}
+                                            slug={doctor.slug}
+                                            specialities={doctor.speciality}
+                                        />
+                                    </div>
+                                ))}
+                            </div>}
                         </div>}
                 </div>
             </div>

@@ -30,9 +30,9 @@ export default function Dashboard() {
     return (
         <div className='flex flex-column bg-gray-200 h-full text-gray-800'>
             <div className='w-full px-6'>
-                <h1 className="font-bold capitalize text-xl text-left py-8">Online Psychologists</h1>
+                <h1 className="font-semibold capitalize text-xl text-left py-6">Online Psychologists</h1>
 
-                <div className='w-full grid grid-cols-4 gap-3'>
+                <div className='w-full grid grid-cols-4 gap-4'>
 
                     {loading && <div className="relative w-full h-32 bg-white rounded col-span-4 flex items-center justify-center">
                         <BigLoader />
@@ -46,11 +46,13 @@ export default function Dashboard() {
                             username={doctor.username}
                             avatar={doctor.avatar}
                             slug={doctor.slug}
-                            specialities={doctor.specialities}
+                            role={doctor.role}
+                            specialities={doctor.speciality}
                         />
                     ))}
                 </div>
-                <h1 className="font-bold capitalize text-xl text-left py-8" >Charts</h1>
+
+                <h1 className="font-semibold capitalize text-xl text-left py-6">Charts</h1>
                 <div className='flex'>
                     <img src='/assets/icons/chart.png' className='w-70 h-40' />
                     <img src='/assets/icons/chart.png' className='w-70 h-40 pl-10' />
