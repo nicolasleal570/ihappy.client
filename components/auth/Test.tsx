@@ -1,11 +1,23 @@
 import React, { useEffect } from 'react'
+import { getSpecialty, getUsers } from '../../utils/endpoints';
+import Axios from 'axios';
+
 
 const Test = () => {
 
-    interface QuestionsProps {
-        title: String;
-        answers: Array<String>;
+    interface Psychologists {
+        name: String;
+        imgUrl: string;
     }
+
+    const Psychologists = ({ name, imgUrl }: Psychologists) => (
+        <div className='container'>
+            <div className="flex flex-col">
+                <img src={imgUrl} className="w-48 ml-10" alt="Doctors" />
+                <h3 className="font-bold capitalize ml-20">{name}</h3>
+            </div>
+        </div>
+    );
 
 
     let educativo = 0;
@@ -16,6 +28,8 @@ const Test = () => {
     let socio = 0;
     let neupsi = 0; //
     let partner = 0; //
+
+    let outcome: String;
 
     const [suenio, setSuenio] = React.useState('null')
     const [sexo, setSexo] = React.useState('null')
@@ -32,21 +46,76 @@ const Test = () => {
     const [student, setStudent] = React.useState('null')
     const [neuro, setNeuro] = React.useState('null')
 
+
+
+    const [specialty, setSpecialty] = React.useState<any>([]) //Este trae todas las especialidades 
+    const [psico, setPsico] = React.useState<any>([])     //Este muestra los que quiere el usuario 
+
+
     const [resultado, setResultado] = React.useState('null')
+    const [res2, setRes2] = React.useState('')
+
+    const psica = psico.map((element: any) => (
+        <Psychologists
+            name={element.slug}
+            imgUrl={element.avatar}
+        />
+    ))
+
+    const buscarPsi = () => {
+        var temp: Array<any> = [];
+
+        console.log(temp.length);
+
+        for (let index = 0; index < psico.length; index++) {
+
+            if (psico[index].role?.identification == 'psicologo') {
+
+
+
+
+                for (let ind = 0; ind < psico[index].speciality.length; ind++) {
+                    console.log(outcome);
+                    console.log('entre al for two');
+                    console.log(psico[index].speciality[ind].name);
+                    if (psico[index].speciality[ind].name === outcome) {
+                        console.log(psico[index]);
+                        temp[temp.length] = psico[index];
+                    }
+
+                }
+
+
+
+            }
+
+
+
+        }
+
+        console.log(temp);
+
+        setPsico(temp);
+    }
 
     const resultadofinal = () => {
 
         console.log('furula')
         if (neupsi != 0) {
-            setResultado('Neuropsicologia')
+            setResultado('Neuro Pediatra')
+            setRes2('Neuro Pediatra')
+            console.log(resultado)
             return
         }
         if (sports != 0) {
             setResultado('Psicologia del deporte')
+            setRes2('Psicologia del deporte')
+
             return
         }
         if (org != 0) {
             setResultado('Psicologia organizacional')
+            setRes2('Psicologia organizacional')
             return
         }
         let q = []
@@ -60,28 +129,92 @@ const Test = () => {
         switch (index) {
             case 0:
                 setResultado('Psicologia educativa')
+                setRes2('Psicologia educativa')
                 break;
             case 1:
-                setResultado('Psicologia clinica o de salud')
+                setResultado('Psicologo Clinico')
+                setRes2('Psicologo Clinico')
                 break;
             case 2:
                 setResultado('Psicologia familiar')
+                setRes2('Psicologia familiar')
                 break;
             case 3:
                 setResultado('Psicologia de parejas')
+                setRes2('Psicologia de parejas')
                 break;
             case 4:
                 setResultado('Psicologia social')
+                setRes2('Psicologia social')
                 break;
         }
         console.log(resultado)
-        alert(resultado)
 
 
     }
 
     useEffect(() => {
+    outcome = resultado;
     })
+
+    useEffect(() => {
+        Axios.get(getSpecialty)
+            .then(response => {
+                const data_role = response.data.data;
+
+                console.log(data_role);
+                setSpecialty(data_role);
+
+            })
+            .catch(e => {
+                // Podemos mostrar los errores en la consola
+                console.log(e);
+            })
+    }, [])
+
+    useEffect(() => {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+
+
+        Axios.get(getUsers, config)
+            .then(response => {
+                const data_role = response.data.data;
+                const data_real = [];
+
+                for (let index = 0; index < data_role.length; index++) {
+
+                    if (data_role[index].role?.identification == 'psicologo') {
+
+                        console.log(data_role[index]);
+
+
+
+                        data_real[data_real.length] = data_role[index]
+
+
+
+                    }
+
+
+
+                }
+
+                console.log(data_real);
+                setPsico(data_real);
+
+            })
+            .catch(e => {
+                // Podemos mostrar los errores en la consola
+                console.log(e);
+            })
+
+    }, [])
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -228,8 +361,9 @@ const Test = () => {
 
             }
 
-            resultadofinal()
-
+            resultadofinal();
+            outcome = resultado;
+            buscarPsi();
 
         }
     }
@@ -418,10 +552,10 @@ const Test = () => {
                         </div> :
                         <div className="grid grid-cols-6 grid-rows-5 gap-3 col-span-6 row-span-5">
                             <div className="col-start-2 col-span-4 text-4xl text-white text-center p-2 mb-3 ">
-                                <p>Su resultado es:</p>
+                                <p>Su resultado es: {resultado} </p>
                             </div>
                             <div className="col-start-2 col-span-4 row-span-3 cool scrul p-10 rounded">
-                                <h1>Le recomendamos que se atienda con profesionales especialistas en {resultado}</h1>
+                                {psica}
                             </div>
                         </div>}
                 </div>
