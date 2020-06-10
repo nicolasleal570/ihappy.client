@@ -11,33 +11,33 @@ export default function FAQ() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-    }
+    const [sendingEmail, setSendingEmail] = useState(false);
+
     const enviarDatos = async () => {
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        axios.post(emails,
-            {
-                'name': name,
-                'email': email,
-                'message': message
-            },
-            config).
-            then((res) => {
-                console.log(res.data);
+        setSendingEmail(true);
+        axios.post(emails, {
+            'name': name,
+            'email': email,
+            'message': message
+        }, config).then((res) => {
 
-            }).catch((err) => {
+            console.log(res.data);
+            setSendingEmail(false);
+            setName('')
+            setEmail('')
+            setMessage('')
 
-                console.log(err);
+        }).catch((err) => {
 
-            })
+            console.log(err);
+            setSendingEmail(false);
+
+        })
 
     }
 
@@ -125,13 +125,20 @@ export default function FAQ() {
                                     <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
                                         <label className="block uppercase tracking-wide  text-xs font-bold mb-2" htmlFor="grid-first-name">
                                             Correo </label>
-                                        <input id='Nombre' onChange={e => setEmail(e.target.value)} size={80} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" />
+                                        <input id='Nombre' onChange={e => setEmail(e.target.value)} size={80} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="email" />
                                     </div>
                                     <div className="w-full md:w-1/2 py-3 px-2 mb-6 md:mb-0">
                                         <label className="block uppercase tracking-wide  text-xs font-bold mb-2" htmlFor="grid-first-bio">
                                             Mensaje </label>
                                         <textarea id='Biografia' onChange={e => setMessage(e.target.value)} className="appearance-none block w-full h-64 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder='Coloque su mensaje'></textarea>
-                                        <button type='submit' className="bg-purple-500 hover:bg-purple-700  text-gray-100 font-bold py-2 px-4  rounded-full">Enviar correo</button>
+                                        <button
+                                            type='submit'
+                                            className={`
+                                                inline-block px-6 py-2 transition duration-300 ease-in-out rounded cursor-pointer mt-4
+                                                ${sendingEmail ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                                    : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                                            `}
+                                        >Enviar correo</button>
                                     </div>
                                 </div>
                             </div>

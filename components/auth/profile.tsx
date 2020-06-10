@@ -166,8 +166,8 @@ export default function Profile() {
                             <textarea id='Biografia' onChange={e => setBiografia(e.target.value)} value={biografia} className="appearance-none block w-full h-64 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder={biografia}></textarea>
                             <button type='submit'
                                 className={`
-                        inline-block px-6 py-2 transition duration-300 ease-in-out rounded cursor-pointer mt-4
-                        //     ${sendingInfo ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                                        inline-block px-6 py-2 transition duration-300 ease-in-out rounded cursor-pointer mt-4 
+                                        ${sendingInfo ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
                                         : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
                             `}
                                 disabled={sendingInfo}

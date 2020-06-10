@@ -54,7 +54,7 @@ export default function signup() {
 		dispatch(signupUser(email, username, password, confirm_password, role));
 
 		if (user && !error) {
-			router.push('/dashboard');
+			router.push('/profile');
 		}
 
 	}
