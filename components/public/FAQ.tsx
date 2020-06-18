@@ -144,7 +144,6 @@ export default function FAQ() {
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
 
