@@ -9,13 +9,12 @@ import { createWrapper } from 'next-redux-wrapper';
 import store from '../store/store';
 import { authCheckState } from '../store/actions/authAction';
 
-
 const App = ({ Component, pageProps }: AppProps) => {
 
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        dispatch(authCheckState())
+        dispatch(authCheckState());
     }, [pageProps]);
 
     return (
