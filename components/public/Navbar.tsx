@@ -23,7 +23,7 @@ const Navbar = () => {
                     <Link href="/">
                         <span className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Nosotros </span>
                     </Link>
-                    <Link href="/faq">
+                    <Link href="/faq-contact">
                         <span className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-white hover:text-purple-500 mr-4"> Ayuda </span>
                     </Link>
 
