@@ -43,7 +43,7 @@ const logoutAuth = (state: typeof initialState, action: any) => {
     });
 };
 
-export const authReduder = (state = initialState, action: any) => {
+export const authReducer = (state = initialState, action: any) => {
     const { type } = action;
 
     switch (type) {

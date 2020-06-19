@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { postReducer } from './postReducer';
-import { authReduder } from './authReducer'
+import { authReducer } from './authReducer'
+import { socketReducer } from './socketReducer'
 
 export default combineReducers({
-    post: postReducer,
-    auth: authReduder
+    auth: authReducer,
+    socket: socketReducer,
 });

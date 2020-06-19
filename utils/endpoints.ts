@@ -1,10 +1,10 @@
-let url = "http://localhost:5000";
+export let backendURL = "http://localhost:5000";
 
 if (process.env.NODE_ENV === 'production') {
-    url = 'https://ihappy-api.herokuapp.com' // URL de produccion
+    backendURL = 'https://ihappy-api.herokuapp.com' // URL de produccion
 }
 
-export const endpoint = `${url}/api`;
+export const endpoint = `${backendURL}/api`;
 
 // AUTH API ROUTES
 export const login = `${endpoint}/auth/login/`
@@ -24,7 +24,8 @@ export const sendReview = `${endpoint}/reviews/`
 
 export const getSpecialty = `${endpoint}/specialities/`
 
+export const getConversations = `${endpoint}/conversations/`
+export const getMessages = (conversation: string) => `${endpoint}/messages/?conversation=${conversation}`
 
 // EMAIL 
-
 export const emails = `${endpoint}/emails/`

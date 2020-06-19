@@ -37,7 +37,7 @@ const Navbar = () => {
 
                     <SidebarLink
                         title="Chats"
-                        url="/chats"
+                        url="/chat"
                     >
                         <ForumIcon className="text-white" />
                     </SidebarLink>
