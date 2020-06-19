@@ -4,10 +4,8 @@ export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = "AUTH_FAIL";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 
-export const SIGNUP_START = "SIGNUP_START";
-export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
-export const SIGNUP_FAIL = "SIGNUP_FAIL";
-// -- Example
-export const START_GET_POSTS = 'START_GET_POSTS';
-export const SUCCESS_GET_POSTS = 'SUCCESS_GET_POSTS';
-export const FAIL_GET_POSTS = 'FAIL_GET_POSTS';
+// Sockets Actions
+export const SOCKET_START = "SOCKET_START";
+export const SOCKET_SUCCESS = "SOCKET_SUCCESS";
+export const SOCKET_FAIL = "SOCKET_FAIL";
+export const SOCKET_CLOSE = "SOCKET_CLOSE";

@@ -34,7 +34,7 @@ export const loginUser = (email: String, password: String) => async (dispatch: F
         dispatch(startAuth());
 
         const { data } = await Axios.post(login, { email, password }, config);
-        const { token, user } = data;
+        const { token, user } = data;        
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         dispatch(successAuth(token, user));
