@@ -26,6 +26,7 @@ export const getSpecialty = `${endpoint}/specialities/`
 
 export const getConversations = `${endpoint}/conversations/`
 export const getMessages = (conversation: string) => `${endpoint}/messages/?conversation=${conversation}`
+export const postMessages =  `${endpoint}/messages/`
 
 // EMAIL 
 export const emails = `${endpoint}/emails/`
