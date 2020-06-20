@@ -21,7 +21,7 @@ const chat = () => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          }
         };
 
         const res = await Axios.get(getConversations, config);

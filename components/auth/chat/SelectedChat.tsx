@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import { getMessages } from '../../../utils/endpoints';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import SendMessage from './SendMessage';
 
@@ -18,6 +19,17 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
+  const { socket }: { socket: SocketIOClient.Socket } = useSelector(
+    (state: any) => state.socket
+  );
+
+  const updateMessage = (message: String) =>{
+
+    socket.off('new message').on('new message', (data:any) => {
+      console.log(data)
+      setMessages((prev) => ([...prev, data.message]))
+    } )
+  }
 
   React.useEffect(() => {
     if (chat) {
@@ -81,9 +93,14 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
         </div>
 
         {/* Send message */}
-        <SendMessage />
+        <SendMessage
+        selectedChatId={chat._id}
+        userId={user._id}
+        updateMessage = {updateMessage} />
 
       </div>
+
+
     );
   } else {
     chatView = <p>No hay chat seleccionado</p>;
