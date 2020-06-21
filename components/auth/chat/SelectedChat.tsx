@@ -4,7 +4,6 @@ import { getMessages } from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import SendMessage from './SendMessage';
-import { useSelector } from 'react-redux';
 
 interface SelectedChatProps {
   chat: {
