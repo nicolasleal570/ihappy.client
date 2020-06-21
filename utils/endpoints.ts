@@ -25,6 +25,7 @@ export const sendReview = `${endpoint}/reviews/`
 export const getSpecialty = `${endpoint}/specialities/`
 
 export const getConversations = `${endpoint}/conversations/`
+export const conversationStatus = (conversation:string) => `${endpoint}/conversations/?conversation=${conversation}`
 export const getMessages = (conversation: string) => `${endpoint}/messages/?conversation=${conversation}`
 
 // EMAIL 

@@ -1,8 +1,9 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import { getReviews, sendReview } from '../../utils/endpoints';
 import moment from 'moment';
 import { BigLoader } from '../Loader';
+import {getConversations} from '../../utils/endpoints';
 
 interface PsychologistHeaderProps {
     psychologist: {
@@ -18,8 +19,10 @@ interface PsychologistHeaderProps {
         bio: string;
         avatar: string;
         created_at: any;
+        _id:any;
     }
 }
+
 const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
     const {
         first_name,
@@ -34,7 +37,41 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
         bio,
         avatar,
         created_at,
+        _id
     } = psychologist;
+    const [requestConversation, setRequestConversation] = React.useState(false)
+    
+
+    const solicitarChat = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+
+        setRequestConversation(true);
+        axios.post(getConversations, {
+            'participants': [_id],
+            'last_message':''
+    
+        }, config).then((res) => {
+
+            console.log(res.data);
+            setRequestConversation(false);
+        }).catch((err) => {
+
+            console.log(err);
+            setRequestConversation(false);
+
+        })
+    }
+    
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        solicitarChat()
+    }
     return (
         <div className='py-4'>
             <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
@@ -43,11 +80,17 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
             <div className="flex pt-4">
                 <div className="flex-1 px-6">
                     {first_name && last_name && <h3 className="font-bold capitalize text-4xl text-center block w-full">{`${first_name} ${last_name}`}</h3>}
-
                     <p className="text-center text-gray-500">@{username}</p>
-
                     <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">{bio}</p>
-
+                    <div className='flex justify-center py-2'>
+                    <form method='POST' onSubmit={onSubmit}>
+                    <button type='submit' className={`
+                    'w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200 
+                    ${requestConversation ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'}
+                    `}>Chatear!</button>
+                    </form>
+                    </div>
                     {/* <ul>
                         <li>
                             <p className="text-lg font-bold">Education</p>
@@ -89,7 +132,7 @@ export default function Reviews({ slug }: any) {
         const loadData = async function () {
             try {
                 if (slug) {
-                    const res = await Axios.get(getReviews(slug + ''), config);
+                    const res = await axios.get(getReviews(slug + ''), config);
                     setReviews(res.data.data.reviews);
                     setPsychologist(res.data.data.psychologist);
                     setLoading(false);
@@ -98,7 +141,7 @@ export default function Reviews({ slug }: any) {
                 console.log('error', err);
             }
         }
-
+        
         loadData();
     }, [slug]);
 
@@ -115,7 +158,7 @@ export default function Reviews({ slug }: any) {
                         slug_psicologo: slug,
                         content: comment
                     }
-                    const res = await Axios.post(sendReview, data, config);
+                    const res = await axios.post(sendReview, data, config);
                     const newComment: any = await res.data.data;
                     setReviews([...reviews, newComment]);
                     setComment('');
