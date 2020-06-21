@@ -4,6 +4,7 @@ import { getMessages } from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import SendMessage from './SendMessage';
+import { useSelector } from 'react-redux';
 
 interface SelectedChatProps {
   chat: {
@@ -12,23 +13,26 @@ interface SelectedChatProps {
     last_message: string;
     last_time: string;
   };
-  user: any;
 }
 
-const SelectedChat = ({ chat, user }: SelectedChatProps) => {
+
+const SelectedChat = ({ chat }: SelectedChatProps) => {
+
+  const { user } = useSelector((state: any) => state.auth);
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
+
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
   );
 
-  const updateMessage = (message: String) =>{
+  const updateMessage = (message: String) => {
 
-    socket.off('new message').on('new message', (data:any) => {
+    socket.off('new message').on('new message', (data: any) => {
       console.log(data)
       setMessages((prev) => ([...prev, data.message]))
-    } )
+    })
   }
 
   React.useEffect(() => {
@@ -41,11 +45,11 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
           },
         };
 
-        setLoading(true);
+
         const res = await Axios.get(getMessages(chat._id), config);
         const data = res.data.data;
         setMessages(data);
-        setLoading(false);
+
       };
 
       getData();
@@ -70,7 +74,8 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
         </div>
 
         {/* Messages */}
-        <div className="h-full overflow-y-auto p-6 border-l border-gray-300">
+        <div className="h-screen overflow-y-auto p-6 border-l border-gray-300">
+
           {!loading &&
             messages.map((message: any) => {
               //   Para saber quien escribe el mensaje
@@ -79,14 +84,14 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
                 <div
                   className={`p-3 rounded-lg max-w-md text-sm mb-2 ${
                     writtenByMe ? 'ml-auto bg-gray-200 text-gray-700 ' : 'mr-auto bg-purple-500 text-white'
-                  }`}
+                    }`}
                 >
                   <p className="mb-2">{message.content}</p>
                   <p className="pt-1 text-xs text-right leading-none">
                     {moment(message.created_at).format('hh:mm A')}
                   </p>
                 </div>
-                
+
               </>);
             })}
 
@@ -94,16 +99,20 @@ const SelectedChat = ({ chat, user }: SelectedChatProps) => {
 
         {/* Send message */}
         <SendMessage
-        selectedChatId={chat._id}
-        userId={user._id}
-        updateMessage = {updateMessage} />
+          selectedChatId={chat._id}
+          userId={user._id}
+          updateMessage={updateMessage} />
 
       </div>
 
 
     );
   } else {
-    chatView = <p>No hay chat seleccionado</p>;
+    chatView = (
+      <div>
+        <p>No hay chat seleccionado</p>
+      </div>
+    );
   }
 
   return <div className="bg-white flex-1">{chatView}</div>;
