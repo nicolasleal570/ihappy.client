@@ -241,8 +241,10 @@ const ChatList = ({
                     }`}
                     key={chat._id}
                   >
-                    <div className="flex-none rounded-full w-12 h-12 bg-purple-400 overflow-hidden">
+                    
+                    <div className="flex bg-purple-700 w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
                       <img
+                        className="w-full h-full object-cover"
                         src={participants[0].avatar}
                         alt={participants[0].username}
                       />
