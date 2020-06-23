@@ -12,7 +12,7 @@ const chat = () => {
     (state: any) => state.socket
   );
   const [chats, setChats] = React.useState<Array<any>>([]);
-  const [selectedChat, setSelectedChat] = React.useState<any>(null)
+  const [selectedChat, setSelectedChat] = React.useState<any>(null);
 
   React.useEffect(() => {
     if (user && !loading) {
@@ -21,7 +21,7 @@ const chat = () => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
-          }
+          },
         };
 
         const res = await Axios.get(getConversations, config);
@@ -46,12 +46,29 @@ const chat = () => {
     setSelectedChat(chat);
   };
 
+  // Update if new messages are sent or recieve
+  React.useEffect(() => {
+    if (socket) {
+      socket.on('new message', (data: any) => {
+        const { conversation: chat } = data;
+        const newChats = chats.filter(
+          (element: any) => element._id !== data.conversation._id
+        );
+
+        const chatUpdated = Array<any>()
+          .concat([...newChats, chat])
+          .sort((a: any, b: any) => (a?.last_time < b?.last_time ? 1 : -1));
+
+        setChats(chatUpdated);
+      });
+    }
+  }, [socket, chats]);
+
   return (
     <AuthLayout title="Chat">
       <div className="flex">
-
         {/* Conversation list */}
-        <ChatList 
+        <ChatList
           chats={chats}
           userId={user._id}
           onChangeConversation={onChangeConversation}
@@ -59,11 +76,7 @@ const chat = () => {
         />
 
         {/* Selected chat */}
-        <SelectedChat 
-          chat={selectedChat}
-          user={user}
-        />
-
+        <SelectedChat chat={selectedChat} />
       </div>
     </AuthLayout>
   );

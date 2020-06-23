@@ -14,9 +14,7 @@ interface SelectedChatProps {
   };
 }
 
-
 const SelectedChat = ({ chat }: SelectedChatProps) => {
-
   const { user } = useSelector((state: any) => state.auth);
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
@@ -26,13 +24,14 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     (state: any) => state.socket
   );
 
-  const updateMessage = (message: String) => {
-
-    socket.off('new message').on('new message', (data: any) => {
-      console.log(data)
-      setMessages((prev) => ([...prev, data.message]))
-    })
-  }
+  // Update if new messages are sent or recieve
+  React.useEffect(() => {
+    if (socket) {
+      socket.on('new message', (data: any) => {
+        setMessages((prev) => [...prev, data.message]);
+      });
+    }
+  }, [socket]);
 
   React.useEffect(() => {
     if (chat) {
@@ -44,11 +43,9 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
           },
         };
 
-
         const res = await Axios.get(getMessages(chat._id), config);
         const data = res.data.data;
         setMessages(data);
-
       };
 
       getData();
@@ -74,37 +71,31 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
 
         {/* Messages */}
         <div className="h-screen overflow-y-auto p-6 border-l border-gray-300">
-
           {!loading &&
             messages.map((message: any) => {
               //   Para saber quien escribe el mensaje
               const writtenByMe = message.sender === user._id;
-              return (<>
+              return (
                 <div
+                  key={message._id}
                   className={`p-3 rounded-lg max-w-md text-sm mb-2 ${
-                    writtenByMe ? 'ml-auto bg-gray-200 text-gray-700 ' : 'mr-auto bg-purple-500 text-white'
-                    }`}
+                    writtenByMe
+                      ? 'ml-auto bg-gray-200 text-gray-700 '
+                      : 'mr-auto bg-purple-500 text-white'
+                  }`}
                 >
                   <p className="mb-2">{message.content}</p>
                   <p className="pt-1 text-xs text-right leading-none">
                     {moment(message.created_at).format('hh:mm A')}
                   </p>
                 </div>
-
-              </>);
+              );
             })}
-
         </div>
 
         {/* Send message */}
-        <SendMessage
-          selectedChatId={chat._id}
-          userId={user._id}
-          updateMessage={updateMessage} />
-
+        <SendMessage selectedChatId={chat._id} userId={user._id} />
       </div>
-
-
     );
   } else {
     chatView = (
