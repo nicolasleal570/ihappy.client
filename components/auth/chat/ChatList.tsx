@@ -8,6 +8,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { conversationStatus } from '../../../utils/endpoints';
+import ClearIcon from '@material-ui/icons/Clear';
 
 interface ChatListProps {
   chats: Array<any>;
@@ -18,7 +19,7 @@ interface ChatListProps {
 
 const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatListProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
-  const [accept, setAccept] = React.useState(false);
+  const [accept, setAccept] = React.useState(true);
   const [decline, setDecline] = React.useState(false);
   const [sendPendiente, setSendPendiente] = React.useState(false);
   const [chatID, setChatID] = React.useState('');
@@ -37,7 +38,6 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
       'pendiente': accept
 
     }, config).then((res) => {
-
       console.log(res.data);
       if (!loading) {
         setSendPendiente(false);
@@ -59,13 +59,11 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
       }
     }
     setSendPendiente(true);
-    axios.post(conversationStatus(chatID), {
+    axios.put(conversationStatus(chatID), {
 
-      '_id': '',
       'hidden': decline
 
     }, config).then((res) => {
-
       console.log(res.data);
       if (!loading) {
         setSendPendiente(false);
@@ -79,21 +77,24 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
     })
   }
 
-
-
   const onHandle = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     if (!accept) {
-      console.log(chatID)
-      console.log(accept)
-      e.preventDefault();
       actualizarEdoChat();
     } else if (decline) {
       eliminarChat();
     }
   }
 
-  if (chats.length == 0) {
+
+  //Funcion para evaluar si todos los chats estan eliminados
+  function isAllHidden(element:any, index:any, array:any) { 
+    return (element.hidden); 
+ } 
+           
+ var passed = chats.every(isAllHidden); 
+ console.log("No hay conversaciones: " + passed );
+ //Si no tiene ningun chat registrado o todos estan eliminados 
+  if (chats.length == 0 || passed) {
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
         <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
@@ -117,62 +118,60 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
 
             return (
               <>
-                {chat.pendiente && user.role.identification === 'psicologo' && (
-                  <button disabled
-                    onClick={(e) => onChangeConversation(e, chat._id)}
-                    className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}
+                {chat.pendiente && !chat.hidden && user.role.identification === 'psicologo' && (
+                  <div>
+                    <button disabled
+                      onClick={(e) => onChangeConversation(e, chat._id)}
+                      className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}
               `}
-                    key={chat._id}
-                  >
-                    <div className="flex-none rounded-full w-12 h-12 bg-purple-400 overflow-hidden ">
-                      <img
-                        src={participants[0].avatar}
-                        alt={participants[0].username}
-                      />
-                    </div>
+                      key={chat._id}
+                    >
+                      <div className="flex-none rounded-full w-12 h-12 bg-purple-400 overflow-hidden ">
+                        <img
+                          src={participants[0].avatar}
+                          alt={participants[0].username}
+                        />
+                      </div>
 
-                    <div className="w-full flex-1 ml-2">
-                      <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
-                      {!chat.last_message && (
-                        <p className="text-gray-500">No hay mensajes aún</p>
-                      )}
+                      <div className="w-full flex-1 ml-2">
+                        <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        {!chat.last_message && (
+                          <p className="text-gray-500">No hay mensajes aún</p>
+                        )}
 
-                      {chat.last_message && (
-                        <p className="">
-                          {chat.last_message}{' '}
-                          <span className="text-xs text-gray-500">
-                            {moment(chat.last_time).fromNow()}
-                          </span>
-                        </p>
-                      )}
-                    </div>
-                    <FiberManualRecordIcon style={{ fill: '#805ad5', fontSize: 20 }} />
-                  </button>
-                )}
-
-                {chat.pendiente === true && (
-                  <form onSubmit={onHandle}>
-                    <div className="flex inline-flex w-full mx-auto items-center justify-center bg-gray-200 mb-2">
-                      <button className={` 
-                      ${sendPendiente ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
-                          : 'bg-gray-300 hover:bg-green-400 text-gray-800 semi-bold py-1 px-2 rounded-l hover:text-black'}
-                      `} onClick={(e) => setChatID(chat._id)} onSubmit={e => setAccept(false)}
-                        key={chat._id}
-                        type='submit'
-                      >
-                        Aceptar
-                        </button>
-                      <button className={`
-                      ${sendPendiente ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
-                          : 'bg-gray-300 hover:bg-red-400 text-gray-800 semi-bold py-1 px-2 rounded-r hover:text-black'}
-                      `} onClick={e => setDecline(true)}>
-                        Rechazar
+                        {chat.last_message && (
+                          <p className="">
+                            {chat.last_message}{' '}
+                            <span className="text-xs text-gray-500">
+                              {moment(chat.last_time).fromNow()}
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                      <FiberManualRecordIcon style={{ fill: '#805ad5', fontSize: 15 }} />
+                    </button>
+                    <form onSubmit={onHandle}>
+                      <div className="flex inline-flex w-full mx-auto items-center justify-center bg-gray-200 mb-2">
+                        <button className={` 
+                    ${sendPendiente ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                            : 'bg-gray-300 hover:bg-green-400 text-gray-800 semi-bold py-1 px-2 rounded-l hover:text-black'}
+                    `} onClick={(e) => (setChatID(chat._id), setAccept(false))}
+                          key={chat._id}
+                          type='submit'>
+                          Aceptar
                       </button>
-                    </div>
-                  </form>
+                        <button className={`
+                    ${sendPendiente ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                            : 'bg-gray-300 hover:bg-red-400 text-gray-800 semi-bold py-1 px-2 rounded-r hover:text-black'}
+                    `} onClick={e => (setChatID(chat._id), setDecline(true))}
+                          type='submit'>
+                          Rechazar
+                    </button>
+                      </div>
+                    </form>
+                  </div>
                 )}
-
-                {chat.pendiente && user.role.identification === 'usuario' && (
+                {chat.pendiente && !chat.hidden && user.role.identification === 'usuario' && (
                   <button disabled
                     onClick={(e) => onChangeConversation(e, chat._id)}
                     className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}
@@ -190,7 +189,7 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
                       <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
                       {!chat.last_message && chat.pendiente && (
                         <p className="text-gray-500">Esperando que psicologo acepte petición</p>
-                        
+
                       )}
 
                       {chat.last_message && (
@@ -206,33 +205,44 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
                   </button>
                 )}
 
-                {!chat.pendiente && (
-                  <button
-              onClick={(e) => onChangeConversation(e, chat._id)}
-              className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer hover:bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}`}
-              key={chat._id}
-            >
-              <div className="flex-none rounded-full w-12 h-12 bg-purple-400 overflow-hidden">
-                <img
-                  src={participants[0].avatar}
-                  alt={participants[0].username}
-                />
-              </div>
-              <div className="w-full flex-1 ml-2">
-                <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
-                {!chat.last_message && (
-                  <p className="text-gray-500">No hay mensajes aún</p>
-                )}
-                {chat.last_message && (
-                  <p className="">
-                    {chat.last_message}{' '}
-                    <span className="text-xs text-gray-500">
-                      {moment(chat.last_time).fromNow()}
-                    </span>
-                  </p>
-                )}
-              </div>
-            </button>
+                {!chat.pendiente && !chat.hidden && (
+                  <div>
+                    <button
+                      onClick={(e) => onChangeConversation(e, chat._id)}
+                      className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer hover:bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}`}
+                      key={chat._id}
+                    >
+                      <div className="flex-none rounded-full w-12 h-12 bg-purple-400 overflow-hidden">
+                        <img
+                          src={participants[0].avatar}
+                          alt={participants[0].username}
+                        />
+                      </div>
+                      <div className="w-full flex-1 ml-2">
+                        <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        {!chat.last_message && (
+                          <p className="text-gray-500">No hay mensajes aún</p>
+                        )}
+                        {chat.last_message && (
+                          <p className="">
+                            {chat.last_message}{' '}
+                            <span className="text-xs text-gray-500">
+                              {moment(chat.last_time).fromNow()}
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                    {/* <div className='z-40'>
+                      <form onSubmit={onHandle}>
+                        <button
+                          onClick={e => (setChatID(chat._id), setDecline(true))}
+                          type='submit' className='focus:outline-none'>
+                          <ClearIcon style={{ fill: '#feb2b2', fontSize: 20 }}></ClearIcon>
+                        </button>
+                      </form>
+                    </div> */}
+                  </div>
                 )}
               </>
             );
