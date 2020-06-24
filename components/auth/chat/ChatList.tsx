@@ -14,24 +14,28 @@ interface ChatListProps {
   chats: Array<any>;
   onChangeConversation: (e: any, chatId: string) => void;
   userId: string;
-  selectedChatId: string
+  selectedChatId: string;
 }
 
-const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatListProps) => {
+const ChatList = ({
+  chats,
+  onChangeConversation,
+  userId,
+  selectedChatId,
+}: ChatListProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const [accept, setAccept] = React.useState(true);
   const [decline, setDecline] = React.useState(false);
   const [sendPendiente, setSendPendiente] = React.useState(false);
   const [chatID, setChatID] = React.useState('');
-  const { first_name, last_name, cedula, address, bio, role } = user;
 
   const actualizarEdoChat = async () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    };
     setSendPendiente(true);
     axios.put(conversationStatus(chatID), {
 
@@ -41,23 +45,16 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
       console.log(res.data);
       if (!loading) {
         setSendPendiente(false);
-      }
-
-    }).catch((err) => {
-
-      console.log(err);
-      setSendPendiente(false);
-
-    })
-  }
+      });
+  };
 
   const eliminarChat = async () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    };
     setSendPendiente(true);
     axios.put(conversationStatus(chatID), {
 
@@ -83,7 +80,7 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
     } else if (decline) {
       eliminarChat();
     }
-  }
+  };
 
 
   //Funcion para evaluar si todos los chats estan eliminados
@@ -98,20 +95,22 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
         <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
-        <div className='flex flex-col items-start'>
-          <h3 className='text-2xl p-4'>No tienes ningún chat</h3>
-          <Link href='/search'>
-            <button className='w-full lg:w-auto ml-5 shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200'>Busca profesionales</button>
+        <div className="flex flex-col items-start">
+          <h3 className="text-2xl p-4">No tienes ningún chat</h3>
+          <Link href="/search">
+            <button className="w-full lg:w-auto ml-5 shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200">
+              Busca profesionales
+            </button>
           </Link>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
         <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
         {chats.length > 0 &&
-          chats.map((chat) => {
+          chats.map((chat, index) => {
             const participants = chat.participants.filter(
               (element: any) => element._id !== userId
             );
@@ -174,7 +173,9 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
                 {chat.pendiente && !chat.hidden && user.role.identification === 'usuario' && (
                   <button disabled
                     onClick={(e) => onChangeConversation(e, chat._id)}
-                    className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer bg-gray-200 ${selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'}
+                    className={`text-left w-full py-3 px-4 flex outline-none focus:outline-none cursor-pointer bg-gray-200 ${
+                      selectedChatId === chat._id ? 'bg-gray-200' : 'bg-white'
+                    }
               `}
                     key={chat._id}
                   >
@@ -247,9 +248,8 @@ const ChatList = ({ chats, onChangeConversation, userId, selectedChatId }: ChatL
               </>
             );
           })}
-
       </div>
     );
   }
-}
+};
 export default ChatList;
