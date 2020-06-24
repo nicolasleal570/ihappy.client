@@ -33,9 +33,9 @@ const ChatList = ({
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    };
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }
     setSendPendiente(true);
     axios.put(conversationStatus(chatID), {
 
@@ -45,16 +45,22 @@ const ChatList = ({
       console.log(res.data);
       if (!loading) {
         setSendPendiente(false);
-      });
-  };
+      }
+    }).catch((err) => {
+
+      console.log(err);
+      setSendPendiente(false);
+
+    })
+  }
 
   const eliminarChat = async () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    };
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }
     setSendPendiente(true);
     axios.put(conversationStatus(chatID), {
 
