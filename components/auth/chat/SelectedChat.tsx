@@ -4,7 +4,7 @@ import { getMessages } from '../../../utils/endpoints';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import SendMessage from './SendMessage';
-import {conversationStatus} from '../../../utils/endpoints';
+import { conversationStatus } from '../../../utils/endpoints';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 interface SelectedChatProps {
@@ -14,9 +14,6 @@ interface SelectedChatProps {
     last_message: string;
     last_time: string;
   };
-  user: {
-
-  }
 }
 
 const SelectedChat = ({ chat }: SelectedChatProps) => {
@@ -24,7 +21,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
-  const [borrarChat, setBorrarChat] = React.useState(false)
+  const [borrarChat, setBorrarChat] = React.useState(false);
   const [sendPendiente, setSendPendiente] = React.useState(false);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
@@ -65,54 +62,58 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    };
     setSendPendiente(true);
-    Axios.put(conversationStatus(chat._id), {
-
-      'hidden': borrarChat
-
-    }, config).then((res) => {
-      console.log(res.data);
-      if (!loading) {
+    Axios.put(
+      conversationStatus(chat._id),
+      {
+        hidden: borrarChat,
+      },
+      config
+    )
+      .then((res) => {
+        console.log(res.data);
+        if (!loading) {
+          setSendPendiente(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setSendPendiente(false);
-      }
-
-    }).catch((err) => {
-
-      console.log(err);
-      setSendPendiente(false);
-
-    })
-  }
-  const onHandle = (e:React.FormEvent<HTMLFormElement>) => {
-    if(borrarChat){
-      eliminarChat()
+      });
+  };
+  const onHandle = (e: React.FormEvent<HTMLFormElement>) => {
+    if (borrarChat) {
+      eliminarChat();
     }
-  } 
+  };
 
   let chatView = null;
   if (chat && recipientUser) {
     chatView = (
       <div className="h-screen ">
         {/* Top bar */}
-        <div className="flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l border-gray-300">
+        <div className="flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l">
           <div className="flex-none rounded-full w-16 h-16 bg-purple-400 overflow-hidden ml-4">
             <img src={recipientUser.avatar} alt={recipientUser.first_name} />
           </div>
           <h1 className="text-2xl font-semibold p-4 capitalize">
             {recipientUser.first_name} {recipientUser.last_name}
           </h1>
-         
-          <div className='absolute right-0 mr-5'>
-          <form onSubmit={onHandle}>
-          <button className='focus:outline-none' type='submit' onClick={e => setBorrarChat(true)}>
-            <DeleteIcon style={{ fill: '#6b46c1',fontSize: 30 }}/>
-          </button>
-          </form>
+
+          <div className="absolute right-0 mr-5">
+            <form onSubmit={onHandle}>
+              <button
+                className="focus:outline-none"
+                type="submit"
+                onClick={(e) => setBorrarChat(true)}
+              >
+                <DeleteIcon style={{ fill: '#6b46c1', fontSize: 30 }} />
+              </button>
+            </form>
           </div>
-       
         </div>
 
         {/* Messages */}
