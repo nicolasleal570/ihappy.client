@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-
+import Axios from 'axios';
+import { disable } from '../../../utils/endpoints';
+import AuthLayout from '../Layout';
 
 interface DoctorCardProps {
     firstName: string
@@ -10,9 +12,33 @@ interface DoctorCardProps {
     avatar: string
     role?: any
     slug: string
+    disabled: boolean
 }
 
-const DoctorCard = ({
+
+
+
+const handleClick = (slug: string) => {
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    }
+    Axios.put(disable(slug + ''), {}, config).then((res) => {
+
+        console.log(res.data);
+        
+       
+
+    }).catch((err) => {
+
+        console.log(err);
+        
+
+    })
+}
+
+const AdminCard = ({
     firstName,
     lastName,
     username,
@@ -20,6 +46,7 @@ const DoctorCard = ({
     role,
     avatar,
     slug,
+    disabled
 }: DoctorCardProps) => {
     return (
         <div className="relative w-full bg-white rounded shadow-md border border-gray-300">
@@ -54,8 +81,16 @@ const DoctorCard = ({
                     <a className="text-center px-3 py-1 text-sm bg-purple-700 rounded text-white">Ver Perfil</a>
                 </Link>
             </div>
+            <div className="w-full bg-gray-100 flex items-center justify-center py-2 border-t border-gray-300 px-4">
+                <a href="#" type="button" onClick={() =>handleClick(slug)}>
+                    { disabled ?
+                        <a className="text-center px-3 py-1 text-sm bg-purple-700 rounded text-white">Hablitar</a>
+                       : <a className="text-center px-3 py-1 text-sm bg-purple-700 rounded text-white">Deshabilitar</a>
+                    }
+                </a>
+            </div>
         </div>
     )
 }
 
-export default DoctorCard
+export default AdminCard
