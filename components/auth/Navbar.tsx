@@ -15,9 +15,26 @@ const Navbar = () => {
 
     const { user } = useSelector((state: any) => state.auth)
 
+    const [navbarOpen, setNavbarOpen] = React.useState(true);
+
+    const toggleNavbar = () => {
+        setNavbarOpen(!navbarOpen)
+        console.log(navbarOpen)
+    } 
+
+
     return (
         <nav>
-            <div className='fixed lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll'>
+
+            <div className="block lg:hidden">
+                <button className="flex items-center px-3 py-2 border rounded text-black border-purple-400 hover:text-purple-500 hover:border-white bg-white-600 outline-none" onClick={toggleNavbar}>
+                    <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+                    </button>
+            </div>
+
+            <div  className={`fixed  lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll z-40 ${navbarOpen ? '' : 'hidden'}`}>
+
+                
 
                 <Link href="/dashboard">
                     <div className="cursor-pointer flex justify-around items-center bg-purple-700 px-4 pt-4 pb-10">
