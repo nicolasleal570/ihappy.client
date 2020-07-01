@@ -1,20 +1,43 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, authCheckState } from '../../../store/actions/authAction';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import { USER_CONNECTED } from '../../../utils/events';
+import InputField from '../../auth/partials/InputField';
 
 export default function login() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [data, setData] = React.useState<{ email: string; password: string }>({
+    email: '',
+    password: '',
+  });
+  const [userError, setUserError] = React.useState(null);
+
+  const inputRefs = React.useRef<Array<any>>([
+    React.createRef(),
+    React.createRef(),
+  ]); // la cantidad de createRef depende de la cantidad de inputs
+
+  const [sendingForm, setSendingForm] = React.useState(false);
 
   const { loading, user, error } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
   );
+
   const router = useRouter();
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    Router.prefetch('/dashboard');
+  }, []);
+
+  React.useEffect(() => {
+    if (error && !loading) {
+      setUserError(error);
+      setSendingForm(false);
+    }
+  }, [loading, error]);
 
   React.useEffect(() => {
     if (!user) {
@@ -25,14 +48,32 @@ export default function login() {
     }
   }, [user]);
 
+  const handleChange = (name: string, value: string) => {
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(loginUser(email, password));
+    let isValid = true;
 
-    if (user && !error && !loading) {
-      emitSetUserEvent(user);
-      router.push('/dashboard');
+    for (let i = 0; i < inputRefs.current.length; i++) {
+      const element = inputRefs.current[i];
+      const valid = element.current.validate();
+      if (!valid) {
+        isValid = false;
+      }
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    if (!sendingForm) {
+      setSendingForm(true);
+
+      dispatch(loginUser(data.email, data.password));
+
     }
   };
 
@@ -68,39 +109,40 @@ export default function login() {
             Inicia Sesion
           </div>
 
+          {userError && (
+            <div className="lg:w-7/12 w-full mx-auto text-gray-700 text-center mb-1 rounded px-4 py-2 capitalize bg-red-300 border border-red-500">
+              {userError}
+            </div>
+          )}
+
           <div className="text-gray-700 px-6 lg:px-4 py-2">
             <div className="mb-6 flex flex-row justify-center items-center">
-              <div className="mr-6 ">
-                <img className="w-8" src="/assets/icons/usuario.png" alt="" />
-              </div>
-              <div className="lg:w-2/5 w-full text-center">
-                <input
-                  className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                  id="email"
+              <div className="lg:w-7/12 w-full">
+                <InputField
+                  name="email"
                   type="text"
-                  placeholder="Email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
+                  label="Ingrese su email"
+                  placeholder="Ej. john_doe@example.com"
+                  value=""
+                  inputChange={handleChange}
+                  ref={inputRefs.current[0]}
+                  validation="required|email|min:6|max:20"
                 />
               </div>
             </div>
 
             <div className="mb-6 flex flex-row justify-center items-center">
-              <div className="mr-6">
-                <img
-                  className="w-8"
-                  src="/assets/icons/contrasena.png"
-                  alt=""
-                />
-              </div>
-              <div className="lg:w-2/5 w-full text-center">
-                <input
-                  className="bg-white appearance-none border-2 border-purple-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                  id="password"
+              <div className="lg:w-7/12 w-full ">
+                <InputField
+                  name="password"
                   type="password"
-                  placeholder="******************"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
+                  label="Ingrese su Contraseña"
+                  placeholder="********"
+                  value=""
+                  inputChange={handleChange}
+                  ref={inputRefs.current[1]}
+                  validation="required|min:6|max:20"
+                  withMarginBottom
                 />
               </div>
             </div>
@@ -111,12 +153,12 @@ export default function login() {
                 className={`
                                     w-full lg:w-auto mx-auto block shadow focus:outline-none py-2 px-4 rounded
                                     ${
-                                      loading
+                                      sendingForm
                                         ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
                                         : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'
                                     }
                                     `}
-                disabled={loading}
+                disabled={sendingForm}
               >
                 {' '}
                 Iniciar Sesion{' '}
