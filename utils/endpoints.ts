@@ -20,6 +20,7 @@ export const getUsers = `${endpoint}/users/`
 export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`
 export const getPacients = `${endpoint}/users/pacients/`
 export const getDoctorsBySpeciality = (name: String) => `${endpoint}/users/specialities/?name=${name}`
+export const getCountDoctorsBySpeciality =  `${endpoint}/users/specialities/count`
 export const getRoles = `${endpoint}/roles/`
 
 export const getReviews = (slug: string) => `${endpoint}/reviews/${slug}`

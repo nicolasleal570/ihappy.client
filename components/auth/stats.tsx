@@ -1,6 +1,6 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
-import { getDoctors,getPacients, getSpecialty } from '../../utils/endpoints';
+import { getDoctors,getPacients, getSpecialty,getCountDoctorsBySpeciality } from '../../utils/endpoints';
 import Axios from 'axios';
 
 
@@ -33,13 +33,24 @@ const  stats= () => {
 
             })
         
-        Axios.get(getSpecialty, config)
+        
+
+            Axios.get(getCountDoctorsBySpeciality, config)
             .then(response => {
                 const data_role = response.data.data;
 
+                let temp = []
+                let tempo = []
+                for (let index = 0; index < data_role.length; index++) {
 
-                console.log(data_role);
-                setSpecialty(data_role);
+                    tempo[index]=data_role[index]._id
+                    temp[index]=data_role[index].count
+                }
+
+                console.log(temp);
+                console.log(tempo);
+                setnumberSpecialty(temp);
+                setSpecialty(tempo);
 
                
     
@@ -97,11 +108,50 @@ const  stats= () => {
         ]
     };
 
+    const dato = {
+        datasets: [{
+            data: numberSpecialty,
+            backgroundColor: ['#003f5c','#374c80','#7a5195',
+            '#bc5090',
+            '#ef5675',
+            '#ff6361',
+            '#ffa600'
+                ],
+                hoverBackgroundColor: ['#003f5c','#374c80','#7a5195',
+                '#bc5090',
+                '#ef5675',
+                '#ff6361',
+                '#ffa600'
+                ]
+        }],
+    
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: specialty
+        
+    };
+
     return (
-        <div>
-            <h2>Doctores vs Pacientes</h2>
+        <div className='flex flex-col'>
+
+        <div className=" text-left  px-4 py-8 m-2">
+            
+        <h2 className='underline  text-4xl my-2'>Doctores vs Pacientes</h2>
             <Doughnut data={data} />
+        
         </div>
+
+        <div className=" text-left  px-4 py-2 m-2">
+            
+        <h2 className=' underline text-4xl my-2'>Tipos de Doctores</h2>
+            <Doughnut data={dato} />
+        
+        </div>
+            
+            
+            
+        </div>
+        
+        
     )
 }
 
