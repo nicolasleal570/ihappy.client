@@ -55,6 +55,7 @@ export const signupUser = (email: String, username: String, password: String, pa
         dispatch(successAuth(token, user));
 
     } catch (err) {
+        console.log('err', err);
         dispatch(failAuth(err.response?.data.error));
     }
 };
