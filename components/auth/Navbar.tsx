@@ -54,6 +54,12 @@ const Navbar = () => {
                         >
                             <SearchIcon className="text-white" />
                         </SidebarLink>
+                        <SidebarLink
+                            title="Stats"
+                            url="/stats"
+                        >
+                            <SearchIcon className="text-white" />
+                        </SidebarLink>
                     </div>
                     :
 
