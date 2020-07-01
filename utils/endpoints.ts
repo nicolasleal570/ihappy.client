@@ -13,9 +13,12 @@ export const signup = `${endpoint}/auth/register/`
 // PROFILE USER
 export const profile = `${endpoint}/users/profile/`
 export const avatar = `${endpoint}/users/avatar/`
+export const disable = (slug: string) => `${endpoint}/users/disable/${slug}`
+
 
 export const getUsers = `${endpoint}/users/`
 export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`
+export const getPacients = `${endpoint}/users/pacients/`
 export const getDoctorsBySpeciality = (name: String) => `${endpoint}/users/specialities/?name=${name}`
 export const getRoles = `${endpoint}/roles/`
 
