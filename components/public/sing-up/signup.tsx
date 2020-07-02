@@ -51,15 +51,6 @@ export default function signup() {
   }, []);
 
   React.useEffect(() => {
-    if (!user) {
-      dispatch(authCheckState());
-    }
-    if (user && !error && !loading) {
-      router.push('/profile');
-    }
-  }, [user]);
-  
-  React.useEffect(() => {
     if (error && !loading) {
       setUserError(error);
       setSendingForm(false);
@@ -84,6 +75,17 @@ export default function signup() {
         console.log(e);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (user && !error && !loading) {
+      const { redirected } = Router.query;
+      if (redirected === 'true') {
+        Router.back();
+      } else {
+        Router.push('/profile');
+      }
+    }
+  }, [user, loading, error]);
 
   const emitSetUserEvent = (user: any) => {
     socket.emit('identity', user._id);
@@ -112,7 +114,7 @@ export default function signup() {
     }
 
     if (!sendingForm) {
-      setSendingForm(true)
+      setSendingForm(true);
       dispatch(
         signupUser(
           data.email,
@@ -122,7 +124,6 @@ export default function signup() {
           data.role
         )
       );
-
     }
   };
 

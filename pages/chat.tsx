@@ -1,86 +1,43 @@
 import React from 'react';
 import AuthLayout from '../components/auth/Layout';
-import { useSelector } from 'react-redux';
-import Axios from 'axios';
-import { getConversations } from '../utils/endpoints';
-import ChatList from '../components/auth/chat/ChatList';
-import SelectedChat from '../components/auth/chat/SelectedChat';
+import ChatSection from '../components/auth/chat/ChatSection';
+import { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
+import Router from 'next/router';
+import cookies from 'next-cookies';
+const LoginPage = dynamic(() => import('./login'));
 
-const chat = () => {
-  const { user, loading } = useSelector((state: any) => state.auth);
-  const { socket }: { socket: SocketIOClient.Socket } = useSelector(
-    (state: any) => state.socket
-  );
-  const [chats, setChats] = React.useState<Array<any>>([]);
-  const [selectedChat, setSelectedChat] = React.useState<any>(null);
+interface ChatProps {
+  loggedIn: boolean;
+}
 
+const Chat: NextPage<ChatProps> = ({ loggedIn }) => {
   React.useEffect(() => {
-    if (user && !loading) {
-      const getChats = async () => {
-        const config = {
-          withCredentials: true,
-        };
-
-        const res = await Axios.get(getConversations, config);
-        const data = res.data.data;
-        setChats(data);
-      };
-
-      getChats();
-    }
-  }, [user, loading]);
-
-  React.useEffect(() => {
-    if (socket && chats.length > 0) {
-      chats.map((room) => {
-        socket.emit('subscribe', room._id);
+    if (!loggedIn) {
+      Router.push({
+        pathname: '/login',
+        query: { redirected: true },
       });
     }
-  }, [chats, socket]);
+  }, [loggedIn]);
 
-  const onChangeConversation = (e: any, chatId: string) => {
-    const chat = chats.find((chat: any) => chat._id === chatId);
-    setSelectedChat(chat);
-  };
-
-  // Update if new messages are sent or recieve
-  React.useEffect(() => {
-    if (socket) {
-      socket.on('new message', (data: any) => {
-        const { conversation: chat } = data;
-        const newChats = chats.filter(
-          (element: any) => element._id !== data.conversation._id
-        );
-
-        const chatUpdated = Array<any>()
-          .concat([...newChats, chat])
-          .sort((a: any, b: any) => (a?.last_time < b?.last_time ? 1 : -1));
-
-        setChats(chatUpdated);
-      });
-    }
-  }, [socket, chats]);
-
-  return (
+  return loggedIn ? (
     <AuthLayout title="Chat">
-      <div className="flex">
-        {/* Conversation list */}
-        {user && !loading && (
-          <>
-            <ChatList
-              chats={chats}
-              userId={user._id}
-              onChangeConversation={onChangeConversation}
-              selectedChatId={selectedChat ? selectedChat._id : ''}
-            />
-
-            {/* Selected chat */}
-            <SelectedChat chat={selectedChat} />
-          </>
-        )}
-      </div>
+      <ChatSection />
     </AuthLayout>
+  ) : (
+    <LoginPage />
   );
 };
 
-export default chat;
+export const getServerSideProps: GetServerSideProps<ChatProps> = async (
+  context
+) => {
+  const allCookies = cookies(context);
+  const token = allCookies.token;
+  if (!token) return { props: { loggedIn: false } };
+  return { props: { loggedIn: true } };
+};
+
+export default Chat;
