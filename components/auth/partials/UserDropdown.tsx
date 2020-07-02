@@ -1,11 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { logout } from '../../../store/actions/authAction';
+import { logoutAuth } from '../../../store/actions/authAction';
 import Link from 'next/link';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import { AllScreenLoader } from '../../Loader';
-import { LOGOUT } from '../../../utils/events';
 import { socketLogout } from '../../../store/actions/socketAction';
 
 const UserDropdown = () => {
@@ -24,7 +22,7 @@ const UserDropdown = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutAuth());
     emitLogoutEvent();
     router.push('/');
   };

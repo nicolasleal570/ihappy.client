@@ -40,10 +40,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     if (chat) {
       const getData = async () => {
         const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          withCredentials: true,
         };
 
         const res = await Axios.get(getMessages(chat._id), config);
@@ -60,10 +57,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
 
   const eliminarChat = async () => {
     const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
+      withCredentials: true
     };
     setSendPendiente(true);
     Axios.put(

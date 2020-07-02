@@ -44,10 +44,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 
     const solicitarChat = async () => {
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+            withCredentials: true
         }
 
         setRequestConversation(true);
@@ -127,10 +124,7 @@ export default function Reviews({ slug}: any) {
     // Making request to get reviews of psychologist
     React.useEffect(() => {
                     setConfig({
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
+                        withCredentials: true
                     });
 
         const loadData = async function () {

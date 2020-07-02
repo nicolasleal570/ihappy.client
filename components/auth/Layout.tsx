@@ -22,8 +22,6 @@ const Layout = ({ children, title }: LayoutProps) => {
 
   const dispatch = useDispatch();
 
-  const { first_name, last_name, cedula, address, bio } = user;
-
   // Setting up sockets
   React.useEffect(() => {
     if (user && !loading) {
@@ -34,7 +32,8 @@ const Layout = ({ children, title }: LayoutProps) => {
   }, [user, loading]);
 
   React.useEffect(() => {
-    if (!loading) {
+    if (!loading && user) {
+      const { first_name, last_name, cedula, address, bio } = user;
       if (
         first_name === '' ||
         !first_name ||
@@ -88,7 +87,7 @@ const Layout = ({ children, title }: LayoutProps) => {
             </div>
 
             {/* User dropdown */}
-            <UserDropdown />
+            {user && !loading && <UserDropdown />}
           </div>
 
           {children}

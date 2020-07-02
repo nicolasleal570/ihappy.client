@@ -18,10 +18,7 @@ const chat = () => {
     if (user && !loading) {
       const getChats = async () => {
         const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          withCredentials: true,
         };
 
         const res = await Axios.get(getConversations, config);
@@ -68,15 +65,19 @@ const chat = () => {
     <AuthLayout title="Chat">
       <div className="flex">
         {/* Conversation list */}
-        <ChatList
-          chats={chats}
-          userId={user._id}
-          onChangeConversation={onChangeConversation}
-          selectedChatId={selectedChat ? selectedChat._id : ''}
-        />
+        {user && !loading && (
+          <>
+            <ChatList
+              chats={chats}
+              userId={user._id}
+              onChangeConversation={onChangeConversation}
+              selectedChatId={selectedChat ? selectedChat._id : ''}
+            />
 
-        {/* Selected chat */}
-        <SelectedChat chat={selectedChat} />
+            {/* Selected chat */}
+            <SelectedChat chat={selectedChat} />
+          </>
+        )}
       </div>
     </AuthLayout>
   );

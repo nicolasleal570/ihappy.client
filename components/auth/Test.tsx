@@ -113,10 +113,7 @@ const Test = () => {
         console.log('resultadoFIn', resultado);
 
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+            withCredentials: true
         }
 
         const getDoctors = async () => {

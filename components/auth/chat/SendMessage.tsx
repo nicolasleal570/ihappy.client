@@ -17,10 +17,7 @@ const SendMessage = ({
     e.preventDefault();
 
     const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
+      withCredentials: true
     };
 
     const sendData = async function () {
