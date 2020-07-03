@@ -83,7 +83,7 @@ export default function login() {
       <div
         className="flex-1 bg-center bg-no-repeat bg-cover h-screen"
         style={{
-          backgroundImage: `url('/assets/img/login-image.jpg')`,
+          backgroundImage: `url('/assets/img/login-image.webp')`,
         }}
       >
         <div className="flex justify-center h-full">

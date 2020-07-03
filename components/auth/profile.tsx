@@ -90,7 +90,7 @@ export default function Profile() {
     }
 
     return (
-        <div className='flex bg-cover bg-top bg-no-repeat h-screen' style={{ backgroundImage: `url('/assets/img/chill2.png')` }}>
+        <div className='flex bg-cover bg-top bg-no-repeat h-screen' style={{ backgroundImage: `url('/assets/img/chill2.webp')` }}>
             <div className='w-1/5'>
             </div>
             <div className='w-5/5 mr-64'>
