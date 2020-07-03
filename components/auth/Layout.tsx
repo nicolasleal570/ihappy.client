@@ -8,6 +8,8 @@ import Alert from './partials/Alert';
 import * as io from 'socket.io-client';
 import { backendURL } from '../../utils/endpoints';
 import { initSocket } from '../../store/actions/socketAction';
+import MenuIcon from '@material-ui/icons/Menu';
+import Router from 'next/router';
 
 interface LayoutProps {
   children: React.ReactChild | Array<React.ReactChild>;
@@ -19,6 +21,7 @@ let socket: SocketIOClient.Socket;
 const Layout = ({ children, title }: LayoutProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const [incompleteProfile, setIncompleteProfile] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -31,6 +34,7 @@ const Layout = ({ children, title }: LayoutProps) => {
     }
   }, [user, loading]);
 
+  // Incomplete profile validation
   React.useEffect(() => {
     if (!loading && user) {
       const { first_name, last_name, cedula, address, bio } = user;
@@ -53,24 +57,38 @@ const Layout = ({ children, title }: LayoutProps) => {
     }
   }, [user]);
 
+  // Adding new socket ID to the user
   const emitSetUserEvent = (userId: String) => {
     socket.emit('identity', userId);
   };
 
+  // Open menu function
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  Router.events.on('routeChangeStart', () => {
+    setMenuOpen(false);
+  });
+
   return (
-    <div className={`${loading ? 'overflow-hidden' : ''}`}>
+    <div
+      className={`
+      ${menuOpen || loading ? 'overflow-hidden h-screen' : ''}
+    `}
+    >
       {loading && (
         <div className="">
           <AllScreenLoader />
         </div>
       )}
 
-      <Navbar />
+      <Navbar closeMenu={closeMenu} isOpen={menuOpen} openMenu={openMenu} />
 
-      <div className="flex text-gray-800">
+      <div className="flex flex-col lg:flex-row text-gray-800 overflow-hidden">
         {/* Fill content */}
-        <div className="flex-none lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen"></div>
-        <div className="flex-1">
+        <div className="hidden lg:block flex-none lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen"></div>
+        <div className="relative flex-1">
           {incompleteProfile && (
             <Alert
               title="Complete Your Profile!"
@@ -80,8 +98,15 @@ const Layout = ({ children, title }: LayoutProps) => {
           )}
 
           {/* Top Navbar */}
-          <div className="border-b border-gray-300 w-full flex justify-between items-center px-6 py-2 text-gray-800 shadow-md">
-            <div className="flex items-center text-2xl capitalize">
+          <div className="border-b border-gray-300 w-full flex justify-between items-center px-4 lg:px-6 py-2 text-gray-800 shadow-md">
+            <button
+              className="block lg:hidden text-purple-700 py-1 px-2 rounded focus:outline-none outline-none"
+              onClick={openMenu}
+            >
+              <MenuIcon style={{ fontSize: '1.50rem' }} />
+            </button>
+
+            <div className="flex flex-1 justify-center lg:justify-start items-center text-2xl capitalize">
               <InfoIcon />
               <p className=" px-2">{title}</p>
             </div>

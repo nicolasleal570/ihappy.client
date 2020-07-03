@@ -21,17 +21,16 @@ export default function Dashboard() {
     };
 
     getDoctorsData();
-    console.log(doctors);
   }, []);
 
   return (
-    <div className="flex flex-column bg-gray-200 h-full text-gray-800">
+    <div className="flex flex-column bg-gray-200 text-gray-800 pb-6 min-h-screen">
       <div className="w-full px-6">
         <h1 className="font-semibold capitalize text-xl text-left py-6">
           Online Psychologists
         </h1>
 
-        <div className="w-full grid grid-cols-4 gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {loading && (
             <div className="relative w-full h-32 bg-white rounded col-span-4 flex items-center justify-center">
               <BigLoader />
@@ -51,15 +50,6 @@ export default function Dashboard() {
                 specialities={doctor.speciality}
               />
             ))}
-        </div>
-
-        <h1 className="font-semibold capitalize text-xl text-left py-6">
-          Charts
-        </h1>
-        <div className="flex">
-          <img src="/assets/icons/chart.png" className="w-70 h-40" />
-          <img src="/assets/icons/chart.png" className="w-70 h-40 pl-10" />
-          <img src="/assets/icons/chart.png" className="w-70 h-40" />
         </div>
       </div>
     </div>

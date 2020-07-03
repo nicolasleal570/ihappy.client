@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { logoutAuth } from '../../../store/actions/authAction';
 import Link from 'next/link';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { socketLogout } from '../../../store/actions/socketAction';
 
 const UserDropdown = () => {
+
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
@@ -24,8 +25,13 @@ const UserDropdown = () => {
   const handleLogout = () => {
     dispatch(logoutAuth());
     emitLogoutEvent();
+    socket.close();
     router.push('/');
   };
+
+  Router.events.on('routeChangeStart', () => {
+    setIsOpen(false)
+  });
 
   return (
     <>
@@ -36,14 +42,14 @@ const UserDropdown = () => {
           className="flex justify-between items-center focus:outline-none"
         >
           {/*  */}
-          <div className="flex bg-purple-700 w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
+          <div className="bg-purple-700 w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
             <img
               className="w-full h-full object-cover"
               src={user?.avatar}
               alt="profile"
             />
           </div>
-          <p className="w-32 truncate px-2">
+          <p className="hidden lg:block w-32 truncate px-2">
             {user?.first_name} {user?.last_name}
           </p>
           <KeyboardArrowDownIcon className="text-lg" />
@@ -53,7 +59,7 @@ const UserDropdown = () => {
         <div
           className={`w-48 ${
             isOpen ? 'absolute' : 'hidden'
-          } text-left z-50 mt-2 bg-gray-200 border border-gray-300 rounded shadow-md right-0`}
+          } text-left z-50 mt-4 bg-gray-100 border border-gray-400 rounded shadow-lg right-0`}
         >
           <Link href="/profile">
             <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full rounded-t">
@@ -68,7 +74,7 @@ const UserDropdown = () => {
           <div className="border-t border-gray-400"></div>
           <button
             onClick={handleLogout}
-            className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full rounded-b text-left"
+            className="block px-4 py-2 text-red-400 font-semibold hover:bg-purple-400 hover:text-white w-full rounded-b text-left"
           >
             Log out
           </button>
