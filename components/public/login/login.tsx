@@ -40,13 +40,15 @@ export default function login() {
   }, [loading, error]);
 
   React.useEffect(() => {
-    if (!user) {
-      dispatch(authCheckState());
-    }
     if (user && !error && !loading) {
-      router.push('/dashboard');
+      const { redirected } = Router.query;
+      if (redirected === 'true') {
+        Router.back();
+      } else {
+        Router.push('/dashboard');
+      }
     }
-  }, [user]);
+  }, [user, loading, error]);
 
   const handleChange = (name: string, value: string) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -73,12 +75,7 @@ export default function login() {
       setSendingForm(true);
 
       dispatch(loginUser(data.email, data.password));
-
     }
-  };
-
-  const emitSetUserEvent = (user: any) => {
-    socket.emit('identity', user._id);
   };
 
   return (

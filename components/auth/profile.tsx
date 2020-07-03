@@ -31,10 +31,7 @@ export default function Profile() {
 
     const enviarDatos = async () => {
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+            withCredentials: true
         }
         setSendingInfo(true);
         axios.put(profile, {
@@ -62,10 +59,7 @@ export default function Profile() {
 
     const enviarFoto = async (formData: any) => {
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+            withCredentials: true
         }
         setSendingPhoto(true);
         axios.put(avatar, formData, config
@@ -80,17 +74,6 @@ export default function Profile() {
                 console.log(err);
                 setSendingPhoto(false);
             })
-    }
-
-    const obtenerDatos = async () => {
-        const res = await axios.get(getUsers, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token')
-            }
-        })
-        console.log(res)
-        const userData = await res.data.data
-        console.log(userData)
     }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

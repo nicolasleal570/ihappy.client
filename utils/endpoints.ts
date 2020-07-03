@@ -9,6 +9,8 @@ export const endpoint = `${backendURL}/api`;
 // AUTH API ROUTES
 export const login = `${endpoint}/auth/login/`
 export const signup = `${endpoint}/auth/register/`
+export const me = `${endpoint}/auth/me/`
+export const logout = `${endpoint}/auth/logout/`
 
 // PROFILE USER
 export const profile = `${endpoint}/users/profile/`

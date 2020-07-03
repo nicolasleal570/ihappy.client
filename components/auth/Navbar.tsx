@@ -1,7 +1,5 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import Axios from 'axios';
+import React from 'react';
+
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HelpIcon from '@material-ui/icons/Help';
@@ -10,138 +8,93 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import ForumIcon from '@material-ui/icons/Forum';
+import CloseIcon from '@material-ui/icons/Close';
 import Link from 'next/link';
-import { Divider } from '@material-ui/core';
-import { getPacients } from '../../utils/endpoints';
 
-const Navbar = () => {
-
-    const { user } = useSelector((state: any) => state.auth)
-
-    const [navbarOpen, setNavbarOpen] = React.useState(true);
-
-    const toggleNavbar = () => {
-        setNavbarOpen(!navbarOpen)
-        console.log(navbarOpen)
-    } 
-
-    const [modoA, setModoA] = React.useState()
-
-    useEffect(() => {
-        let modo = JSON.parse(String(localStorage.getItem('user')));
-        console.log(modo.slug)
-        setModoA(modo.slug)
-
-    }, [])
-
-    
-
-    return (
-        <nav>
-
-            <div className="block lg:hidden">
-                <button className="flex items-center px-3 py-2 border rounded text-black border-purple-400 hover:text-purple-500 hover:border-white bg-white-600 outline-none" onClick={toggleNavbar}>
-                    <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-                    </button>
-            </div>
-
-            <div  className={`fixed  lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll z-40 ${navbarOpen ? '' : 'hidden'}`}>
-
-                
-
-                <Link href="/dashboard">
-                    <div className="cursor-pointer flex justify-around items-center bg-purple-700 px-4 pt-4 pb-10">
-                        <img src='/favicon.png' className='w-12' />
-                        <h1 className='font-mono bold text-white text-4xl'>iHappy</h1>
-                    </div>
-                </Link>
-                {modoA === 'admin'
-                    ?
-                    <div className='flex flex-col'>
-                        <SidebarLink
-                            title="Psychologists"
-                            url="/psicologos"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                        <SidebarLink
-                            title="Users"
-                            url="/users"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                        <SidebarLink
-                            title="Stats"
-                            url="/stats"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                    </div>
-                    :
-
-                    <div className='flex flex-col'>
-                        <SidebarLink
-                            title="Dashboard"
-                            url="/dashboard"
-                        >
-                            <DashboardIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Chats"
-                            url="/chat"
-                        >
-                            <ForumIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Account Overview"
-                            isDropdown
-                            options={[
-                                { url: '/profile', name: 'My Profile' }
-                            ]}
-                        >
-                            <AccountCircleIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Payments"
-                            isDropdown
-                            options={[
-                                { url: '/payments', name: 'See All' },
-                                { url: '/payments', name: 'Manage Payments' }
-                            ]}
-                        >
-                            <AccountBalanceIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Search"
-                            url="/search"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Settings"
-                            url="/settings"
-                        >
-                            <SettingsIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Help"
-                            url="/help"
-                        >
-                            <HelpIcon className="text-white" />
-                        </SidebarLink>
-
-                    </div>
-                }
-            </div>
-
-        </nav>
-    )
+interface NavbarProps {
+  openMenu: () => void;
+  closeMenu: () => void;
+  isOpen: boolean;
 }
+const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
+  const closeMenuAnimation = () => {
+    if (isOpen) {
+      closeMenu();
+    }
+  };
 
-export default Navbar
+  return (
+    <nav
+      className={`${
+        isOpen ? 'w-full' : 'w-0'
+      } absolute left-0 top-0 z-40 h-full lg:relative lg:w-auto lg:left-auto lg:top-auto transition duration-700 ease-in-out`}
+      style={{
+        backgroundColor: 'rgba(0,0,0,0.5)',
+      }}
+    >
+      <div
+        className={`lg:fixed w-8/12 md:w-4/12 lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll transition duration-700 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-56 lg:translate-x-0'}`}
+      >
+        <div className="px-2 pt-2 flex flex-row-reverse lg:hidden">
+          <button
+            onClick={closeMenuAnimation}
+            className="leading-none p-1 bg-transparent rounded"
+          >
+            <CloseIcon className="text-white" />
+          </button>
+        </div>
+        <Link href="/dashboard">
+          <div className="cursor-pointer flex items-center bg-purple-700 lg:px-4 lg:pt-4 lg:pb-10 px-2 my-6">
+            <img src="/favicon.png" className="w-12 mr-1" />
+            <span className="cursor-pointer font-bold text-4xl tracking-tight text-white">
+              iHappy
+            </span>
+          </div>
+        </Link>
+
+        <div className="flex flex-col">
+          <SidebarLink title="Dashboard" url="/dashboard">
+            <DashboardIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink title="Chats" url="/chat">
+            <ForumIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink
+            title="Account Overview"
+            isDropdown
+            options={[{ url: '/profile', name: 'My Profile' }]}
+          >
+            <AccountCircleIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink
+            title="Payments"
+            isDropdown
+            options={[
+              { url: '/payments', name: 'See All' },
+              { url: '/payments', name: 'Manage Payments' },
+            ]}
+          >
+            <AccountBalanceIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink title="Search" url="/search">
+            <SearchIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink title="Settings" url="/settings">
+            <SettingsIcon className="text-white" />
+          </SidebarLink>
+
+          <SidebarLink title="Help" url="/faq-contact">
+            <HelpIcon className="text-white" />
+          </SidebarLink>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
