@@ -109,6 +109,7 @@ const ChatList = ({
       </div>
     );
   } else {
+    //Si hay chats, muestra los chats 
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
         <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
