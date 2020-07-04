@@ -15,8 +15,7 @@
       "purpose": "maskable any"
     }
   ],
-  "start_url": "/",
-  "scope": "/app/",
+  "start_url": "/app",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#212121",
