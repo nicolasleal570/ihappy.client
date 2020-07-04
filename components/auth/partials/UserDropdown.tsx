@@ -7,7 +7,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { socketLogout } from '../../../store/actions/socketAction';
 
 const UserDropdown = () => {
-
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
@@ -56,10 +55,8 @@ const UserDropdown = () => {
         </button>
 
         {/* Dropdown */}
-        <div
-          className={`w-48 ${
-            isOpen ? 'absolute' : 'hidden'
-          } text-left z-50 mt-4 bg-gray-100 border border-gray-400 rounded shadow-lg right-0`}
+        {isOpen ? <div
+          className={`absolute w-48 text-left z-50 mt-4 bg-gray-100 border border-gray-400 rounded shadow-lg right-0`}
         >
           <Link href="/profile">
             <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full rounded-t">
@@ -78,7 +75,7 @@ const UserDropdown = () => {
           >
             Log out
           </button>
-        </div>
+        </div> : null}
       </div>
     </>
   );
