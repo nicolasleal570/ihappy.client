@@ -23,7 +23,7 @@
     "moment": "^2.26.0",
     "next": "^9.4.1",
     "next-cookies": "^2.0.3",
-    "next-offline": "^5.0.2",
+    "next-pwa": "^3.0.1",
     "next-redux-wrapper": "^6.0.0",
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
@@ -58,7 +58,7 @@
     "postcss-import": "^12.0.1",
     "prettier": "2.0.5",
     "tailwindcss": "^1.4.6",
-    "xo": "^0.29.1"
+    "xo": "^0.32.1"
   },
   "xo": {
     "envs": [
