@@ -132,7 +132,7 @@ export default function signup() {
       <div
         className="flex-1 bg-center bg-no-repeat bg-cover h-screen"
         style={{
-          backgroundImage: `url('/assets/img/peace-girl.webp')`,
+          backgroundImage: `url('https://res.cloudinary.com/deekenjr3/image/upload/v1593848029/assets/peace-girl_gdshzz.jpg')`,
         }}
       >
         <div className="flex justify-center h-full">

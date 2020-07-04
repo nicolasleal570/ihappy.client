@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, authCheckState } from '../../../store/actions/authAction';
+import { loginUser } from '../../../store/actions/authAction';
 import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
-import { USER_CONNECTED } from '../../../utils/events';
 import InputField from '../../auth/partials/InputField';
 
 export default function login() {
@@ -83,7 +82,7 @@ export default function login() {
       <div
         className="flex-1 bg-center bg-no-repeat bg-cover h-screen"
         style={{
-          backgroundImage: `url('/assets/img/login-image.webp')`,
+          backgroundImage: `url('https://res.cloudinary.com/deekenjr3/image/upload/v1593848072/assets/login-image_xb9ln5.jpg')`,
         }}
       >
         <div className="flex justify-center h-full">

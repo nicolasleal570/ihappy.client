@@ -275,7 +275,7 @@ const Test = () => {
     return (
         <form onSubmit={onSubmit}>
             <div className="grid grid-cols-6 grid-rows-6 gap-3 bg-cover bg-center bg-no-repeat h-screen"
-                style={{ backgroundImage: `url('/assets/img/fototest.webp')` }}>
+                style={{ backgroundImage: `url('https://res.cloudinary.com/deekenjr3/image/upload/v1593847975/assets/fototest_qrteqn.png')` }}>
 
                 <div className="col-span-6">
                 </div>
