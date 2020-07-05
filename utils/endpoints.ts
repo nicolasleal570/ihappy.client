@@ -35,5 +35,8 @@ export const conversationStatus = (conversation:string) => `${endpoint}/conversa
 export const getMessages = (conversation: string) => `${endpoint}/messages/?conversation=${conversation}`
 export const postMessages =  `${endpoint}/messages/`
 
+export const getFactura = (slug:string) => `${endpoint}/factura/${slug}`
+export const postFactura = `${endpoint}/payment/`
+export const postBankAccount = `${endpoint}/bank_account/`
 // EMAIL 
 export const emails = `${endpoint}/emails/`

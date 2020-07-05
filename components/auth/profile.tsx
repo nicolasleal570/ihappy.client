@@ -14,9 +14,9 @@ export default function Profile() {
     const [archivo, setArchivo] = React.useState<File>()
     const [sendingPhoto, setSendingPhoto] = React.useState(false)
     const [sendingInfo, setSendingInfo] = React.useState(false)
-
+    const [price, setPrice] = React.useState('')
     const { user, loading, error } = useSelector((state: any) => state.auth)
-
+    const [role, setRole] = React.useState('')
     useEffect(() => {
         // obtenerDatos()
         setNombre(user?.first_name)
@@ -25,6 +25,8 @@ export default function Profile() {
         setDireccion(user?.address)
         setBiografia(user?.bio)
         setArchivo(user?.avatar)
+        setPrice(user?.precioConsulta)
+        setRole(user?.role.identification)
     }, [user])
 
     const dispatch = useDispatch();
@@ -39,7 +41,9 @@ export default function Profile() {
             'last_name': apellido,
             'cedula': cedula,
             'address': direccion,
-            'bio': biografia
+            'bio': biografia,
+            'precioConsulta':price
+
 
         }, config).then((res) => {
 
@@ -79,6 +83,7 @@ export default function Profile() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         enviarDatos();
+        e.preventDefault()
 
     }
 
@@ -112,6 +117,13 @@ export default function Profile() {
                                     Cedula </label>
                                 <input id='cedula' onChange={e => setCedula(e.target.value)} value={cedula} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="number" placeholder={cedula} />
                             </div>
+                            { role === "psicologo" || role===undefined && (
+                            <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
+                                <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-first-cedula">
+                                    Precio </label>
+                                <input id='precioConsulta' onChange={e => setPrice(e.target.value)} value={price} size={20} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="number" placeholder={price} />
+                            </div>
+                             ) }
                             {/* <div className="w-full py-1 md:w-1/2 px-2 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-cedula">
                             Carga tu avatar </label>
