@@ -1,10 +1,16 @@
 import * as types from '../actionTypes';
 import Axios, { AxiosRequestConfig } from 'axios';
 import { login, signup, me, logout } from '../../utils/endpoints';
+import Cookies, {CookieAttributes} from 'js-cookie';
 
 const config: AxiosRequestConfig = {
   withCredentials: true,
 };
+
+const cookiesConfig: CookieAttributes = {
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict'
+}
 
 const startAuth = () => {
   return {
@@ -34,6 +40,7 @@ export const loginUser = (email: String, password: String) => async (
 
     const { data } = await Axios.post(login, { email, password }, config);
     const { user, token } = data;
+    Cookies.set('token', token, cookiesConfig);
 
     dispatch(successAuth(user));
   } catch (err) {
@@ -63,7 +70,10 @@ export const signupUser = (
       config
     );
     const { user, token } = data;
+    Cookies.set('token', token, cookiesConfig);
+
     dispatch(successAuth(user));
+
   } catch (err) {
     dispatch(failAuth(err.response?.data.error));
   }
@@ -75,6 +85,9 @@ export const logoutAuth = () => async (dispatch: Function) => {
 
     const res = await Axios.put(logout, {}, config);
     const { success } = res.data;
+    if (success) {
+      Cookies.remove('token');
+    }
 
     dispatch({
       type: types.AUTH_LOGOUT,
