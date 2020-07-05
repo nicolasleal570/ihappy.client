@@ -9,7 +9,7 @@ const config: AxiosRequestConfig = {
 
 const cookiesConfig: CookieAttributes = {
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'none',
+  sameSite: 'Lax',
   expires: 1209600000,
 }
 
