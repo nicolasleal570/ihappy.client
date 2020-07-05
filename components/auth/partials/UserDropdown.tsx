@@ -7,7 +7,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { socketLogout } from '../../../store/actions/socketAction';
 
 const UserDropdown = () => {
-
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
@@ -26,11 +25,14 @@ const UserDropdown = () => {
     dispatch(logoutAuth());
     emitLogoutEvent();
     socket.close();
-    router.push('/');
   };
 
+  React.useEffect(() => {
+    console.log('User dropwdown', { user, loading });
+  }, [user, loading]);
+
   Router.events.on('routeChangeStart', () => {
-    setIsOpen(false)
+    setIsOpen(false);
   });
 
   return (

@@ -32,6 +32,10 @@ const Layout = ({ children, title }: LayoutProps) => {
       dispatch(initSocket(socket));
       emitSetUserEvent(user._id);
     }
+
+    if (!user && !loading) {
+      Router.push('/');
+    }
   }, [user, loading]);
 
   // Incomplete profile validation
