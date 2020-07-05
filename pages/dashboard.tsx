@@ -26,16 +26,16 @@ const Account: NextPage<AccountProps> = ({ loggedIn }) => {
     <AuthLayout title="Dashboard">
       <Dashboard />
     </AuthLayout>
-  ) : (
-    <LoginPage />
-  );
+  ) : null;
 };
 
-Account.getInitialProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<AccountProps> = async (
+  context
+) => {
   const allCookies = cookies(context);
   const token = allCookies.token;
-  if (!token) return { loggedIn: false };
-  return { loggedIn: true };
+  if (!token) return { props: { loggedIn: false } };
+  return { props: { loggedIn: true } };
 };
 
 export default Account;
