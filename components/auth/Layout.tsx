@@ -7,7 +7,7 @@ import { AllScreenLoader } from '../Loader';
 import Alert from './partials/Alert';
 import * as io from 'socket.io-client';
 import { backendURL } from '../../utils/endpoints';
-import { initSocket } from '../../store/actions/socketAction';
+import { initSocket, socketLogout } from '../../store/actions/socketAction';
 import MenuIcon from '@material-ui/icons/Menu';
 import Router from 'next/router';
 
@@ -36,6 +36,12 @@ const Layout = ({ children, title }: LayoutProps) => {
     if (!user && !loading) {
       Router.push('/');
     }
+    return () => {
+      if (socket) {
+        socket.removeAllListeners();
+        dispatch(socketLogout());
+      }
+    };
   }, [user, loading]);
 
   // Incomplete profile validation

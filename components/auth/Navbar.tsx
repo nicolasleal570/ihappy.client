@@ -88,7 +88,7 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
             <SettingsIcon className="text-white" />
           </SidebarLink>
 
-          <SidebarLink title="Help" url="/help">
+          <SidebarLink title="Help" url="/faq-contact">
             <HelpIcon className="text-white" />
           </SidebarLink>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
+
 interface DoctorCardProps {
     firstName: string
     lastName: string
