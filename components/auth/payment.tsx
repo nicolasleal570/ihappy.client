@@ -109,7 +109,6 @@ export default function Payment({ slug }: any) {
       )
       .then((res) => {
         console.log(res.data);
-        console.log('nigga we made it')
         setRequestConversation(false);
       })
       .catch((err) => {
@@ -155,7 +154,8 @@ export default function Payment({ slug }: any) {
             axios.post(postFactura, {
 
               'id': id,
-              'amount': infoPsicologo.precioConsulta,
+              'amount': infoPsicologo.precioConsulta*100,
+              'slug_psicologo':infoPsicologo.slug
 
             }, config).then((res) => {
 
@@ -179,7 +179,7 @@ export default function Payment({ slug }: any) {
       }
     }
     return (
-
+  
       <form onSubmit={handleSubmit} className='pt-5 pb-5' style={{ maxWidth: '400px', margin: '' }}>
         <div className='flex'>
           <h1 className='font-semibold text-xl text-gray-800'>Psicologo:</h1>
@@ -206,7 +206,7 @@ export default function Payment({ slug }: any) {
           <BigLoader />
         </div>
       )}
-      <div className='m-10 ml-10 mr-10 mb-10'>
+       <div className='m-10 ml-10 mr-10 mb-10'>
 
         {!loading && infoPsicologo != null && (
           <div>
