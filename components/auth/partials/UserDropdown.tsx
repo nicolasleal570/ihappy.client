@@ -27,10 +27,6 @@ const UserDropdown = () => {
     socket.close();
   };
 
-  React.useEffect(() => {
-    console.log('User dropwdown', { user, loading });
-  }, [user, loading]);
-
   Router.events.on('routeChangeStart', () => {
     setIsOpen(false);
   });
@@ -58,27 +54,29 @@ const UserDropdown = () => {
         </button>
 
         {/* Dropdown */}
-        {isOpen ? <div
-          className={`absolute w-48 text-left z-50 mt-4 bg-gray-100 border border-gray-400 rounded shadow-lg right-0`}
-        >
-          <Link href="/profile">
-            <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full rounded-t">
-              Account Overview
-            </a>
-          </Link>
-          <Link href="/help">
-            <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full">
-              Help
-            </a>
-          </Link>
-          <div className="border-t border-gray-400"></div>
-          <button
-            onClick={handleLogout}
-            className="block px-4 py-2 text-red-400 font-semibold hover:bg-purple-400 hover:text-white w-full rounded-b text-left"
+        {isOpen ? (
+          <div
+            className={`absolute w-48 text-left z-50 mt-4 bg-gray-100 border border-gray-400 rounded shadow-lg right-0`}
           >
-            Log out
-          </button>
-        </div> : null}
+            <Link href="/profile">
+              <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full rounded-t">
+                Account Overview
+              </a>
+            </Link>
+            <Link href="/help">
+              <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full">
+                Help
+              </a>
+            </Link>
+            <div className="border-t border-gray-400"></div>
+            <button
+              onClick={handleLogout}
+              className="block px-4 py-2 text-red-400 font-semibold hover:bg-purple-400 hover:text-white w-full rounded-b text-left"
+            >
+              Log out
+            </button>
+          </div>
+        ) : null}
       </div>
     </>
   );

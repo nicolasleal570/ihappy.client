@@ -15,10 +15,10 @@ interface AccountProps {
 const Account: NextPage<AccountProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-        Router.push({
-          pathname: '/login',
-          query: { redirected: true },
-        });
+      Router.push({
+        pathname: '/login',
+        query: { redirected: true },
+      });
     }
   }, [loggedIn]);
 
@@ -31,13 +31,11 @@ const Account: NextPage<AccountProps> = ({ loggedIn }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<AccountProps> = async (
-    context
-  ) => {
-    const allCookies = cookies(context);
-    const token = allCookies.token;
-    if (!token) return { props: { loggedIn: false } };
-    return { props: { loggedIn: true } };
-  };
+Account.getInitialProps = async (context) => {
+  const allCookies = cookies(context);
+  const token = allCookies.token;
+  if (!token) return { loggedIn: false };
+  return { loggedIn: true };
+};
 
 export default Account;
