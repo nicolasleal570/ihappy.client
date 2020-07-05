@@ -6,6 +6,13 @@ import Cookies, {CookieAttributes} from 'js-cookie';
 const config: AxiosRequestConfig = {
   withCredentials: true,
 };
+
+const cookiesConfig: CookieAttributes = {
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'None',
+  expires: 1209600000,
+}
+
 const startAuth = () => {
   return {
     type: types.AUTH_START,
@@ -34,7 +41,7 @@ export const loginUser = (email: String, password: String) => async (
 
     const { data } = await Axios.post(login, { email, password }, config);
     const { user, token } = data;
-    Cookies.set('token', token);
+    Cookies.set('token', token, cookiesConfig);
 
     dispatch(successAuth(user));
   } catch (err) {
@@ -64,7 +71,7 @@ export const signupUser = (
       config
     );
     const { user, token } = data;
-    Cookies.set('token', token);
+    Cookies.set('token', token, cookiesConfig);
 
     dispatch(successAuth(user));
 
