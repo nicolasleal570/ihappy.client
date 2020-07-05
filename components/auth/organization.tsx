@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { getDoctors,getPacients, getSpecialty,getCountDoctorsBySpeciality } from '../../utils/endpoints';
 import Axios from 'axios';
 
-const  finance= () => {
+const  organization= () => {
 
     const [money, setMoney] = React.useState<Array<any>>([]);
 
@@ -33,57 +33,70 @@ const  finance= () => {
     //         })
     // }, [])
 
+    const data = {
+        labels: [
+            'Consultas Activas',
+            'Consultas Finalizadas'
+        ],
+        datasets: [{
+            data: [300, 50],
+            backgroundColor: [
+            '#FF6384',
+            '#36A2EB'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB'
+            ]
+        }]
+    };
+
     return (
         <div className='flex flex-col'>
-            <div className=" text-left  px-4 py-8 m-2 flex flex-row">
-            
-    <h2 className='text-4xl my-2'><u>Ingresos totales hasta la fecha:</u>   $888</h2>
             
 
-            </div>
-            <div className="px-4 ">
-                <h1 className='underline text-4xl'>Status de Compras</h1>
-                
-                
-            </div>
-            <div className='flex justify-center'>
-                <table className="table-fixed">
+            <div className="flex justify-center text-left  px-4 py-8 m-2">
+            
+            <table className="table-fixed">
                     <thead>
                         <tr>
-                        <th className="w-1/5 px-4 py-2">Orden</th>
-                        <th className="w-1/5 px-4 py-2">Psicologo</th>
-                        <th className="w-1/5 px-4 py-2">Paciente</th>
-                        <th className="w-1/5 px-4 py-2">Status</th>
-                        <th className="w-1/5 px-4 py-2">Metodo</th>
+                        <th className="w-1/3 px-4 py-2">Orden</th>
+                        <th className="w-1/3 px-4 py-2">Cliente</th>
+                        <th className="w-1/3 px-4 py-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td className="border px-4 py-2">Intro to CSS</td>
-                        <td className="border px-4 py-2">Adam</td>
                         <td className="border px-4 py-2">858</td>
                         <td className="border px-4 py-2">Adam</td>
-                        <td className="border px-4 py-2">858</td>
+                        <td className="border px-4 py-2">Activa</td>
                         </tr>
                         <tr>
-                        <td className="border px-4 py-2">Intro to CSS</td>
-                        <td className="border px-4 py-2">Adam</td>
                         <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">Adam</td>
-                        <td className="border px-4 py-2">858</td>
+                        <td className="border px-4 py-2">Yacob</td>
+                        <td className="border px-4 py-2">Activa</td>
                         </tr>
                         <tr>
-                        <td className="border px-4 py-2">Intro to CSS</td>
-                        <td className="border px-4 py-2">Adam</td>
                         <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">Adam</td>
-                        <td className="border px-4 py-2">858</td>
+                        <td className="border px-4 py-2">Pascual</td>
+                        <td className="border px-4 py-2">Finalizada</td>
                         </tr>
                     </tbody>
                 </table>
-                </div>
+            
+    
+            </div>
+
+            <div className="flex text-4xl text-left  px-4 py-8 m-2">
+                <h1 className='underline'>Finalizadas vs Activas</h1>
+            </div>
+
+            <div className="flex justify-center  px-4 py-8 m-2">
+            <Doughnut data={data} />
+            </div>
+
         </div>
     )
 }
 
-export default finance
+export default organization
