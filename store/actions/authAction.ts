@@ -41,7 +41,7 @@ export const loginUser = (email: String, password: String) => async (
 
     const { data } = await Axios.post(login, { email, password }, config);
     const { user, token } = data;
-    Cookies.set('token', token, cookiesConfig);
+    // Cookies.set('token', token, cookiesConfig);
 
     dispatch(successAuth(user));
   } catch (err) {
@@ -71,7 +71,7 @@ export const signupUser = (
       config
     );
     const { user, token } = data;
-    Cookies.set('token', token, cookiesConfig);
+    // Cookies.set('token', token, cookiesConfig);
 
     dispatch(successAuth(user));
 
@@ -86,9 +86,9 @@ export const logoutAuth = () => async (dispatch: Function) => {
 
     const res = await Axios.put(logout, {}, config);
     const { success } = res.data;
-    if (success) {
-      Cookies.remove('token');
-    }
+    // if (success) {
+    //   Cookies.remove('token');
+    // }
 
     dispatch({
       type: types.AUTH_LOGOUT,
