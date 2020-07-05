@@ -42,7 +42,7 @@ const  finance= () => {
             
 
             </div>
-            <div className="px-4">
+            <div className="px-4 justify-center">
                 <h1 className='underline text-4xl'>Status de Compras</h1>
                 <table className="table-fixed">
                     <thead>
