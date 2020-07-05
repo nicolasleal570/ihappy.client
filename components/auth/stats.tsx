@@ -23,7 +23,9 @@ const  stats= () => {
             }
         }
 
-        Axios.get(getDoctors(), config)
+        Axios.get(getDoctors(),  {
+            withCredentials: true,
+          })
             .then(response => {
                 const data_role = response.data.data;
 
@@ -35,7 +37,9 @@ const  stats= () => {
         
         
 
-            Axios.get(getCountDoctorsBySpeciality, config)
+            Axios.get(getCountDoctorsBySpeciality,  {
+                withCredentials: true,
+              })
             .then(response => {
                 const data_role = response.data.data;
 
@@ -71,7 +75,9 @@ const  stats= () => {
             }
         }
 
-        Axios.get(getPacients, config)
+        Axios.get(getPacients,  {
+            withCredentials: true,
+          })
             .then(response => {
                 const data_role = response.data.data;
 
