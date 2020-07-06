@@ -36,7 +36,6 @@ export const getServerSideProps: GetServerSideProps<AccountProps> = async (
 ) => {
   const allCookies = cookies(context);
   const token = allCookies.token;
-  Axios.defaults.headers.get.Cookie = context.req.headers.cookie;
   if (!token) return { props: { loggedIn: false } };
   return { props: { loggedIn: true } };
 };
