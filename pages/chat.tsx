@@ -15,19 +15,18 @@ interface ChatProps {
 const Chat: NextPage<ChatProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/chat', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
 
-  return loggedIn ? (
-    <AuthLayout title="Chat">
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
+    <AuthLayout title="Dashboard">
       <ChatSection />
     </AuthLayout>
-  ) : (
-    <LoginPage />
   );
 };
 

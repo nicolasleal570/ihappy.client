@@ -15,18 +15,19 @@ interface AccountProps {
 const Account: NextPage<AccountProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/dashboard', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
 
-  return loggedIn ? (
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
     <AuthLayout title="Dashboard">
       <Dashboard />
     </AuthLayout>
-  ) : null;
+  );
 };
 
 export const getServerSideProps: GetServerSideProps<AccountProps> = async (

@@ -16,22 +16,20 @@ interface ReviewsProps {
 const Reviews: NextPage<ReviewsProps> = ({ loggedIn }) => {
   const router = useRouter();
   const { slug } = router.query;
-
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/reviews/:slug', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
 
-  return loggedIn ? (
-    <AuthLayout title="User Biography">
-      <ReviewsList slug={slug} />
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
+    <AuthLayout title="Reseñas y Perfil">
+    <ReviewsList slug={slug} />
     </AuthLayout>
-  ) : (
-    <LoginPage />
   );
 };
 

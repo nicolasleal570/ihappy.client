@@ -15,19 +15,18 @@ interface SearchProps {
 const Search: NextPage<SearchProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/search', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
 
-  return loggedIn ? (
-    <AuthLayout title="Encuentra Médicos">
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
+    <AuthLayout title="Encuentra tu Médico">
       <SearchSection />
     </AuthLayout>
-  ) : (
-    <LoginPage />
   );
 };
 

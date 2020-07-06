@@ -15,18 +15,18 @@ interface TestProps {
 const Test: NextPage<TestProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/test', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
-  return loggedIn ? (
-    <AuthLayout title="Test X">
+
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
+    <AuthLayout title="Metricas de la pagina">
       <TestForm />
     </AuthLayout>
-  ) : (
-    <LoginPage />
   );
 };
 

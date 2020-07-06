@@ -15,19 +15,18 @@ interface ProfileProps {
 const Profile: NextPage<ProfileProps> = ({ loggedIn }) => {
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.push({
-        pathname: '/login',
-        query: { redirected: true },
-      });
+      Router.replace('/profile/', '/login?redirected=true', { shallow: true });
     }
   }, [loggedIn]);
 
-  return loggedIn ? (
-    <AuthLayout title="Account Overview">
+  if (!loggedIn) {
+    return <LoginPage />;
+  }
+
+  return (
+    <AuthLayout title="Resumen de tu cuenta">
       <ProfileForm />
     </AuthLayout>
-  ) : (
-    <LoginPage />
   );
 };
 
