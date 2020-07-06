@@ -17,6 +17,9 @@ export const profile = `${endpoint}/users/profile/`
 export const avatar = `${endpoint}/users/avatar/`
 export const disable = (slug: string) => `${endpoint}/users/disable/${slug}`
 
+export const getFacturas = `${endpoint}/factura/stats/finance`
+export const getFacturasByPsico = (slug: string) => `${endpoint}/factura/find/${slug}`
+
 
 export const getUsers = `${endpoint}/users/`
 export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`

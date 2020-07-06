@@ -1,37 +1,39 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
-import { getDoctors,getPacients, getSpecialty,getCountDoctorsBySpeciality } from '../../utils/endpoints';
+import { getPacients, getFacturasByPsico } from '../../utils/endpoints';
 import Axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
 const  organization= () => {
 
     const [money, setMoney] = React.useState<Array<any>>([]);
+    const [schedule, setschedule] = React.useState<Array<any>>([]);
+    const {user, loading} = useSelector((state:any) => state.auth);
 
-    // React.useEffect(() => {
+    
 
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //         }
-    //     }
+    React.useEffect(() => {
 
-    //     Axios.get(getPacients,  {
-    //         withCredentials: true,
-    //       })
-    //         .then(response => {
-    //             const data_role = response.data.data;
+        
+
+        if  (user){Axios.get(getFacturasByPsico(user.slug),  {
+            withCredentials: true,
+          })
+            .then(response => {
+                const data_role = response.data.data;
 
 
-    //             console.log(data_role);
-    //             setMoney(data_role);
+                console.log(data_role.factura);
+                setschedule(data_role.factura)
 
-    //         })
-    //         .catch(e => {
-    //             // Podemos mostrar los errores en la consola
-    //             console.log(e);
-    //         })
-    // }, [])
+            })
+        .catch(e => {
+            // Podemos mostrar los errores en la consola
+            console.log(e);
+        })}
+
+        
+    }, [user,loading])
 
     const data = {
         labels: [
@@ -61,26 +63,24 @@ const  organization= () => {
                     <thead>
                         <tr>
                         <th className="w-1/3 px-4 py-2">Orden</th>
-                        <th className="w-1/3 px-4 py-2">Cliente</th>
+                        <th className="w-1/3 px-4 py-2">Fecha</th>
                         <th className="w-1/3 px-4 py-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {
+
+                        schedule.map(el => 
                         <tr>
-                        <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">Adam</td>
-                        <td className="border px-4 py-2">Activa</td>
-                        </tr>
-                        <tr>
-                        <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">Yacob</td>
-                        <td className="border px-4 py-2">Activa</td>
-                        </tr>
-                        <tr>
-                        <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">Pascual</td>
-                        <td className="border px-4 py-2">Finalizada</td>
-                        </tr>
+                        <td className="border px-4 py-2">{el._id}</td>
+                        <td className="border px-4 py-2">{el.fecha}</td>
+                        <td className="border px-4 py-2">Finalizado</td>
+                        </tr>)
+
+                        
+
+                    }
+                        
                     </tbody>
                 </table>
             
