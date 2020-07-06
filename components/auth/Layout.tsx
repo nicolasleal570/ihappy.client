@@ -33,9 +33,6 @@ const Layout = ({ children, title }: LayoutProps) => {
       emitSetUserEvent(user._id);
     }
 
-    if (!user && !loading) {
-      Router.push('/');
-    }
     return () => {
       if (socket) {
         socket.removeAllListeners();
