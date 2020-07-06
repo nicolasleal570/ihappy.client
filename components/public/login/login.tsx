@@ -29,10 +29,6 @@ export default function login() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    Router.prefetch('/dashboard');
-  }, []);
-
-  React.useEffect(() => {
     if (error && !loading) {
       setUserError(error);
       setSendingForm(false);

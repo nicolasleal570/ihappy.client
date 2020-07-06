@@ -1,9 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
-import Axios from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 import { getDoctors } from '../../utils/endpoints';
 import DoctorCard from './partials/DoctorCard';
 import { BigLoader } from '../Loader';
+
+const config: AxiosRequestConfig = {
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 export default function Dashboard() {
   const [loading, setLoading] = React.useState(false);
@@ -13,9 +20,7 @@ export default function Dashboard() {
     setLoading(true);
 
     const getDoctorsData = async () => {
-      const res = await Axios.get(getDoctors(4), {
-        withCredentials: true,
-      });
+      const res = await Axios.get(getDoctors(4), config);
       setDoctors(res.data.data);
       setLoading(false);
     };

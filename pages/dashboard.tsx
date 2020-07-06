@@ -9,35 +9,11 @@ import cookies from 'next-cookies';
 import Axios from 'axios';
 const LoginPage = dynamic(() => import('./login'));
 
-interface AccountProps {
-  loggedIn: boolean;
-}
-
-const Account: NextPage<AccountProps> = ({ loggedIn }) => {
-  React.useEffect(() => {
-    if (!loggedIn) {
-      Router.replace('/dashboard', '/login?redirected=true', { shallow: true });
-    }
-  }, [loggedIn]);
-
-  if (!loggedIn) {
-    return <LoginPage />;
-  }
-
+const Account = () => {
   return (
     <AuthLayout title="Dashboard">
       <Dashboard />
     </AuthLayout>
   );
 };
-
-export const getServerSideProps: GetServerSideProps<AccountProps> = async (
-  context
-) => {
-  const allCookies = cookies(context);
-  const token = allCookies.token;
-  if (!token) return { props: { loggedIn: false } };
-  return { props: { loggedIn: true } };
-};
-
 export default Account;
