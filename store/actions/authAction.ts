@@ -4,6 +4,9 @@ import { login, signup, me, logout } from '../../utils/endpoints';
 
 const config: AxiosRequestConfig = {
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 };
 
 const startAuth = () => {
