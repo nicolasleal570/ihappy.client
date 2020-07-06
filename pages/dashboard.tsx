@@ -6,6 +6,7 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import cookies from 'next-cookies';
+import Axios from 'axios';
 const LoginPage = dynamic(() => import('./login'));
 
 interface AccountProps {
@@ -35,6 +36,7 @@ export const getServerSideProps: GetServerSideProps<AccountProps> = async (
 ) => {
   const allCookies = cookies(context);
   const token = allCookies.token;
+  Axios.defaults.headers.get.Cookie = context.req.headers.cookie;
   if (!token) return { props: { loggedIn: false } };
   return { props: { loggedIn: true } };
 };
