@@ -118,15 +118,27 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
                             <ForumIcon className="text-white" />
                         </SidebarLink>
 
-                        <SidebarLink
-                            title="Account Overview"
-                            isDropdown
-                            options={[
-                                { url: '/profile', name: 'My Profile' }
-                            ]}
-                        >
-                            <AccountCircleIcon className="text-white" />
-                        </SidebarLink>
+                        {modoA === 'psicologo' ? 
+                                <SidebarLink
+                                title="Account Overview"
+                                isDropdown
+                                options={[
+                                    { url: '/profile', name: 'My Profile' },
+                                    { url: '/organization', name: 'Schedule'}
+                               ]}> 
+                                <AccountCircleIcon className="text-white" />
+                                </SidebarLink>: <SidebarLink
+                    title="Account Overview"
+                    isDropdown
+                    options={[
+                        { url: '/profile', name: 'My Profile' }
+                        
+                    ]}
+                ><AccountCircleIcon className="text-white" />
+                </SidebarLink>}
+
+                        
+                            
 
                         <SidebarLink
                             title="Payments"
@@ -145,14 +157,6 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
                         >
                             <SearchIcon className="text-white" />
                         </SidebarLink>
-
-                        {modoA === 'psicologo' ? 
-                        <SidebarLink
-                        title="Schedule"
-                        url="/organization"
-                    >
-                        <SearchIcon className="text-white" />
-                    </SidebarLink>: ''}
 
                         <SidebarLink
                             title="Settings"
