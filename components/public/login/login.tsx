@@ -123,7 +123,7 @@ export default function login() {
                   value=""
                   inputChange={handleChange}
                   ref={inputRefs.current[0]}
-                  validation="required|email|min:6|max:20"
+                  validation="required|email|min:6|max:30"
                 />
               </div>
             </div>

@@ -32,7 +32,7 @@ const  stats= () => {
 
                 console.log(data_role);
                 setDoctors(data_role);
-
+                
             })
         
         
@@ -96,6 +96,7 @@ const  stats= () => {
 
     const data = {
         datasets: [{
+            
             data: [doctors.length, pacients.length],
             backgroundColor: [
                 '#FF6384',

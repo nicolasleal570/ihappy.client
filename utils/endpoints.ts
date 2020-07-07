@@ -14,7 +14,7 @@ export const logout = `${endpoint}/auth/logout/`
 
 // PROFILE USER
 export const profile = `${endpoint}/users/profile/`
-export const avatar = `${endpoint}/users/avatar/`
+export const putAvatar = `${endpoint}/users/avatar/`
 export const disable = (slug: string) => `${endpoint}/users/disable/${slug}`
 
 export const getFacturas = `${endpoint}/factura/stats/finance`
@@ -38,5 +38,8 @@ export const conversationStatus = (conversation:string) => `${endpoint}/conversa
 export const getMessages = (conversation: string) => `${endpoint}/messages/?conversation=${conversation}`
 export const postMessages =  `${endpoint}/messages/`
 
+export const getFactura = (slug:string) => `${endpoint}/factura/${slug}`
+export const postFactura = `${endpoint}/factura/`
+export const postBankAccount = `${endpoint}/bank_account/`
 // EMAIL 
 export const emails = `${endpoint}/emails/`

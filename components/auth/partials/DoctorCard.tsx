@@ -37,12 +37,15 @@ const DoctorCard = ({
             </div>
 
             {/* Specialities */}
+            {specialities && (
             <div className="flex items-start justify-center flex-col px-4 my-4">
+
                 {specialities.map((elemen) => (
                     <span key={elemen.slug} className="px-2 py-1 text-xs bg-purple-200 mb-2 rounded capitalize border border-purple-300">{elemen.name}</span>
                 ))}
+               
             </div>
-
+)}
             {/* Tag role */}
             {role && <div className="absolute right-0 top-0 mt-4 -mr-2 rounded bg-purple-200 px-2 py-1 shadow capitalize border border-purple-300">
                 {role.public_name}
