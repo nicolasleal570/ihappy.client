@@ -18,7 +18,7 @@ const Reviews: NextPage<ReviewsProps> = ({ loggedIn }) => {
   const { slug } = router.query;
   React.useEffect(() => {
     if (!loggedIn) {
-      Router.replace('/reviews/:slug', '/login?redirected=true', { shallow: true });
+      Router.push('/login?redirected=true');
     }
   }, [loggedIn]);
 
@@ -28,7 +28,7 @@ const Reviews: NextPage<ReviewsProps> = ({ loggedIn }) => {
 
   return (
     <AuthLayout title="Reseñas y Perfil">
-    <ReviewsList slug={slug} />
+      <ReviewsList slug={slug} />
     </AuthLayout>
   );
 };
@@ -36,6 +36,7 @@ const Reviews: NextPage<ReviewsProps> = ({ loggedIn }) => {
 export const getServerSideProps: GetServerSideProps<ReviewsProps> = async (
   context
 ) => {
+  console.log('cookie', context.req.headers.cookie);
   const allCookies = cookies(context);
   const token = allCookies.token;
   if (!token) return { props: { loggedIn: false } };
