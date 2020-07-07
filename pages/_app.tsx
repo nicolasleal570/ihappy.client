@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-
+import 'react-toastify/dist/ReactToastify.css'
 import '../tailwind.css';
 
 import { Provider, useSelector, useDispatch } from 'react-redux';

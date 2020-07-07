@@ -14,7 +14,7 @@ export const logout = `${endpoint}/auth/logout/`
 
 // PROFILE USER
 export const profile = `${endpoint}/users/profile/`
-export const avatar = `${endpoint}/users/avatar/`
+export const putAvatar = `${endpoint}/users/avatar/`
 export const disable = (slug: string) => `${endpoint}/users/disable/${slug}`
 
 
