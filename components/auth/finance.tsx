@@ -1,7 +1,8 @@
 import React from 'react'
-import { Doughnut } from 'react-chartjs-2';
+import CountUp from 'react-countup';
 import { getFacturas,getPacients, getSpecialty,getCountDoctorsBySpeciality } from '../../utils/endpoints';
 import Axios from 'axios';
+
 
 const tablon = ({a}:any,{b}:any ) =>{
     
@@ -19,11 +20,15 @@ interface statsData {
     total: number
 }
 
+
+
 const  finance= () => {
 
     
+    let numo: number;
+    
     const [stats, setStats] = React.useState<Array<any>>([]);
-    const [money, setMoney] = React.useState<Number>();
+    const [money, setMoney] = React.useState<number>(0);
 
     React.useEffect(() => {
 
@@ -45,6 +50,8 @@ const  finance= () => {
 
                 total = total*.1
 
+                numo = total
+
                 setMoney(total);
 
                 setStats(data_role);
@@ -57,20 +64,18 @@ const  finance= () => {
             })
     }, [])
 
-    const psica = stats.map((stats: any) => (
-        tablon(stats._id,stats.total)
-    )) 
+    
 
     return (
         <div className='flex flex-col'>
-            <div className=" text-left  px-4 py-8 m-2 flex flex-row">
+            <div className=" text-left  px-4 py-8  flex flex-row">
             
-    <h2 className='text-4xl my-2'><u>Ingresos totales hasta la fecha:</u>   ${money}</h2>
+                <h2 className='text-4xl my-2'>Ingresos totales hasta la fecha:  $<CountUp end={money} /></h2>
             
 
             </div>
             <div className="px-4 ">
-                <h1 className='underline text-4xl'>Historial de Compras</h1>
+                <h1 className=' text-4xl'>Historial de Compras</h1>
                 
                 
             </div>
@@ -80,6 +85,8 @@ const  finance= () => {
                 <thead>
                     <tr>
                     <th className="w-1/5 px-4 py-2">Orden</th>
+                    <th className="w-1/5 px-4 py-2">Psicologo</th>
+                    <th className="w-1/5 px-4 py-2">Paciente</th>
                     <th className="w-1/5 px-4 py-2">Total</th>
                     </tr>
                 </thead>
@@ -88,7 +95,9 @@ const  finance= () => {
 
                     stats.map(el => <tr>
                         <td className="border px-4 py-2">{el._id}</td>
-                        <td className="border px-4 py-2">{el.total}</td>
+                        <td className="border px-4 py-2">{el.psicologo.username}</td>
+                        <td className="border px-4 py-2">{el.user.username} </td>
+                        <td className="border px-4 py-2">${el.total}</td>
                         </tr>)
 
                         

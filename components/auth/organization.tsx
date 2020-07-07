@@ -22,6 +22,7 @@ const  organization= () => {
             .then(response => {
                 const data_role = response.data.data;
 
+                
 
                 console.log(data_role.factura);
                 setschedule(data_role.factura)
@@ -34,6 +35,19 @@ const  organization= () => {
 
         
     }, [user,loading])
+
+    React.useEffect(() => {
+  if  (schedule){
+                for (let index = 0; index < schedule.length; index++) {
+                    const date =  new Date(schedule[index].fecha)
+                    console.log(date);
+                    schedule[index].fecha = date.toLocaleDateString("en-US");
+                    
+                } }
+
+
+        
+    }, [schedule])
 
     const data = {
         labels: [
@@ -64,6 +78,7 @@ const  organization= () => {
                         <tr>
                         <th className="w-1/3 px-4 py-2">Orden</th>
                         <th className="w-1/3 px-4 py-2">Fecha</th>
+                        <th className="w-1/3 px-4 py-2">Paciente</th>
                         <th className="w-1/3 px-4 py-2">Status</th>
                         </tr>
                     </thead>
@@ -74,6 +89,7 @@ const  organization= () => {
                         <tr>
                         <td className="border px-4 py-2">{el._id}</td>
                         <td className="border px-4 py-2">{el.fecha}</td>
+                        <td className="border px-4 py-2">{el.user.first_name} {el.user.last_name}</td>
                         <td className="border px-4 py-2">Finalizado</td>
                         </tr>)
 

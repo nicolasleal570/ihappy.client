@@ -12,6 +12,12 @@ export default function Dashboard() {
   React.useEffect(() => {
     setLoading(true);
 
+    // const config = {
+    //     headers: {
+    //         Authorization: 'Bearer ' + localStorage.getItem('token')
+    //     }
+    // }
+
     const getDoctorsData = async () => {
       const res = await Axios.get(getDoctors(4), {
         withCredentials: true,
