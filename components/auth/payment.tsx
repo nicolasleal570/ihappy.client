@@ -63,7 +63,7 @@ export default function Payment({ slug }: any) {
   const [infoPsicologo, setInfoPsicologo] = React.useState(null);
   const { user, error } = useSelector((state: any) => state.auth)
   const [paymentDone, setPaymentDone] = React.useState('')
-  
+
   const config = {
     withCredentials: true,
   };
@@ -76,7 +76,7 @@ export default function Payment({ slug }: any) {
 
         if (slug) {
           const res = await axios.get(getFactura(slug + ''), config);
-          setInfoPsicologo(res.data.data.psychologist);
+          setInfoPsicologo(res.data.data.psicologo);
           console.log(res)
           console.log(infoPsicologo)
           setLoading(false);
