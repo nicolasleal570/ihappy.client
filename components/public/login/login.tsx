@@ -82,7 +82,7 @@ export default function login() {
       <div
         className="flex-1 bg-center bg-no-repeat bg-cover h-screen"
         style={{
-          backgroundImage: `url('https://res.cloudinary.com/deekenjr3/image/upload/v1593848072/assets/login-image_xb9ln5.jpg')`,
+          backgroundImage: `url('/assets/img/login-image.jpg')`,
         }}
       >
         <div className="flex justify-center h-full">

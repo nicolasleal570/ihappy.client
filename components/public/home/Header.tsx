@@ -62,7 +62,7 @@ const Header = () => {
             <div
                 className="absolute top-0 w-full h-full bg-center bg-no-repeat bg-cover"
                 style={{
-                    backgroundImage: `url('https://res.cloudinary.com/deekenjr3/image/upload/v1593847974/assets/home-bg_jk5x3n.png')`
+                    backgroundImage: `url('/assets/img/home-bg.png')`
                 }}>
 
                 {/* Content */}
