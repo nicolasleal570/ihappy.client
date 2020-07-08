@@ -1,11 +1,5 @@
 {
     "version": 2,
-    "routes": [
-      {
-        "src": "/sw.js$",
-        "dest": "/_next/static/sw.js"
-      }
-    ],
     "builds": [
       {
         "src": "next.config.js",
