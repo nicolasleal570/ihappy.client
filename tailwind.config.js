@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { fontFamily } = require('tailwindcss/defaultTheme');
 
 // tailwind.config.js
 module.exports = {
