@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 import '../tailwind.css';
 
 import { Provider, useSelector, useDispatch } from 'react-redux';
@@ -25,6 +25,19 @@ Router.events.on('routeChangeError', () => {
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('service worker registration successful');
+        })
+        .catch((err) => {
+          console.warn('service worker registration failed', err.message);
+        });
+    }
+  }, []);
 
   React.useEffect(() => {
     dispatch(authCheckState());
