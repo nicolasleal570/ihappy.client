@@ -25,20 +25,7 @@ Router.events.on('routeChangeError', () => {
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then((registration) => {
-          console.log('service worker registration successful');
-        })
-        .catch((err) => {
-          console.warn('service worker registration failed', err.message);
-        });
-    }
-  }, []);
-
+  
   React.useEffect(() => {
     dispatch(authCheckState());
   }, [pageProps]);
