@@ -32,7 +32,10 @@ function search() {
 
   React.useEffect(() => {
     const config = {
-      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     };
 
     Axios.get(getDoctors(100), config)
@@ -50,7 +53,10 @@ function search() {
   }, []);
 
   const option = specialty.map((element: any) => (
-    <option value={element._id} key={element._id}> {element.name} </option>
+    <option value={element._id} key={element._id}>
+      {' '}
+      {element.name}{' '}
+    </option>
   ));
 
   const psica =

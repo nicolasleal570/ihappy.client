@@ -174,7 +174,7 @@ export default function signup() {
                     value=""
                     inputChange={handleChange}
                     ref={inputRefs.current[1]}
-                    validation="required|min:6|max:20"
+                    validation="required|min:3"
                   />
                 </div>
 
@@ -188,7 +188,7 @@ export default function signup() {
                     value=""
                     inputChange={handleChange}
                     ref={inputRefs.current[0]}
-                    validation="required|email|min:6|max:20"
+                    validation="required|email|min:6"
                   />
                 </div>
 

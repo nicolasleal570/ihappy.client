@@ -26,7 +26,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
   );
-  const boxRef = React.createRef<HTMLDivElement>()
+  const boxRef = React.createRef<HTMLDivElement>();
 
   // Update if new messages are sent or recieve
   React.useEffect(() => {
@@ -41,7 +41,10 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     if (chat) {
       const getData = async () => {
         const config = {
-          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
         };
 
         const res = await Axios.get(getMessages(chat._id), config);
@@ -62,7 +65,10 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
 
   const eliminarChat = async () => {
     const config = {
-      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     };
     setSendPendiente(true);
     Axios.put(
