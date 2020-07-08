@@ -6,7 +6,7 @@ import {
 } from '../../utils/endpoints';
 import axios from 'axios';
 import { BigLoader } from '../Loader';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, StripeCardElement } from '@stripe/stripe-js';
 import {
   Elements,
   CardElement,
@@ -81,7 +81,7 @@ export default function Payment({ slug }: any) {
       try {
         if (slug) {
           const res = await axios.get(getFactura(slug + ''), config);
-          setInfoPsicologo(res.data.data.psychologist);
+          setInfoPsicologo(res.data.data.psicologo);
           console.log(res);
           console.log(infoPsicologo);
           setLoading(false);
@@ -139,58 +139,59 @@ export default function Payment({ slug }: any) {
 
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
-        card: elements.getElement(CardElement),
+        card: elements.getElement(CardElement) as StripeCardElement,
       });
 
       if (!error) {
-        const { id } = paymentMethod;
-        console.log(paymentMethod);
+        if (paymentMethod) {
+          const { id } = paymentMethod;
 
-        try {
-          const enviarDatos = async () => {
-            const config = {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-              },
-            };
-
-            axios
-              .post(
-                postFactura,
-                {
-                  id: id,
-                  amount: infoPsicologo.precioConsulta * 100,
-                  slug_psicologo: infoPsicologo.slug,
+          try {
+            const enviarDatos = async () => {
+              const config = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + localStorage.getItem('token'),
                 },
-                config
-              )
-              .then((res) => {
-                console.log(res.data);
-                {
-                  payment();
-                }
-                {
-                  onSubmit();
-                }
-                swal(
-                  'Su pago ha sido exitoso',
-                  'Gracias por confiar en iHappy!',
-                  'success'
-                );
-              })
-              .catch((err) => {
-                console.log(err);
-                swal(
-                  'Upss! Algo anda mal',
-                  'La transacción no se ha logrado',
-                  'error'
-                );
-              });
-          };
-          enviarDatos();
-        } catch (error) {
-          console.log(error);
+              };
+
+              axios
+                .post(
+                  postFactura,
+                  {
+                    id: id,
+                    amount: infoPsicologo.precioConsulta * 100,
+                    slug_psicologo: infoPsicologo.slug,
+                  },
+                  config
+                )
+                .then((res) => {
+                  console.log(res.data);
+                  {
+                    payment();
+                  }
+                  {
+                    onSubmit();
+                  }
+                  swal(
+                    'Su pago ha sido exitoso',
+                    'Gracias por confiar en iHappy!',
+                    'success'
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                  swal(
+                    'Upss! Algo anda mal',
+                    'La transacción no se ha logrado',
+                    'error'
+                  );
+                });
+            };
+            enviarDatos();
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
     };
