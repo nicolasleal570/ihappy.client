@@ -55,7 +55,13 @@ const Psicologos = () => {
 
     React.useEffect(() => {
         setLoading(true)
-        Axios.get(getSpecialty)
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        Axios.get(getSpecialty, config)
             .then(response => {
                 const data_role = response.data.data;
 

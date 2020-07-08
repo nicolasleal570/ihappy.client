@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { updateUser } from '../../store/actions/authAction';
-import {
-  profile,
-  putAvatar,
-  getSpecialty,
-} from '../../utils/endpoints';
+import { profile, putAvatar, getSpecialty } from '../../utils/endpoints';
 import Emoji from './partials/Emoji';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { ToastContainer, toast } from 'react-toastify';
@@ -39,6 +35,7 @@ export default function Profile() {
     []
   );
   const [quitarEspecialidades, setQuitarEspecialidades] = React.useState(false);
+  const [config, setConfig] = React.useState<any>(null);
 
   useEffect(() => {
     // obtenerDatos()
@@ -64,18 +61,23 @@ export default function Profile() {
   }
   const dispatch = useDispatch();
   toast.configure();
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    },
-  };
+
+  React.useEffect(() => {
+    setConfig({
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    });
+  }, []);
 
   const getSpecialities = async () => {
-    const res = await axios.get(getSpecialty, config);
-    setSpecialities(res.data.data);
-    console.log(specialities);
-    setDone(false);
+    if (config) {
+      const res = await axios.get(getSpecialty, config);
+      setSpecialities(res.data.data);
+      console.log(specialities);
+      setDone(false);
+    }
   };
 
   if (done) {
@@ -122,6 +124,12 @@ export default function Profile() {
   actualizarEspecialidades();
   const enviarDatos = async () => {
     setSendingInfo(true);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
 
     if (quitarEspecialidades) {
       eliminarEspecialidades();
@@ -185,6 +193,12 @@ export default function Profile() {
 
   const enviarFoto = async (formData: any) => {
     setSendingPhoto(true);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
     axios
       .put(putAvatar, formData, config)
       .then((res) => {

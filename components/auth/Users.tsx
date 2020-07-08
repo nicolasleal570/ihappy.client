@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
@@ -16,119 +16,88 @@ import { getPacients, getDoctors, getSpecialty } from '../../utils/endpoints';
 import AdminCard from './partials/AdminCard';
 import { BigLoader } from '../Loader';
 
-
-
-
 const Users = () => {
+  const [pacientes, setPacientes] = React.useState<Array<any>>([]);
+  const [specialty, setSpecialty] = React.useState<Array<any>>([]); //Este trae todas las especialidades
+  const [lookFor, setLookFor] = React.useState<any>(''); //Este indica cual es la que quiere el usuario
+  const [psico, setPsico] = React.useState<Array<any>>([]);
+  const [psicoAll, setPsicoAll] = React.useState<any>([]); //Este siempre tiene todos para no tener que hace mil peticiones al backend
+  const [loading, setLoading] = React.useState(false);
 
-    const [pacientes, setPacientes] = React.useState<Array<any>>([]) 
-    const [specialty, setSpecialty] = React.useState<Array<any>>([]) //Este trae todas las especialidades 
-    const [lookFor, setLookFor] = React.useState<any>('') //Este indica cual es la que quiere el usuario
-    const [psico, setPsico] = React.useState<Array<any>>([])
-    const [psicoAll, setPsicoAll] = React.useState<any>([]) //Este siempre tiene todos para no tener que hace mil peticiones al backend 
-    const [loading, setLoading] = React.useState(false)
+  React.useEffect(() => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    };
 
-    React.useEffect(() => {
+    Axios.get(getPacients, config)
+      .then((response) => {
+        const data_role = response.data.data;
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        }
+        console.log(data_role);
+        setPsico(data_role);
+        setPsicoAll(data_role);
+      })
+      .catch((e) => {
+        // Podemos mostrar los errores en la consola
+        console.log(e);
+      });
+  }, []);
 
-        Axios.get(getPacients, config)
-            .then(response => {
-                const data_role = response.data.data;
+  React.useEffect(() => {
+    setLoading(true);
+    Axios.get(getSpecialty)
+      .then((response) => {
+        const data_role = response.data.data;
 
+        setSpecialty(data_role);
+        setLoading(false);
+      })
+      .catch((e) => {
+        // Podemos mostrar los errores en la consola
+        console.log(e);
+        setLoading(false);
+      });
+  }, []);
 
-                console.log(data_role);
-                setPsico(data_role);
-                setPsicoAll(data_role);
-
-            })
-            .catch(e => {
-                // Podemos mostrar los errores en la consola
-                console.log(e);
-            })
-    }, [])
-
-    React.useEffect(() => {
-        setLoading(true)
-        Axios.get(getSpecialty)
-            .then(response => {
-                const data_role = response.data.data;
-
-                console.log(data_role);
-                setSpecialty(data_role);
-                setLoading(false)
-
-            })
-            .catch(e => {
-                // Podemos mostrar los errores en la consola
-                console.log(e);
-                setLoading(false)
-            })
-    }, [])
-
-    const option = specialty.map((element: any) => (
-        <option value={element._id}> {element.name} </option>)
-    )
-
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!lookFor || lookFor === '') {
-            return;
-        }
-        var temp: Array<any> = [];
-
-        for (let index = 0; index < psicoAll.length; index++) {
-
-            if (psicoAll[index].role?.identification == 'psicologo') {
-                for (let ind = 0; ind < psicoAll[index].speciality.length; ind++) {
-                    console.log('entre al for two');
-                    if (psicoAll[index].speciality[ind]._id == lookFor) {
-                        temp[temp.length] = psicoAll[index];
-                    }
-                }
-            }
-        }
-
-        setPsico(temp);
-    }
-
-
-    const psica = psico.length > 0 && !loading ? psico.map((doctor: any) => (
+  const psica =
+    psico.length > 0 && !loading ? (
+      psico.map((doctor: any) => (
         <AdminCard
-            firstName={doctor.first_name}
-            lastName={doctor.last_name}
-            username={doctor.username}
-            avatar={doctor.avatar}
-            slug={doctor.slug}
-            specialities={doctor.speciality}
-            disabled = {doctor.disabled}
+          firstName={doctor.first_name}
+          lastName={doctor.last_name}
+          username={doctor.username}
+          avatar={doctor.avatar}
+          slug={doctor.slug}
+          specialities={doctor.speciality}
+          disabled={doctor.disabled}
         />
-    )) : <div className="col-span-4 p-6">
-            <p className="block w-full text-center font-bold text-xl text-gray-500">No hay psicologos para esta especialidad.</p>
+      ))
+    ) : (
+      <div className="col-span-4 p-6">
+        <p className="block w-full text-center font-bold text-xl text-gray-500">
+          No hay psicologos para esta especialidad.
+        </p>
+      </div>
+    );
+
+  return (
+    <div className="relative flex flex-col">
+      <hr></hr>
+
+      {(loading || specialty.length <= 0) && (
+        <div className="col-span-4 p-6">
+          <BigLoader />
         </div>
+      )}
 
-    return (
-        <div className='relative flex flex-col'>
-           
-
-            <hr></hr>
-
-            {(loading || specialty.length <= 0) && <div className="col-span-4 p-6">
-                <BigLoader />
-            </div>}
-
-            {!loading && <div className='grid grid-cols-4 gap-4 mt-8 px-6'>
-                {psica}
-            </div>}
-
-        </div>
-    )
+      {!loading && (
+        <div className="grid grid-cols-4 gap-4 mt-8 px-6">{psica}</div>
+      )}
+    </div>
+  );
 };
 
-export default Users
+export default Users;

@@ -3,7 +3,6 @@ import { Doughnut } from 'react-chartjs-2';
 import {
   getDoctors,
   getPacients,
-  getSpecialty,
   getCountDoctorsBySpeciality,
 } from '../../utils/endpoints';
 import Axios from 'axios';
