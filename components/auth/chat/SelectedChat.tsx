@@ -26,6 +26,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
   );
+  const boxRef = React.createRef<HTMLDivElement>();
 
   // Update if new messages are sent or recieve
   React.useEffect(() => {
@@ -42,7 +43,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
         const config = {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
         };
 
@@ -58,11 +59,15 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     }
   }, [chat]);
 
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [boxRef, chat, messages]);
+
   const eliminarChat = async () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
     setSendPendiente(true);
@@ -90,10 +95,16 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     }
   };
 
+  const scrollToBottom = () => {
+    if (null !== boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    }
+  };
+
   let chatView = null;
   if (chat && recipientUser) {
     chatView = (
-      <div className="h-screen ">
+      <div className="relative h-screen ">
         {/* Top bar */}
         <div className="flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l">
           <div className="flex-none rounded-full w-16 h-16 bg-purple-400 overflow-hidden ml-4">
@@ -117,7 +128,10 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
         </div>
 
         {/* Messages */}
-        <div className="h-screen overflow-y-auto p-6 border-l border-gray-300">
+        <div
+          className="h-full p-6 border-l border-gray-300 overflow-y-auto custom-scroll pb-40"
+          ref={boxRef}
+        >
           {!loading &&
             messages.map((message: any) => {
               //   Para saber quien escribe el mensaje

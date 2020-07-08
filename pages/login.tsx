@@ -1,11 +1,13 @@
-import React from 'react'
-import Login from '../components/public/login/login'
+import React from 'react';
 import PublicLayout from '../components/public/Layout';
+import LoginForm from '../components/public/login/login';
 
-export default function login() {
-    return (
-        <PublicLayout>
-            <Login/>
-        </PublicLayout>
-    )
-}
+const Login = () => {
+  return (
+    <PublicLayout>
+      <LoginForm />
+    </PublicLayout>
+  );
+};
+
+export default Login;

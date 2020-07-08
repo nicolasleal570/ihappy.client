@@ -7,104 +7,144 @@
 /* Stop purging */
 
 .cool {
-    background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .scrul {
-    overflow-y: scroll
+  overflow-y: scroll;
 }
 
 /* scroll*/
 
 .custom-scroll::-webkit-scrollbar {
-    width: 7px;
-    height: auto;
+  width: 7px;
+  height: auto;
 }
 
 .custom-scroll::-webkit-scrollbar-button {
-    width: 3px;
-    height: 5px;
+  width: 3px;
+  height: 5px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-    background: #9f7aea;
-    border: 17px none #9e3bab;
-    border-radius: 20px;
+  background: #9f7aea;
+  border: 17px none #9e3bab;
+  border-radius: 20px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:active {
-    background: #000000;
+  background: #000000;
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-    background: #ffffff;
-    border: 9px none #9f45bf;
-    border-radius: 50px;
+  background: #ffffff;
+  border: 9px none #9f45bf;
+  border-radius: 50px;
 }
 
 .custom-scroll::-webkit-scrollbar-track:hover {
-    background: #ffffff;
+  background: #ffffff;
 }
 
 .custom-scroll::-webkit-scrollbar-track:active {
-    background: #9f7aea;
+  background: #9f7aea;
 }
 
 .custom-scroll::-webkit-scrollbar-corner {
-    background: transparent;
+  background: transparent;
 }
 
 /* BIG LOADER */
 .loader-dots div {
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
 .loader-dots div:nth-child(1) {
-    left: 8px;
-    animation: loader-dots1 0.6s infinite;
+  left: 8px;
+  animation: loader-dots1 0.6s infinite;
 }
 
 .loader-dots div:nth-child(2) {
-    left: 8px;
-    animation: loader-dots2 0.6s infinite;
+  left: 8px;
+  animation: loader-dots2 0.6s infinite;
 }
 
 .loader-dots div:nth-child(3) {
-    left: 32px;
-    animation: loader-dots2 0.6s infinite;
+  left: 32px;
+  animation: loader-dots2 0.6s infinite;
 }
 
 .loader-dots div:nth-child(4) {
-    left: 56px;
-    animation: loader-dots3 0.6s infinite;
+  left: 56px;
+  animation: loader-dots3 0.6s infinite;
 }
 
 @keyframes loader-dots1 {
-    0% {
-        transform: scale(0);
-    }
+  0% {
+    transform: scale(0);
+  }
 
-    100% {
-        transform: scale(1);
-    }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes loader-dots3 {
-    0% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
 
-    100% {
-        transform: scale(0);
-    }
+  100% {
+    transform: scale(0);
+  }
 }
 
 @keyframes loader-dots2 {
-    0% {
-        transform: translate(0, 0);
-    }
+  0% {
+    transform: translate(0, 0);
+  }
 
-    100% {
-        transform: translate(24px, 0);
-    }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* NPROGRESS */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: #5145cd;
+  position: fixed;
+  z-index: 1060;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #5145cd, 0 0 5px #5145cd;
+  opacity: 1;
+
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
 }

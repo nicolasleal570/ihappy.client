@@ -8,6 +8,9 @@
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.7.0",
+    "@sweetalert/with-react": "^0.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -17,21 +20,30 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.9",
     "@types/socket.io-client": "^1.4.33",
+    "@wellyshen/use-web-animations": "^0.3.2",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
+    "countup.js": "^2.0.5",
     "moment": "^2.26.0",
     "next": "^9.4.1",
+    "next-cookies": "^2.0.3",
     "next-offline": "^5.0.2",
     "next-redux-wrapper": "^6.0.0",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
+    "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
+    "react-stripe-checkout": "^2.6.3",
+    "react-toastify": "^6.0.8",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "stripe": "^8.68.0",
+    "sweetalert": "^2.1.2",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -42,6 +54,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@fullhuman/postcss-purgecss": "^2.2.0",
+    "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "autoprefixer": "^9.8.0",
@@ -54,7 +67,7 @@
     "postcss-import": "^12.0.1",
     "prettier": "2.0.5",
     "tailwindcss": "^1.4.6",
-    "xo": "^0.29.1"
+    "xo": "^0.32.1"
   },
   "xo": {
     "envs": [

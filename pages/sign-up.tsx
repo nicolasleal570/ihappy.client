@@ -1,11 +1,13 @@
-import React from 'react'
-import Signup from '../components/public/sing-up/signup'
+import React from 'react';
 import PublicLayout from '../components/public/Layout';
+import SignupForm from '../components/public/sing-up/signup';
 
-export default function sign_up() {
-    return (
-        <PublicLayout>
-            <Signup/>
-        </PublicLayout>
-    )
-}
+const Signup = () => {
+  return (
+    <PublicLayout>
+      <SignupForm />
+    </PublicLayout>
+  );
+};
+
+export default Signup;

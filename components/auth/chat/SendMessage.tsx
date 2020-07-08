@@ -7,10 +7,7 @@ interface SendMessageProps {
   selectedChatId: string;
   userId: string;
 }
-const SendMessage = ({
-  selectedChatId,
-  userId,
-}: SendMessageProps) => {
+const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const [message, setMessage] = React.useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +16,7 @@ const SendMessage = ({
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
 
@@ -31,14 +28,17 @@ const SendMessage = ({
 
       const res = await Axios.post(postMessages, body, config);
       setMessage('');
-
     };
 
     sendData();
   };
 
   return (
-    <form method="POST" onSubmit={onSubmit}>
+    <form
+      className="absolute bottom-0 right-0 w-full bg-white"
+      method="POST"
+      onSubmit={onSubmit}
+    >
       <div className="border-l border-t border-gray-300 px-6 py-4 w-full flex">
         <input
           type="text"
@@ -48,7 +48,7 @@ const SendMessage = ({
           onChange={(e) => setMessage(e.target.value)}
           value={message}
         />
-        <button className="px-4 py-2 bg-purple-700 border border-purple-700 rounded-r bg-white">
+        <button className="px-4 py-2 bg-purple-700 border border-purple-700 rounded-r">
           <svg
             width="21"
             height="21"
