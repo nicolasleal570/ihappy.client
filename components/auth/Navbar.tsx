@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useState, useEffect } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import HelpIcon from '@material-ui/icons/Help';
@@ -9,6 +9,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import ForumIcon from '@material-ui/icons/Forum';
 import CloseIcon from '@material-ui/icons/Close';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 interface NavbarProps {
@@ -22,6 +23,29 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
       closeMenu();
     }
   };
+
+  const { user } = useSelector((state: any) => state.auth)
+
+    const [navbarOpen, setNavbarOpen] = React.useState(true);
+
+    const toggleNavbar = () => {
+        setNavbarOpen(!navbarOpen)
+        console.log(navbarOpen)
+    } 
+
+    const [modoA, setModoA] = React.useState()
+
+    useEffect(() => {
+
+      if (user){
+
+        let modo = user.role.identification;
+        console.log(modo)
+        setModoA(modo)
+
+      }
+
+    }, [user])
 
   return (
     <nav
@@ -52,47 +76,105 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
           </div>
         </Link>
 
-        <div className="flex flex-col">
-          <SidebarLink title="Dashboard" url="/dashboard">
-            <DashboardIcon className="text-white" />
-          </SidebarLink>
+        {modoA === 'admin'
+                    ?
+                    <div className='flex flex-col'>
+                        <SidebarLink
+                            title="Psychologists"
+                            url="/psicologos"
+                        >
+                            <SearchIcon className="text-white" />
+                        </SidebarLink>
+                        <SidebarLink
+                            title="Users"
+                            url="/users"
+                        >
+                            <SearchIcon className="text-white" />
+                        </SidebarLink>
+                        <SidebarLink
+                            title="Stats"
+                            isDropdown
+                            options={[
+                                { url:"/stats", name: 'General Stats' },
+                                { url: '/finance', name: 'Finance Stats' }
+                            ]}
+                        >
+                            <SearchIcon className="text-white" />
+                        </SidebarLink>
+                    </div>
+              :
+                    <div className='flex flex-col'>
+                        <SidebarLink
+                            title="Dashboard"
+                            url="/dashboard"
+                        >
+                            <DashboardIcon className="text-white" />
+                        </SidebarLink>
 
-          <SidebarLink title="Chats" url="/chat">
-            <ForumIcon className="text-white" />
-          </SidebarLink>
+                        <SidebarLink
+                            title="Chats"
+                            url="/chat"
+                        >
+                            <ForumIcon className="text-white" />
+                        </SidebarLink>
 
-          <SidebarLink
-            title="Account Overview"
-            isDropdown
-            options={[{ url: '/profile', name: 'My Profile' }]}
-          >
-            <AccountCircleIcon className="text-white" />
-          </SidebarLink>
+                        {modoA === 'psicologo' ? 
+                                <SidebarLink
+                                title="Account Overview"
+                                isDropdown
+                                options={[
+                                    { url: '/profile', name: 'My Profile' },
+                                    { url: '/organization', name: 'Schedule'}
+                               ]}> 
+                                <AccountCircleIcon className="text-white" />
+                                </SidebarLink>: <SidebarLink
+                    title="Account Overview"
+                    isDropdown
+                    options={[
+                        { url: '/profile', name: 'My Profile' }
+                        
+                    ]}
+                ><AccountCircleIcon className="text-white" />
+                </SidebarLink>}
 
-          <SidebarLink
-            title="Payments"
-            isDropdown
-            options={[
-              { url: '/payments', name: 'See All' },
-              { url: '/payments', name: 'Manage Payments' },
-            ]}
-          >
-            <AccountBalanceIcon className="text-white" />
-          </SidebarLink>
+                        
+                            
 
-          <SidebarLink title="Search" url="/search">
-            <SearchIcon className="text-white" />
-          </SidebarLink>
+                        <SidebarLink
+                            title="Payments"
+                            isDropdown
+                            options={[
+                                { url: '/payments', name: 'See All' },
+                                { url: '/payments', name: 'Manage Payments' }
+                            ]}
+                        >
+                            <AccountBalanceIcon className="text-white" />
+                        </SidebarLink>
 
-          <SidebarLink title="Settings" url="/settings">
-            <SettingsIcon className="text-white" />
-          </SidebarLink>
+                        <SidebarLink
+                            title="Search"
+                            url="/search"
+                        >
+                            <SearchIcon className="text-white" />
+                        </SidebarLink>
 
-          <SidebarLink title="Help" url="/faq-contact">
-            <HelpIcon className="text-white" />
-          </SidebarLink>
-        </div>
-      </div>
+                        <SidebarLink
+                            title="Settings"
+                            url="/settings"
+                        >
+                            <SettingsIcon className="text-white" />
+                        </SidebarLink>
+
+                        <SidebarLink
+                            title="Help"
+                            url="/help"
+                        >
+                            <HelpIcon className="text-white" />
+                        </SidebarLink>
+
+                    </div>
+                }
+            </div>
     </nav>
   );
 };

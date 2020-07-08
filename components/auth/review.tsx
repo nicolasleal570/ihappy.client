@@ -3,8 +3,8 @@ import axios from 'axios';
 import { getReviews, sendReview } from '../../utils/endpoints';
 import moment from 'moment';
 import { BigLoader } from '../Loader';
-import { getConversations } from '../../utils/endpoints';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 interface PsychologistHeaderProps {
   psychologist: {
     first_name: string;
@@ -20,6 +20,7 @@ interface PsychologistHeaderProps {
     avatar: string;
     created_at: any;
     _id: any;
+    precioConsulta: any;
   };
 }
 
@@ -38,40 +39,12 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
     avatar,
     created_at,
     _id,
+    precioConsulta,
   } = psychologist;
   const [requestConversation, setRequestConversation] = React.useState(false);
 
-  const solicitarChat = async () => {
-    const config = {
-      withCredentials: true,
-    };
-
-    setRequestConversation(true);
-    axios
-      .post(
-        getConversations,
-        {
-          participants: [_id],
-          last_message: '',
-        },
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        setRequestConversation(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setRequestConversation(false);
-      });
-  };
-
   const { user, loading } = useSelector((state: any) => state.auth);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    solicitarChat();
-  };
   return (
     <div className="py-4">
       <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
@@ -86,11 +59,13 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
           <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
             {bio}
           </p>
+          <p className="absolute px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
+            Precio de consulta: {precioConsulta}$
+          </p>
           <div className="flex justify-center py-2">
             {user._id != psychologist._id && (
-              <form method="POST" onSubmit={onSubmit}>
+              <Link href={`/payment/${slug}`}>
                 <button
-                  type="submit"
                   className={`
                     'w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200 
                     ${
@@ -102,7 +77,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
                 >
                   Chatear!
                 </button>
-              </form>
+              </Link>
             )}
           </div>
         </div>
@@ -117,12 +92,15 @@ export default function Reviews({ slug }: any) {
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [sendingComment, setSendingComment] = React.useState(false);
-  const config = {
-    withCredentials: true,
-  };
 
   // Making request to get reviews of psychologist
   React.useEffect(() => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
     const loadData = async function () {
       try {
         if (slug) {
@@ -142,6 +120,12 @@ export default function Reviews({ slug }: any) {
   // Submit comment
   const sendComment = (e: any) => {
     e.preventDefault();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
 
     const sendData = async function () {
       try {
