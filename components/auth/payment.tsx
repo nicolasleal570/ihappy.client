@@ -64,19 +64,9 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 export default function Payment({ slug }: any) {
   const [idUsuario, setIdUsuario] = React.useState('');
   const [loading, setLoading] = React.useState(true);
-<<<<<<< HEAD
-  const [infoPsicologo, setInfoPsicologo] = React.useState(null);
-  const { user, error } = useSelector((state: any) => state.auth)
-  const [paymentDone, setPaymentDone] = React.useState('')
-
-  const config = {
-    withCredentials: true,
-  };
-=======
   const [infoPsicologo, setInfoPsicologo] = React.useState<any>(null);
   const { user, error } = useSelector((state: any) => state.auth);
   const [paymentDone, setPaymentDone] = React.useState('');
->>>>>>> 342f638ce1c1ecc7f3a638aae5839d49eba5d549
 
   // Making request to get data of psychologist
   React.useEffect(() => {
@@ -91,15 +81,9 @@ export default function Payment({ slug }: any) {
       try {
         if (slug) {
           const res = await axios.get(getFactura(slug + ''), config);
-<<<<<<< HEAD
-          setInfoPsicologo(res.data.data.psicologo);
-          console.log(res)
-          console.log(infoPsicologo)
-=======
           setInfoPsicologo(res.data.data.psychologist);
           console.log(res);
           console.log(infoPsicologo);
->>>>>>> 342f638ce1c1ecc7f3a638aae5839d49eba5d549
           setLoading(false);
         }
       } catch (err) {
