@@ -7,17 +7,17 @@ interface SendMessageProps {
   selectedChatId: string;
   userId: string;
 }
-const SendMessage = ({
-  selectedChatId,
-  userId,
-}: SendMessageProps) => {
+const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const [message, setMessage] = React.useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const config = {
-      withCredentials: true
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
     };
 
     const sendData = async function () {
@@ -28,14 +28,17 @@ const SendMessage = ({
 
       const res = await Axios.post(postMessages, body, config);
       setMessage('');
-
     };
 
     sendData();
   };
 
   return (
-    <form className="absolute bottom-0 right-0 w-full bg-white" method="POST" onSubmit={onSubmit}>
+    <form
+      className="absolute bottom-0 right-0 w-full bg-white"
+      method="POST"
+      onSubmit={onSubmit}
+    >
       <div className="border-l border-t border-gray-300 px-6 py-4 w-full flex">
         <input
           type="text"

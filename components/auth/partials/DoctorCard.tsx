@@ -53,7 +53,7 @@ const DoctorCard = ({
 
             {/* Btn view profile */}
             <div className="w-full bg-gray-100 flex items-center justify-center py-2 border-t border-gray-300 px-4">
-                <Link href={`/reviews/${slug}`}>
+                <Link href="/reviews/[slug]" as={`/reviews/${slug}`}>
                     <a className="text-center px-3 py-1 text-sm bg-purple-700 rounded text-white">Ver Perfil</a>
                 </Link>
             </div>
