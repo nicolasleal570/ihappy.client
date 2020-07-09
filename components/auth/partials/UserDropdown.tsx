@@ -63,7 +63,7 @@ const UserDropdown = () => {
               Account Overview
             </a>
           </Link>
-          <Link href="/help">
+          <Link href="/faq-contact">
             <a className="block px-4 py-2 hover:bg-purple-400 hover:text-white w-full">
               Help
             </a>

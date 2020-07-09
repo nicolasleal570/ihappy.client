@@ -160,14 +160,14 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
 
                         <SidebarLink
                             title="Settings"
-                            url="/settings"
+                            url="/dashboard"
                         >
                             <SettingsIcon className="text-white" />
                         </SidebarLink>
 
                         <SidebarLink
                             title="Help"
-                            url="/help"
+                            url="/dashboard"
                         >
                             <HelpIcon className="text-white" />
                         </SidebarLink>
