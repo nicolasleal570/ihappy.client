@@ -112,9 +112,10 @@ export default function FAQ() {
                     />
                 </div>
                 <div className='absolute w-full h-screen bg-gray-900'>
-                    <div className= 'flex'>
+                    <div className= 'flex flex-col lg:flex-row'>
                     <h1 className="absolute left-0 mt-10 ml-10 underline-text border-purple-500 border-2 text-3xl text-white font-bold leading-none">Envianos un correo.</h1>
                     <div className='flex flex-col mt-5 pt-10 bg-gray-900'>
+                        
                         <form method="POST" onSubmit={onSubmit} className='pl-10 pr-10 pt-10'>
                             <div className='flex'>
                                 <div className='text-white'>
@@ -145,9 +146,9 @@ export default function FAQ() {
                             </div>
                         </form>
                     </div>
-                    <div className='mt-10 flex flex-row items-center'>
-                    <img src='/assets/img/help.svg' className='max-w-xl'/>
-                    </div>
+                    <div className='invisible mt-10 flex flex-row items-center'>
+                    <img src='/assets/img/help.svg' className='invisible w-5'/>
+                    </div> 
                     </div>
                 </div>
             </div>

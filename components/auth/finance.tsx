@@ -49,13 +49,11 @@ const finance = () => {
       <div className="px-4 ">
         <h1 className=" text-4xl">Historial de Compras</h1>
       </div>
-      <div className="flex justify-center">
+       <div className="flex justify-center">
         <table className="table-fixed">
           <thead>
             <tr>
               <th className="w-1/5 px-4 py-2">Orden</th>
-              <th className="w-1/5 px-4 py-2">Psicologo</th>
-              <th className="w-1/5 px-4 py-2">Paciente</th>
               <th className="w-1/5 px-4 py-2">Total</th>
             </tr>
           </thead>
@@ -63,14 +61,12 @@ const finance = () => {
             {stats.map((el) => (
               <tr>
                 <td className="border px-4 py-2">{el._id}</td>
-                <td className="border px-4 py-2">{el.psicologo.username}</td>
-                <td className="border px-4 py-2">{el.user.username} </td>
                 <td className="border px-4 py-2">${el.total}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </div> 
     </div>
   );
 };

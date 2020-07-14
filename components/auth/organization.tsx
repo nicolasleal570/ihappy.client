@@ -54,13 +54,12 @@ const organization = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-center text-left  px-4 py-8 m-2">
-        <table className="table-fixed">
+        <table className="table-auto">
           <thead>
             <tr>
-              <th className="w-1/3 px-4 py-2">Orden</th>
-              <th className="w-1/3 px-4 py-2">Fecha</th>
-              <th className="w-1/3 px-4 py-2">Paciente</th>
-              <th className="w-1/3 px-4 py-2">Status</th>
+              <th className=" px-4 py-2">Orden</th>
+              <th className=" px-4 py-2">Fecha</th>
+              <th className=" px-4 py-2">Paciente</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +70,6 @@ const organization = () => {
                 <td className="border px-4 py-2">
                   {el.user.first_name} {el.user.last_name}
                 </td>
-                <td className="border px-4 py-2">Finalizado</td>
               </tr>
             ))}
           </tbody>

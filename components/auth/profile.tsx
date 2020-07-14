@@ -256,7 +256,7 @@ export default function Profile() {
   };
   console.log(userSpecialities.length, quitarEspecialidades);
   return (
-    <div className="h-full w-full ml-10 mt-10">
+    <div className="w-2/3 mr-10 lg:w-full lg:h-full lg:w-full ml-10 mt-10">
       <h1 className="text-gray-900 text-3xl font-bold">Perfil</h1>
       <p className="text-gray-600">
         Tenga al tanto que parte de la información que coloque, puede ser

@@ -103,7 +103,7 @@ const ChatList = ({
   if (chats.length == 0 || passed) {
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
-        <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
+        <h1 className="text-xs lg:text-2xl font-semibold p-4">Conversaciones</h1>
         <div className="flex flex-col items-start">
           <h3 className="text-2xl p-4">No tienes ningún chat</h3>
           <Link href="/search">
@@ -118,7 +118,7 @@ const ChatList = ({
     //Si hay chats, muestra los chats
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
-        <h1 className="text-2xl font-semibold p-4">Conversaciones</h1>
+        <h1 className="text-xs lg:text-2xl font-semibold p-2 mx-2">Conversaciones</h1>
         {chats.length > 0 &&
           chats.map((chat, index) => {
             const participants = chat.participants.filter(

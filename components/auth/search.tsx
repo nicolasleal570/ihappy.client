@@ -146,7 +146,7 @@ function search() {
       )}
 
       {!loading && (
-        <div className="grid grid-cols-4 gap-4 mt-8 px-6">{psica}</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 px-6">{psica}</div>
       )}
     </div>
   );

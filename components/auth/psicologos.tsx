@@ -127,7 +127,7 @@ const Psicologos = () => {
 
             <form method="POST" onSubmit={onSubmit}>
 
-                <div className="flex justify-around mt-4 mb-8 text-gray-800">
+                <div className="flex justify-around mx-4 mt-4 mb-8 text-gray-800">
 
                     <div className="w-full flex flex-row items-center justify-center text-center px-6 h-12">
                         <select
@@ -140,7 +140,7 @@ const Psicologos = () => {
                         </select>
 
                         <button
-                            className="flex-none shadow bg-purple-600 hover:bg-purple-500 hover:border-purple-500 focus:outline-none font-bold text-white px-12 rounded-r border-2 border-purple-600 h-full"
+                            className="flex-none shadow bg-purple-600 hover:bg-purple-500 hover:border-purple-500 focus:outline-none font-bold text-white px-6 rounded-r border-2 border-purple-600 h-full"
                             type="submit">
                             <SearchIcon />
                         </button>
@@ -155,7 +155,7 @@ const Psicologos = () => {
                 <BigLoader />
             </div>}
 
-            {!loading && <div className='grid grid-cols-4 gap-4 mt-8 px-6'>
+            {!loading && <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 px-6'>
                 {psica}
             </div>}
 
