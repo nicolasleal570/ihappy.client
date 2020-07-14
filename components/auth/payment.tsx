@@ -209,7 +209,7 @@ export default function Payment({ slug }: any) {
           <img
             src={infoPsicologo.avatar}
             style={{ maxWidth: '30px' }}
-            className=" ml-5 rounded"
+            className="hidden lg:block ml-5 rounded"
           ></img>
         </div>
         <div className="flex">

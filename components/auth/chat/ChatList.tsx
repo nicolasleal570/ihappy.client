@@ -155,7 +155,7 @@ const ChatList = ({
                           )}
 
                           {chat.last_message && (
-                            <p className="">
+                            <p className="hidden md:block">
                               {chat.last_message}{' '}
                               <span className="text-xs text-gray-500">
                                 {moment(chat.last_time).fromNow()}
@@ -232,7 +232,7 @@ const ChatList = ({
                         )}
 
                         {chat.last_message && (
-                          <p className="">
+                          <p className="hidden md:block">
                             {chat.last_message}{' '}
                             <span className="text-xs text-gray-500">
                               {moment(chat.last_time).fromNow()}
@@ -262,12 +262,12 @@ const ChatList = ({
                         />
                       </div>
                       <div className="w-full flex-1 ml-2">
-                        <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        <h3 className="text-xs lg:text-2xl font-semibold capitalize mr-4">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
                         {!chat.last_message && (
                           <p className="text-gray-500">No hay mensajes aún</p>
                         )}
                         {chat.last_message && (
-                          <p className=" ">
+                          <p className="hidden lg:block ">
                             {chat.last_message}{' '}
                             <span className="text-xs text-gray-500">
                               {moment(chat.last_time).fromNow()}
@@ -282,6 +282,7 @@ const ChatList = ({
             );
           })}
       </div>
+      
     );
   }
 };

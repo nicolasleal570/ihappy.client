@@ -60,7 +60,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
           <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
             {bio}
           </p>
-          <p className="absolute visible lg:invisible px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
+          <p className="absolute hidden lg:block px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
             Precio de consulta: {precioConsulta}$
           </p>
           <div className="flex justify-center py-2">

@@ -110,7 +110,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
           <div className="flex-none rounded-full w-16 h-16 bg-purple-400 overflow-hidden ml-4">
             <img src={recipientUser.avatar} alt={recipientUser.first_name} />
           </div>
-          <h1 className="text-2xl font-semibold p-4 capitalize">
+          <h1 className="text-base lg:text-2xl font-semibold p-4 capitalize">
             {recipientUser.first_name} {recipientUser.last_name}
           </h1>
 
@@ -141,8 +141,8 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
                   key={message._id}
                   className={`p-3 rounded-lg max-w-md text-sm mb-2 ${
                     writtenByMe
-                      ? 'ml-auto bg-gray-200 text-gray-700 '
-                      : 'mr-auto bg-purple-500 text-white'
+                      ? 'ml-auto sm:ml-4 bg-gray-200 text-gray-700 '
+                      : 'mr-auto sm:mr-4 bg-purple-500 text-white'
                   }`}
                 >
                   <p className="mb-2">{message.content}</p>
