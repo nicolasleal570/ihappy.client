@@ -1,5 +1,8 @@
 import React from 'react'
 import Link from 'next/link';
+import { getDoctorsHome } from '../../../utils/endpoints';
+
+import Axios from 'axios';
 
 interface AboutCardProps {
     title: String;
@@ -22,10 +25,11 @@ const AboutCard = ({ title, subtitle, imgUrl }: AboutCardProps) => (
 interface DoctorCardProps {
     title: String;
     description: String;
-    starsCount: number
+    starsCount: number;
+    avatar: string
 }
 
-const DoctorCard = ({ title, description, starsCount }: DoctorCardProps) => {
+const DoctorCard = ({ title, description, starsCount, avatar }: DoctorCardProps) => {
     let rating = [...Array(5).fill(null)];
     let starsIcon: Array<any> = [];
     rating.forEach((value, index) => {
@@ -46,13 +50,34 @@ const DoctorCard = ({ title, description, starsCount }: DoctorCardProps) => {
                 </ul>
             </div>
             <div className="flex-none">
-                <div className="bg-gray-800 w-12 h-12 rounded-full"></div>
+            <div className="px-4 pt-4">
+                <div className="mx-auto bg-purple-700 w-16 h-16 rounded-full overflow-hidden flex justify-center items-center">
+                    <img src={avatar} className="w-full h-full object-cover" />
+                </div>
+            </div>
             </div>
         </div>
     )
 }
 
 const Header = () => {
+    const [doctors, setDoctors] = React.useState<Array<any>>([]); //Este trae todas las especialidades
+  
+    React.useEffect(() => {
+        
+        Axios.get(getDoctorsHome)
+          .then((response) => {
+            const data_role = response.data.data;
+    
+            console.log(data_role);
+            setDoctors(data_role);
+          })
+          .catch((e) => {
+            // Podemos mostrar los errores en la consola
+            console.log(e);
+          });
+      }, []);
+
     return (
         <header className="w-full relative text-white"
             style={{
@@ -85,6 +110,7 @@ const Header = () => {
                         {/* <p className="block my-10 text-2xl text-gray-800 font-bold leading-none">¿Qué es iHappy?</p> */}
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-20">
+                            
                             <AboutCard
                                 title="Gran repertorio de Doctores"
                                 subtitle="Dispuestos a ayudarte a ser mejor"
@@ -111,21 +137,15 @@ const Header = () => {
 
                     {/* Right Column */}
                     <div className="flex flex-col px-0 lg:px-20 mt-0 lg:mt-10 ">
-                        <DoctorCard
-                            title="Dr. José Silva"
-                            description="Experiencia en pacientes con depresión y otros."
-                            starsCount={4}
-                        />
-                        <DoctorCard
-                            title="Dr. José Silva"
-                            description="Experiencia en pacientes con depresión y otros."
-                            starsCount={4}
-                        />
-                        <DoctorCard
-                            title="Dr. José Silva"
-                            description="Experiencia en pacientes con depresión y otros."
-                            starsCount={4}
-                        />
+
+                        {doctors.map((el) => (
+                                <DoctorCard
+                                title={el.first_name}
+                                description={el.bio}
+                                starsCount={4}
+                                avatar={el.avatar}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>
