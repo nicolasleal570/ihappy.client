@@ -46,6 +46,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
 
   return (
+    
     <div className="py-4">
       <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
         <img src={avatar} className="w-full h-full object-cover" alt="Avatar" />
@@ -59,7 +60,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
           <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
             {bio}
           </p>
-          <p className="absolute px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
+          <p className="absolute visible lg:invisible px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
             Precio de consulta: {precioConsulta}$
           </p>
           <div className="flex justify-center py-2">
@@ -150,6 +151,7 @@ export default function Reviews({ slug }: any) {
   };
 
   return (
+    
     <div className="flex">
       {loading && (
         <div className="w-full h-screen flex justify-center items-center overflow-hidden">
@@ -226,5 +228,6 @@ export default function Reviews({ slug }: any) {
         </div>
       )}
     </div>
+    
   );
 }

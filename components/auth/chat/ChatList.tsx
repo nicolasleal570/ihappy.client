@@ -267,7 +267,7 @@ const ChatList = ({
                           <p className="text-gray-500">No hay mensajes aún</p>
                         )}
                         {chat.last_message && (
-                          <p className="">
+                          <p className=" ">
                             {chat.last_message}{' '}
                             <span className="text-xs text-gray-500">
                               {moment(chat.last_time).fromNow()}

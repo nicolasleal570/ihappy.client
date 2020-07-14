@@ -43,11 +43,11 @@ const finance = () => {
     <div className="flex flex-col">
       <div className=" text-left  px-4 py-8  flex flex-row">
         <h2 className="text-4xl my-2">
-          Ingresos totales hasta la fecha: $<CountUp end={money} />
+          <u>Ingresos totales hasta la fecha:</u> $<CountUp end={money} />
         </h2>
       </div>
       <div className="px-4 ">
-        <h1 className=" text-4xl">Historial de Compras</h1>
+        <h1 className=" text-4xl"><u>Historial de Compras</u></h1>
       </div>
        <div className="flex justify-center">
         <table className="table-fixed">

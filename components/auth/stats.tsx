@@ -134,13 +134,32 @@ const stats = () => {
   return (
     <div className="flex flex-col">
       <div className=" text-left  px-4 py-8 m-2">
-        <h2 className="underline  text-4xl my-2">Doctores vs Pacientes</h2>
-        <Doughnut data={data} />
-      </div>
-
+        <h2 className="underline  text-xl lg:text-4xl my-2">Doctores vs Pacientes</h2>
+        <Doughnut data={data} options={{
+            title:{
+              display:false,
+              text:'Doctores vs Pacientes',
+              fontSize:25
+            },
+            legend:{
+              display:true,
+              position:'bottom'
+            }
+          }}/>
+      </div> 
       <div className=" text-left  px-4 py-2 m-2">
-        <h2 className=" underline text-4xl my-2">Tipos de Doctores</h2>
-        <Doughnut data={dato} />
+        <h2 className=" underline text-xl lg:text-4xl my-2">Tipos de Doctores</h2>
+        <Doughnut data={dato}  options={{
+            title:{
+              display:false,
+              text:'Doctores vs Pacientes',
+              fontSize:25
+            },
+            legend:{
+              display:false,
+              position:'left'
+            }
+          }}/>
       </div>
     </div>
   );

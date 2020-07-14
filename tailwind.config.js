@@ -14,4 +14,8 @@ module.exports = {
     defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
   },
   theme: {},
+  variants: {
+    // ...
+  visibility: ['responsive', 'hover', 'focus'],
+  }
 };
