@@ -141,8 +141,8 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
                   key={message._id}
                   className={`p-3 rounded-lg max-w-md text-sm mb-2 ${
                     writtenByMe
-                      ? 'ml-auto sm:ml-4 bg-gray-200 text-gray-700 '
-                      : 'mr-auto sm:mr-4 bg-purple-500 text-white'
+                      ? 'ml-auto bg-gray-200 text-gray-700 '
+                      : 'mr-auto bg-purple-500 text-white'
                   }`}
                 >
                   <p className="mb-2">{message.content}</p>
