@@ -19,7 +19,7 @@ export const disable = (slug: string) => `${endpoint}/users/disable/${slug}`
 
 export const getFacturas = `${endpoint}/factura/stats/finance`
 export const getFacturasByPsico = (slug: string) => `${endpoint}/factura/${slug}`
-
+export const putFacturaByPsico = (slug: string) => `${endpoint}/factura/${slug}`
 
 export const getUsers = `${endpoint}/users/`
 export const getDoctors = (limit?: Number) => `${endpoint}/users/doctors/?limit=${limit ? limit : ''}`
