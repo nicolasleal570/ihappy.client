@@ -33,7 +33,7 @@ const DoctorCard = ({
             {/* Name */}
             <div className="py-2 px-4">
                 <h1 className="truncate font-bold capitalize text-lg w-full text-center leading-none mb-2">{firstName || username} {lastName}</h1>
-                <p className="truncate text-sm text-gray-500 text-center leading-none">@{username}</p>
+                <p className="truncate text-sm text-gray-500 pb-2 text-center leading-none">@{username}</p>
             </div>
 
             {/* Specialities */}
