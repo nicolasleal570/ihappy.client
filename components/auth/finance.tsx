@@ -1,6 +1,6 @@
 import React from 'react';
 import CountUp from 'react-countup';
-import { getFacturas, putFacturaByPsico } from '../../utils/endpoints';
+import { getFacturas, putFacturaByPsicoPaid } from '../../utils/endpoints';
 import Axios from 'axios';
 import swal from 'sweetalert';
 
@@ -59,7 +59,7 @@ const finance = () => {
 
   const payPsico = () => {
 
-    Axios.put(putFacturaByPsico(slug),
+    Axios.put(putFacturaByPsicoPaid(slug),
       {
         paid: true,
         psicoID:psicoID
@@ -155,7 +155,7 @@ const finance = () => {
         <option>Selecciona</option>
         {stats.map((el) => (
           <>
-            {el.requestToPay && (
+            {el.requestToPay && !el.paid && (
               <option value={el.psicologo.slug} key={el.psicologo.slug} >
                 {el.psicologo.username}
               </option>
@@ -192,7 +192,7 @@ const finance = () => {
                       {el.psicologo.avatar && (
                         <div>
                         <hr className='bg-purple-700'></hr>
-                      <img  className="bg-purple-700 w-12 h-12 m-auto rounded-full overflow-hidden flex justify-center items-center" src={el.psicologo.avatar}></img>
+                      <img  className="bg-purple-700 w-12 h-12 m-2 rounded-full overflow-hidden flex justify-center items-center" src={el.psicologo.avatar}></img>
                       </div>
                       )}
                       </div>

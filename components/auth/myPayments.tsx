@@ -18,13 +18,22 @@ export default function mostrarFactura() {
   const [done, setDone] = React.useState(false)
   const [consultasPsico, setConsultasPsico] = React.useState(0)
   const [consultasUser, setConsultasUser] = React.useState(0)
+  const [loggedID, setLoggedID] = React.useState<any>()
+  const [retirado, setRetirado] = React.useState<any>()
+  const [plataforma, setPlataforma] = React.useState<any>()
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     // obtenerDatos()
     setRole(user?.role.identification)
     setSlug(user?.slug)
+    setLoggedID(user?._id)
     console.log(slug)
+    var plataforma;
+    plataforma = retirado - ganancias
+  
+    setPlataforma(plataforma)
 
     const obtenerDatos = () => {
       //Obtenemos las facturas
@@ -66,19 +75,25 @@ export default function mostrarFactura() {
 
   const calcularGanacias = () => {
     var ingresos: any = []
+    var retirado: any = []
     if (facturasPsico) {
       facturasPsico.factura.forEach((element: any) => {
         ingresos = ingresos.concat(element.total * 0.90)
+        if(element.paid){
+          retirado = retirado.concat(element.total *0.90)
+        }
       });
       console.log(ingresos)
+      console.log(retirado)
       const add = (a: any, b: any) => {
         return a + b;
-
       }
       if (!done) {
         setGanacias(ingresos.reduce(add, 0))
+        setRetirado(retirado.reduce(add,0))
         setDone(true)
       }
+      
       // setGanacias(ingresos.reduce(function(a:any, b:any) { return a + b; }, 0));
     }
   }
@@ -124,10 +139,12 @@ export default function mostrarFactura() {
   }, []);
 
   const solicitarPago = () => {
-  
+    console.log(loggedID)
     Axios.put(putFacturaByPsico(slug),
     {
     requestToPay:true,
+    psicoID: loggedID,
+
     },
     config)
       .then(response => {
@@ -157,17 +174,28 @@ export default function mostrarFactura() {
           <div>
             <h1 className='text-4xl font-bold'>Ganancias</h1>
             <hr className='border border-2 bg-purple-700 w-64'></hr>
-            <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
-            <h1 className="text-2xl">Consultas realizadas: {consultasPsico}</h1>
-
+            <div className='bg-gray-100 py-2 px-2 mt-3 rounded-lg shadow-md max-w-xl'>
+            <h1 className="text-2xl pt-5">Totales: ${ganancias}</h1>
+            <h1 className="text-2xl">En la plataforma: ${ganancias-retirado}</h1>
+            <h1 className="text-2xl">Retiradas: ${retirado}</h1>
+            <h1 className="text-2xl pb-5">Consultas realizadas: {consultasPsico}</h1>
+            </div>
             <form method='PUT' onSubmit={handleSubmit}>
-              <button
+            
+              { plataforma === 0 
+                ?  <button className="w-full cursor-not-allowed lg:w-auto py-2 my-4 bg-gray-800 text-white block shadow focus:outline-none py-2 px-4 rounded"
+                type="submit" disabled>Retirar ganancias</button>
+                : 
+                <button 
                 onClick={(e) => handleSubmit}
                 className="w-full lg:w-auto py-2 my-4 bg-purple-700 text-white block shadow focus:outline-none py-2 px-4 rounded"
                 type="submit"
               >
                 Retirar ganancias
-        </button>
+                 </button>
+              }
+                
+       
             </form>
             <img className='w-48 mt-5 h-18' src='/assets/img/stripe.png' alt='stripe'></img>
           </div>
@@ -178,6 +206,7 @@ export default function mostrarFactura() {
             <hr className='border border-2 bg-purple-700 w-64'></hr>
             <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
             <h1 className="text-2xl">Consultas realizadas: {consultasUser}</h1>
+           
 
             <h4 className='mt-5'>Esperemos que su tiempo en iHappy, haya sido de mejoras <Emoji symbol='💪'></Emoji></h4>
           </div>
