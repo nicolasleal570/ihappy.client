@@ -146,8 +146,8 @@ export default function FAQ() {
                             </div>
                         </form>
                     </div>
-                    <div className='invisible mt-10 flex flex-row items-center'>
-                    <img src='/assets/img/help.svg' className='invisible w-5'/>
+                    <div className=' mt-10 flex flex-row items-center'>
+                    <img src='/assets/img/help.svg' className='max-w-xl'/> 
                     </div> 
                     </div>
                 </div>
