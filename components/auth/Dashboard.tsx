@@ -9,24 +9,30 @@ export default function Dashboard() {
   const [loading, setLoading] = React.useState(false);
   const [doctors, setDoctors] = React.useState<Array<any>>([]);
 
+  let _isMounted = false;
   React.useEffect(() => {
     setLoading(true);
+    _isMounted = true;
 
-    const config = {
+    if (_isMounted) {
+      const config = {
         headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      };
+
+      const getDoctorsData = async () => {
+        const res = await Axios.get(getDoctors(4), config);
+        setDoctors(res.data.data);
+        setLoading(false);
+      };
+
+      getDoctorsData();
     }
 
-    const getDoctorsData = async () => {
-      const res = await Axios.get(getDoctors(4), config);
-      console.log(res.data);
-      
-      setDoctors(res.data.data);
-      setLoading(false);
+    return () => {
+      _isMounted = false;
     };
-
-    getDoctorsData();
   }, []);
 
   return (

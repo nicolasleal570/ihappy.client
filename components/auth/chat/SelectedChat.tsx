@@ -6,6 +6,7 @@ import moment from 'moment';
 import SendMessage from './SendMessage';
 import { conversationStatus } from '../../../utils/endpoints';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface SelectedChatProps {
   chat: {
@@ -14,9 +15,10 @@ interface SelectedChatProps {
     last_message: string;
     last_time: string;
   };
+  setSelectedChat: (value: any) => void;
 }
 
-const SelectedChat = ({ chat }: SelectedChatProps) => {
+const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
   const { user } = useSelector((state: any) => state.auth);
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
@@ -79,13 +81,11 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
       config
     )
       .then((res) => {
-        console.log(res.data);
         if (!loading) {
           setSendPendiente(false);
         }
       })
       .catch((err) => {
-        console.log(err);
         setSendPendiente(false);
       });
   };
@@ -104,13 +104,20 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
   let chatView = null;
   if (chat && recipientUser) {
     chatView = (
-      <div className="relative h-screen ">
+      <div className="fixed top-0 left-0 w-full bg-white z-40 lg:z-auto lg:relative h-screen overflow-hidden lg:overflow-auto">
         {/* Top bar */}
         <div className="flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l">
-          <div className="flex-none rounded-full w-16 h-16 bg-purple-400 overflow-hidden ml-4">
+          <button
+            className="pl-2 block lg:hidden focus:outline-none"
+            type="button"
+            onClick={() => setSelectedChat(null)}
+          >
+            <ArrowBackIcon style={{ fill: '#6b46c1', fontSize: 30 }} />
+          </button>
+          <div className="flex-none rounded-full w-12 h-12 lg:w-16 lg:h-16 bg-purple-400 overflow-hidden ml-4">
             <img src={recipientUser.avatar} alt={recipientUser.first_name} />
           </div>
-          <h1 className="text-base lg:text-2xl font-semibold p-4 capitalize">
+          <h1 className="text-xl lg:text-2xl font-semibold p-4 capitalize">
             {recipientUser.first_name} {recipientUser.last_name}
           </h1>
 
@@ -129,7 +136,7 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
 
         {/* Messages */}
         <div
-          className="h-full p-6 border-l border-gray-300 overflow-y-auto custom-scroll pb-40"
+          className="h-screen lg:h-full p-6 border-l border-gray-300 overflow-y-auto custom-scroll pb-40"
           ref={boxRef}
         >
           {!loading &&
@@ -160,8 +167,9 @@ const SelectedChat = ({ chat }: SelectedChatProps) => {
     );
   } else {
     chatView = (
-      <div>
-        <p>No hay chat seleccionado</p>
+      <div className="bg-purple-200 w-full h-screen hidden lg:flex flex-col justify-center items-center">
+        <img src="/assets/icons/empty.svg" className="w-48 h-48" alt="Empty State"/>
+        <p className="text-xl font-light text-gray-800 uppercase py-4 px-6 text-center">No hay nada por aquí. Selecciona un chat y comienza tu sesión.</p>
       </div>
     );
   }

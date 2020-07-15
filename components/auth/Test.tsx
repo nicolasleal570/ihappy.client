@@ -52,12 +52,6 @@ const Test = () => {
   const [loading, setLoading] = React.useState(false);
 
   const resultadofinal = () => {
-    console.log('furula');
-    console.log({
-      neupsi,
-      sports,
-      org,
-    });
     let result = '';
 
     if (neupsi != 0) {
@@ -105,7 +99,6 @@ const Test = () => {
 
   useEffect(() => {
     outcome = resultado;
-    console.log('resultadoFIn', resultado);
 
     const config = {
       headers: {
@@ -117,11 +110,9 @@ const Test = () => {
     const getDoctors = async () => {
       try {
         const res = await Axios.get(getDoctorsBySpeciality(resultado), config);
-        console.log('res.data.data', res.data.data);
         setPsico(res.data.data);
         setLoading(false);
       } catch (err) {
-        console.log(err);
         setLoading(false);
       }
     };

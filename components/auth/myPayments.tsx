@@ -24,7 +24,6 @@ export default function mostrarFactura() {
     // obtenerDatos()
     setRole(user?.role.identification)
     setSlug(user?.slug)
-    console.log(slug)
 
     const obtenerDatos = () => {
       //Obtenemos las facturas
@@ -32,13 +31,11 @@ export default function mostrarFactura() {
         .then(response => {
           const data = response.data.data;
 
-          console.log(data);
           setFacturasPsico(data)
           setConsultasPsico(data.factura.length)
         })
         .catch(e => {
           // Podemos mostrar los errores en la consola
-          console.log(e);
 
         })
 
@@ -47,13 +44,11 @@ export default function mostrarFactura() {
         .then(response => {
           const data = response.data.data;
 
-          console.log(data);
           setFacturasUser(data)
           
         })
         .catch(e => {
           // Podemos mostrar los errores en la consola
-          console.log(e);
 
         })
 
@@ -70,7 +65,6 @@ export default function mostrarFactura() {
       facturasPsico.factura.forEach((element: any) => {
         ingresos = ingresos.concat(element.total * 0.90)
       });
-      console.log(ingresos)
       const add = (a: any, b: any) => {
         return a + b;
 
@@ -92,7 +86,6 @@ export default function mostrarFactura() {
         ingresos = ingresos.concat(element.total * 0.90)
         }
       });
-      console.log(ingresos)
       const add = (a: any, b: any) => {
         return a + b;
 
@@ -113,7 +106,6 @@ export default function mostrarFactura() {
       calcularGanaciasUsario()
     }
 
-  console.log(ganancias)
   React.useEffect(() => {
     setConfig({
       headers: {
@@ -131,7 +123,6 @@ export default function mostrarFactura() {
     },
     config)
       .then(response => {
-        console.log(response.data)
         swal(
           'Recibimos tu solicitud para retirar fondos',
           'Estamos procesando su transferencia, realizaremos el pago lo mas pronto posible.',
@@ -140,7 +131,6 @@ export default function mostrarFactura() {
       })
       .catch(e => {
         // Podemos mostrar los errores en la consola
-        console.log(e);
 
       })
   }
@@ -156,7 +146,7 @@ export default function mostrarFactura() {
         {role === 'psicologo' && (
           <div>
             <h1 className='text-4xl font-bold'>Ganancias</h1>
-            <hr className='border border-2 bg-purple-700 w-64'></hr>
+            <hr className='border bg-purple-700 w-64'></hr>
             <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
             <h1 className="text-2xl">Consultas realizadas: {consultasPsico}</h1>
 

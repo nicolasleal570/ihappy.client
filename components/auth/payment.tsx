@@ -70,27 +70,25 @@ export default function Payment({ slug }: any) {
 
   // Making request to get data of psychologist
   React.useEffect(() => {
-    setIdUsuario(user?._id);
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    };
-    const loadData = async function () {
-      try {
-        if (slug) {
-          const res = await axios.get(getFactura(slug + ''), config);
-          setInfoPsicologo(res.data.data.psicologo);
-          console.log(res);
-          console.log(infoPsicologo);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.log('error', err);
-      }
-    };
-    loadData();
+    if (slug) {
+      setIdUsuario(user?._id);
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      };
+      const loadData = async function () {
+        try {
+          if (slug) {
+            const res = await axios.get(getFactura(slug + ''), config);
+            setInfoPsicologo(res.data.data.psicologo);
+            setLoading(false);
+          }
+        } catch (err) {}
+      };
+      loadData();
+    }
   }, [slug]);
 
   const stripePromise = loadStripe(
@@ -106,7 +104,6 @@ export default function Payment({ slug }: any) {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('algopasa');
     setRequestConversation(true);
     axios
       .post(
@@ -118,11 +115,9 @@ export default function Payment({ slug }: any) {
         config
       )
       .then((res) => {
-        console.log(res.data);
         setRequestConversation(false);
       })
       .catch((err) => {
-        console.log(err);
         setRequestConversation(false);
       });
   };
@@ -166,7 +161,6 @@ export default function Payment({ slug }: any) {
                   config
                 )
                 .then((res) => {
-                  console.log(res.data);
                   {
                     payment();
                   }
@@ -180,7 +174,6 @@ export default function Payment({ slug }: any) {
                   );
                 })
                 .catch((err) => {
-                  console.log(err);
                   swal(
                     'Upss! Algo anda mal',
                     'La transacción no se ha logrado',
@@ -188,14 +181,13 @@ export default function Payment({ slug }: any) {
                   );
                 });
             };
+
             enviarDatos();
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
         }
       }
     };
-    return (
+    return infoPsicologo.precioConsulta ? (
       <form
         onSubmit={handleSubmit}
         className="pt-5 pb-5"
@@ -231,8 +223,9 @@ export default function Payment({ slug }: any) {
           Pay
         </button>
       </form>
-    );
+    ) : null;
   };
+
   return (
     <div>
       {loading && (
@@ -240,30 +233,39 @@ export default function Payment({ slug }: any) {
           <BigLoader />
         </div>
       )}
-      <div className="m-10 ml-10 mr-10 mb-10">
-        {!loading && infoPsicologo != null && (
-          <div>
-            <div className="bg-gray-100 px-4 shadow">
-              <Elements stripe={stripePromise}>
-                <h1 className="font-bold text-4xl text-gray-800">
-                  Realiza tu pago...
-                </h1>
-                <CheckoutForm
-                  payment={() => {
-                    setPaymentDone('Success');
-                  }}
-                  onSubmit={() => {
-                    event?.preventDefault;
-                    solicitarChat();
-                  }}
-                />
-              </Elements>
-              {paymentDone === 'Success' && <h1></h1>}
-              <PsychologistHeader psychologist={infoPsicologo as any} />
+
+      {!infoPsicologo?.precioConsulta && (
+        <h1 className="m-10 font-bold text-4xl text-gray-800 text-center">
+          No está disponible esta acción por ahora.
+        </h1>
+      )}
+
+      {infoPsicologo?.precioConsulta && (
+        <div className="m-10 ml-10 mr-10 mb-10">
+          {!loading && infoPsicologo != null && (
+            <div>
+              <div className="bg-gray-100 px-4 shadow">
+                <Elements stripe={stripePromise}>
+                  <h1 className="font-bold text-4xl text-gray-800">
+                    Realiza tu pago...
+                  </h1>
+                  <CheckoutForm
+                    payment={() => {
+                      setPaymentDone('Success');
+                    }}
+                    onSubmit={() => {
+                      event?.preventDefault;
+                      solicitarChat();
+                    }}
+                  />
+                </Elements>
+                {paymentDone === 'Success' && <h1></h1>}
+                <PsychologistHeader psychologist={infoPsicologo as any} />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

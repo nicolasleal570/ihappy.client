@@ -20,12 +20,10 @@ const organization = () => {
         .then((response) => {
           const data_role = response.data.data;
 
-          console.log(data_role.factura);
           setschedule(data_role.factura);
         })
         .catch((e) => {
           // Podemos mostrar los errores en la consola
-          console.log(e);
         });
     }
   }, [user, loading]);
@@ -34,7 +32,6 @@ const organization = () => {
     if (schedule) {
       for (let index = 0; index < schedule.length; index++) {
         const date = new Date(schedule[index].fecha);
-        console.log(date);
         schedule[index].fecha = date.toLocaleDateString('en-US');
       }
     }
@@ -53,8 +50,8 @@ const organization = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-center text-left  px-4 py-8 m-2">
-        <table className="table-auto">
+      <div className="w-screen overflow-x-scroll lg:overflow-auto text-left px-4 py-8 m-2">
+        <table className="">
           <thead>
             <tr>
               <th className=" px-4 py-2">Orden</th>

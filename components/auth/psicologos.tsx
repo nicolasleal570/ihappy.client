@@ -41,15 +41,12 @@ const Psicologos = () => {
             .then(response => {
                 const data_role = response.data.data;
 
-
-                console.log(data_role);
                 setPsico(data_role);
                 setPsicoAll(data_role);
 
             })
             .catch(e => {
                 // Podemos mostrar los errores en la consola
-                console.log(e);
             })
     }, [])
 
@@ -65,14 +62,12 @@ const Psicologos = () => {
             .then(response => {
                 const data_role = response.data.data;
 
-                console.log(data_role);
                 setSpecialty(data_role);
                 setLoading(false)
 
             })
             .catch(e => {
                 // Podemos mostrar los errores en la consola
-                console.log(e);
                 setLoading(false)
             })
     }, [])
@@ -93,7 +88,6 @@ const Psicologos = () => {
 
             if (psicoAll[index].role?.identification == 'psicologo') {
                 for (let ind = 0; ind < psicoAll[index].speciality.length; ind++) {
-                    console.log('entre al for two');
                     if (psicoAll[index].speciality[ind]._id == lookFor) {
                         temp[temp.length] = psicoAll[index];
                     }

@@ -29,7 +29,6 @@ const stats = () => {
     }).then((response) => {
       const data_role = response.data.data;
 
-      console.log(data_role);
       setDoctors(data_role);
     });
 
@@ -48,8 +47,6 @@ const stats = () => {
         temp[index] = data_role[index].count;
       }
 
-      console.log(temp);
-      console.log(tempo);
       setnumberSpecialty(temp);
       setSpecialty(tempo);
     });
@@ -72,12 +69,10 @@ const stats = () => {
       .then((response) => {
         const data_role = response.data.data;
 
-        console.log(data_role);
         setPacients(data_role);
       })
       .catch((e) => {
         // Podemos mostrar los errores en la consola
-        console.log(e);
       });
   }, []);
 
