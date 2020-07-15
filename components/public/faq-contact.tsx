@@ -6,6 +6,7 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import swal from 'sweetalert';
 export default function FAQ() {
 
     const [name, setName] = useState('')
@@ -31,12 +32,20 @@ export default function FAQ() {
             setName('')
             setEmail('')
             setMessage('')
-
+            swal(
+                'Se ha enviado el correo',
+                'Le responderemos lo mas rapido posible',
+                'success'
+            )
         }).catch((err) => {
 
             console.log(err);
             setSendingEmail(false);
-
+            swal(
+                'Oops! No se envio el email',
+                'No se logro enviar el correo ',
+                'error'
+            )
         })
 
     }

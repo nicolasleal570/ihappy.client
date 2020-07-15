@@ -144,8 +144,8 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
                             title="Payments"
                             isDropdown
                             options={[
-                                { url: '/payments', name: 'See All' },
-                                { url: '/payments', name: 'Manage Payments' }
+                                { url: '/payment', name: 'See All' },
+                                { url: '/payment', name: 'Manage Payments' }
                             ]}
                         >
                             <AccountBalanceIcon className="text-white" />
