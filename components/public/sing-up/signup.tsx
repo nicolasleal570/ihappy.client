@@ -71,8 +71,7 @@ export default function signup() {
         setRoles(options);
       })
       .catch((e) => {
-        // Podemos mostrar los errores en la consola
-        console.log(e);
+        // Podemos mostrar los errores en la consol
       });
   }, []);
 

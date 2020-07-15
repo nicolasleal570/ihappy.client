@@ -24,28 +24,22 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
     }
   };
 
-  const { user } = useSelector((state: any) => state.auth)
+  const { user } = useSelector((state: any) => state.auth);
 
-    const [navbarOpen, setNavbarOpen] = React.useState(true);
+  const [navbarOpen, setNavbarOpen] = React.useState(true);
 
-    const toggleNavbar = () => {
-        setNavbarOpen(!navbarOpen)
-        console.log(navbarOpen)
-    } 
+  const toggleNavbar = () => {
+    setNavbarOpen(!navbarOpen);
+  };
 
-    const [modoA, setModoA] = React.useState()
+  const [modoA, setModoA] = React.useState();
 
-    useEffect(() => {
-
-      if (user){
-
-        let modo = user.role.identification;
-        console.log(modo)
-        setModoA(modo)
-
-      }
-
-    }, [user])
+  useEffect(() => {
+    if (user) {
+      let modo = user.role.identification;
+      setModoA(modo);
+    }
+  }, [user]);
 
   return (
     <nav
@@ -57,7 +51,9 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
       }}
     >
       <div
-        className={`lg:fixed w-8/12 md:w-4/12 lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll transition duration-700 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-56 lg:translate-x-0'}`}
+        className={`lg:fixed w-8/12 md:w-4/12 lg:w-1/5 xl:w-1/6 bg-purple-700 h-screen overflow-y-auto custom-scroll transition duration-700 ease-in-out transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-56 lg:translate-x-0'
+        }`}
       >
         <div className="px-2 pt-2 flex flex-row-reverse lg:hidden">
           <button
@@ -76,105 +72,77 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
           </div>
         </Link>
 
-        {modoA === 'admin'
-                    ?
-                    <div className='flex flex-col'>
-                        <SidebarLink
-                            title="Psychologists"
-                            url="/psicologos"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                        <SidebarLink
-                            title="Users"
-                            url="/users"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                        <SidebarLink
-                            title="Stats"
-                            isDropdown
-                            options={[
-                                { url:"/stats", name: 'General Stats' },
-                                { url: '/finance', name: 'Finance Stats' }
-                            ]}
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-                    </div>
-              :
-                    <div className='flex flex-col'>
-                        <SidebarLink
-                            title="Dashboard"
-                            url="/dashboard"
-                        >
-                            <DashboardIcon className="text-white" />
-                        </SidebarLink>
+        {modoA === 'admin' ? (
+          <div className="flex flex-col">
+            <SidebarLink title="Psychologists" url="/psicologos">
+              <SearchIcon className="text-white" />
+            </SidebarLink>
+            <SidebarLink title="Users" url="/users">
+              <SearchIcon className="text-white" />
+            </SidebarLink>
+            <SidebarLink
+              title="Stats"
+              isDropdown
+              options={[
+                { url: '/stats', name: 'General Stats' },
+                { url: '/finance', name: 'Finance Stats' },
+              ]}
+            >
+              <SearchIcon className="text-white" />
+            </SidebarLink>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            <SidebarLink title="Dashboard" url="/dashboard">
+              <DashboardIcon className="text-white" />
+            </SidebarLink>
 
-                        <SidebarLink
-                            title="Chats"
-                            url="/chat"
-                        >
-                            <ForumIcon className="text-white" />
-                        </SidebarLink>
+            <SidebarLink title="Chats" url="/chat">
+              <ForumIcon className="text-white" />
+            </SidebarLink>
 
-                        {modoA === 'psicologo' ? 
-                                <SidebarLink
-                                title="Account Overview"
-                                isDropdown
-                                options={[
-                                    { url: '/profile', name: 'My Profile' },
-                                    { url: '/organization', name: 'Schedule'}
-                               ]}> 
-                                <AccountCircleIcon className="text-white" />
-                                </SidebarLink>: <SidebarLink
-                    title="Account Overview"
-                    isDropdown
-                    options={[
-                        { url: '/profile', name: 'My Profile' }
-                        
-                    ]}
-                ><AccountCircleIcon className="text-white" />
-                </SidebarLink>}
+            {modoA === 'psicologo' ? (
+              <SidebarLink
+                title="Account Overview"
+                isDropdown
+                options={[
+                  { url: '/profile', name: 'My Profile' },
+                  { url: '/organization', name: 'Schedule' },
+                ]}
+              >
+                <AccountCircleIcon className="text-white" />
+              </SidebarLink>
+            ) : (
+              <SidebarLink
+                title="Account Overview"
+                isDropdown
+                options={[{ url: '/profile', name: 'My Profile' }]}
+              >
+                <AccountCircleIcon className="text-white" />
+              </SidebarLink>
+            )}
 
-                        
-                            
+            <SidebarLink
+              title="Payments"
+              isDropdown
+              options={[
+                { url: '/payment', name: 'See All' },
+                { url: '/payment', name: 'Manage Payments' },
+              ]}
+            >
+              <AccountBalanceIcon className="text-white" />
+            </SidebarLink>
 
-                        <SidebarLink
-                            title="Payments"
-                            isDropdown
-                            options={[
-                                { url: '/payment', name: 'See All' },
-                                { url: '/payment', name: 'Manage Payments' }
-                            ]}
-                        >
-                            <AccountBalanceIcon className="text-white" />
-                        </SidebarLink>
+            <SidebarLink title="Search" url="/search">
+              <SearchIcon className="text-white" />
+            </SidebarLink>
 
-                        <SidebarLink
-                            title="Search"
-                            url="/search"
-                        >
-                            <SearchIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Settings"
-                            url="/dashboard"
-                        >
-                            <SettingsIcon className="text-white" />
-                        </SidebarLink>
-
-                        <SidebarLink
-                            title="Help"
-                            url="/dashboard"
-                        >
-                            <HelpIcon className="text-white" />
-                        </SidebarLink>
-
-                    </div>
-                }
-            </div>
+            <SidebarLink title="Help" url="/faq-contact">
+              <HelpIcon className="text-white" />
+            </SidebarLink>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

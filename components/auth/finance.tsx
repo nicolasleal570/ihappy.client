@@ -36,7 +36,6 @@ const finance = () => {
       .then((response) => {
         const data_role = response.data.data;
 
-        console.log(data_role);
         let total = 0;
         for (let index = 0; index < data_role.length; index++) {
           total = total + data_role[index].total;
@@ -52,7 +51,6 @@ const finance = () => {
       })
       .catch((e) => {
         // Podemos mostrar los errores en la consola
-        console.log(e);
       });
   }, []);
 
@@ -66,7 +64,6 @@ const finance = () => {
       },
       config)
       .then(response => {
-        console.log(response.data)
         swal(
           'Se le ha pagado al psicologo',
           'Transferencia realizada.',
@@ -75,7 +72,6 @@ const finance = () => {
       })
       .catch(e => {
         // Podemos mostrar los errores en la consola
-        console.log(e);
         swal(
           'No se logro pagar al psicologo',
           'Transferencia fallida',
@@ -92,8 +88,6 @@ const finance = () => {
     setCard(true)
     setAux(true)
     setSlug(e.target.value)
-    console.log(slug)
-    console.log(psicoID)
   }
 
   return (

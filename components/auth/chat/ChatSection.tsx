@@ -12,32 +12,48 @@ const ChatSection = () => {
   );
   const [chats, setChats] = React.useState<Array<any>>([]);
   const [selectedChat, setSelectedChat] = React.useState<any>(null);
+  const [loadingChats, setLoadingChats] = React.useState(false);
+
+  let _mounted = false;
 
   React.useEffect(() => {
-    if (user && !loading) {
+    _mounted = true;
+    if (user && !loading && _mounted) {
       const getChats = async () => {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
-          },
-        };
+        try {
+          setLoadingChats(true);
+          const config = {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          };
 
-        const res = await Axios.get(getConversations, config);
-        const data = res.data.data;
-        setChats(data);
+          const res = await Axios.get(getConversations, config);
+          const data = res.data.data;
+          setChats(data);
+          setLoadingChats(false);
+        } catch (err) {}
       };
 
       getChats();
     }
+
+    return () => {
+      _mounted = false;
+    };
   }, [user, loading]);
 
   React.useEffect(() => {
-    if (socket && chats.length > 0) {
+    if (socket && chats.length > 0 && _mounted) {
       chats.map((room) => {
         socket.emit('subscribe', room._id);
       });
     }
+
+    return () => {
+      _mounted = false;
+    };
   }, [chats, socket]);
 
   const onChangeConversation = (e: any, chatId: string) => {
@@ -47,7 +63,7 @@ const ChatSection = () => {
 
   // Update if new messages are sent or recieve
   React.useEffect(() => {
-    if (socket) {
+    if (socket && _mounted) {
       socket.on('new message', (data: any) => {
         const { conversation: chat } = data;
         const newChats = chats.filter(
@@ -61,10 +77,18 @@ const ChatSection = () => {
         setChats(chatUpdated);
       });
     }
+
+    return () => {
+      _mounted = false;
+    };
   }, [socket, chats]);
 
   return (
-    <div className="flex">
+    <div
+      className={`flex ${
+        selectedChat ? 'overflow-hidden h-screen w-screen' : ''
+      }`}
+    >
       {/* Conversation list */}
       {user && !loading && (
         <>
@@ -73,10 +97,11 @@ const ChatSection = () => {
             userId={user._id}
             onChangeConversation={onChangeConversation}
             selectedChatId={selectedChat ? selectedChat._id : ''}
+            loadingChats={loadingChats}
           />
 
           {/* Selected chat */}
-          <SelectedChat chat={selectedChat} />
+          <SelectedChat chat={selectedChat} setSelectedChat={setSelectedChat} />
         </>
       )}
     </div>

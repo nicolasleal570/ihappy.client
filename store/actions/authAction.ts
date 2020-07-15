@@ -67,7 +67,6 @@ export const signupUser = (
     localStorage.setItem('user', JSON.stringify(user));
     dispatch(successAuth(token, user));
   } catch (err) {
-    console.log('err', err);
     dispatch(failAuth(err.response?.data.error));
   }
 };
@@ -78,8 +77,6 @@ export const logout = () => async (dispatch: Function) => {
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    console.log('LOGOUT');
-
     dispatch({
       type: types.AUTH_LOGOUT,
     });

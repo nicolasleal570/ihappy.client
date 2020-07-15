@@ -52,12 +52,9 @@ export default function Profile() {
     setLoadSpecialities(user?.speciality);
   }, [user]);
 
-  console.log(loadSpecialities);
-  console.log(role);
   var userType;
   if (role === 'psicologo' || role === 'usuario') {
     userType = role;
-    console.log(userType);
   }
   const dispatch = useDispatch();
   toast.configure();
@@ -75,7 +72,6 @@ export default function Profile() {
     if (config) {
       const res = await axios.get(getSpecialty, config);
       setSpecialities(res.data.data);
-      console.log(specialities);
       setDone(false);
     }
   };
@@ -101,24 +97,15 @@ export default function Profile() {
       loadSpecialities.map(
         (eleme) => (specialitiesIds = specialitiesIds.concat(eleme._id))
       );
-      console.log(specialitiesIds);
       especialidades = empaquetarEspecialidades(specialitiesIds);
-      console.log(
-        'Ya hay especialidades presentes, se agregaron al arreglo y tenemos este arreglo' +
-          especialidades
-      );
     } else {
       especialidades = empaquetarEspecialidades(specialitiesIds);
-      console.log(
-        'No habian habilidades, se tiene este arreglo' + especialidades
-      );
     }
   };
   const eliminarEspecialidades = () => {
     var emptyObject = null;
     especialidades = emptyObject;
 
-    console.log('Se han eliminado' + especialidades);
   };
 
   actualizarEspecialidades();
@@ -149,9 +136,6 @@ export default function Profile() {
         config
       )
       .then((res) => {
-        console.log(especialidades);
-        console.log(specialitiesIds);
-        console.log(res.data);
         dispatch(updateUser(res.data.data));
         setSuccess(true);
         const notification = () => {
@@ -174,7 +158,6 @@ export default function Profile() {
         }
       })
       .catch((err) => {
-        console.log(err);
         setSendingInfo(false);
         if (!success) {
           toast('☹️Ups! Hubo un error'),
@@ -202,13 +185,11 @@ export default function Profile() {
     axios
       .put(putAvatar, formData, config)
       .then((res) => {
-        console.log(res.data);
         dispatch(updateUser(res.data.data));
         setArchivo(undefined);
         setSendingPhoto(false);
       })
       .catch((err) => {
-        console.log(err);
         setSendingPhoto(false);
       });
   };
@@ -254,9 +235,8 @@ export default function Profile() {
     setQuitarEspecialidades(true);
     event.preventDefault();
   };
-  console.log(userSpecialities.length, quitarEspecialidades);
   return (
-    <div className="w-2/3 mr-10 lg:w-full lg:h-full lg:w-full ml-10 mt-10">
+    <div className="w-2/3 mr-10 lg:w-full lg:h-full ml-10 mt-10">
       <h1 className="text-gray-900 text-3xl font-bold">Perfil</h1>
       <p className="text-gray-600">
         Tenga al tanto que parte de la información que coloque, puede ser

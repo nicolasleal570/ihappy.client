@@ -111,7 +111,6 @@ export default function Reviews({ slug }: any) {
           setLoading(false);
         }
       } catch (err) {
-        console.log('error', err);
       }
     };
 
@@ -143,7 +142,6 @@ export default function Reviews({ slug }: any) {
           setSendingComment(false);
         }
       } catch (err) {
-        console.log('Error', err);
       }
     };
 

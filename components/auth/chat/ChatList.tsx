@@ -9,12 +9,14 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { conversationStatus } from '../../../utils/endpoints';
 import ClearIcon from '@material-ui/icons/Clear';
+import { BigLoader } from '../../Loader';
 
 interface ChatListProps {
   chats: Array<any>;
   onChangeConversation: (e: any, chatId: string) => void;
   userId: string;
   selectedChatId: string;
+  loadingChats: boolean;
 }
 
 const ChatList = ({
@@ -22,6 +24,7 @@ const ChatList = ({
   onChangeConversation,
   userId,
   selectedChatId,
+  loadingChats,
 }: ChatListProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const [accept, setAccept] = React.useState(true);
@@ -46,13 +49,11 @@ const ChatList = ({
         config
       )
       .then((res) => {
-        console.log(res.data);
         if (!loading) {
           setSendPendiente(false);
         }
       })
       .catch((err) => {
-        console.log(err);
         setSendPendiente(false);
       });
   };
@@ -74,13 +75,11 @@ const ChatList = ({
         config
       )
       .then((res) => {
-        console.log(res.data);
         if (!loading) {
           setSendPendiente(false);
         }
       })
       .catch((err) => {
-        console.log(err);
         setSendPendiente(false);
       });
   };
@@ -100,10 +99,18 @@ const ChatList = ({
 
   var passed = chats.every(isAllHidden);
   //Si no tiene ningun chat registrado o todos estan eliminados
-  if (chats.length == 0 || passed) {
+  if (loadingChats) {
+    return (
+      <div className="relative w-full h-32 bg-white rounded flex items-center justify-center">
+        <BigLoader />
+      </div>
+    );
+  } else if (chats.length == 0 || passed) {
     return (
       <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
-        <h1 className="text-xs lg:text-2xl font-semibold p-4">Conversaciones</h1>
+        <h1 className="text-xs lg:text-2xl font-semibold p-4">
+          Conversaciones
+        </h1>
         <div className="flex flex-col items-start">
           <h3 className="text-2xl p-4">No tienes ningún chat</h3>
           <Link href="/search">
@@ -117,8 +124,10 @@ const ChatList = ({
   } else {
     //Si hay chats, muestra los chats
     return (
-      <div className="bg-white w-4/12 h-screen text-gray-800 overflow-y-auto">
-        <h1 className="text-xs lg:text-2xl font-semibold p-2 mx-2">Conversaciones</h1>
+      <div className="w-full lg:w-4/12 h-screen text-gray-800 overflow-y-auto">
+        <h1 className="text-center lg:text-left text-2xl font-semibold p-2 mx-2">
+          Conversaciones
+        </h1>
         {chats.length > 0 &&
           chats.map((chat, index) => {
             const participants = chat.participants.filter(
@@ -155,7 +164,7 @@ const ChatList = ({
                           )}
 
                           {chat.last_message && (
-                            <p className="hidden md:block">
+                            <p className="block">
                               {chat.last_message}{' '}
                               <span className="text-xs text-gray-500">
                                 {moment(chat.last_time).fromNow()}
@@ -262,12 +271,12 @@ const ChatList = ({
                         />
                       </div>
                       <div className="w-full flex-1 ml-2">
-                        <h3 className="text-xs lg:text-2xl font-semibold capitalize mr-4">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        <h3 className="text-lg lg:text-2xl font-semibold capitalize mr-4">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
                         {!chat.last_message && (
                           <p className="text-gray-500">No hay mensajes aún</p>
                         )}
                         {chat.last_message && (
-                          <p className="hidden lg:block ">
+                          <p className="">
                             {chat.last_message}{' '}
                             <span className="text-xs text-gray-500">
                               {moment(chat.last_time).fromNow()}
@@ -282,7 +291,6 @@ const ChatList = ({
             );
           })}
       </div>
-      
     );
   }
 };
