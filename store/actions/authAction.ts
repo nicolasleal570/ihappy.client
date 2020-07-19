@@ -1,6 +1,6 @@
 import * as types from '../actionTypes';
 import Axios from 'axios';
-import { login, signup } from '../../utils/endpoints';
+import { login, signup, me } from '../../utils/endpoints';
 
 const config = {
   headers: {
@@ -87,7 +87,14 @@ export const logout = () => async (dispatch: Function) => {
 
 export const authCheckState = () => async (dispatch: Function) => {
   const token = localStorage.getItem('token') as string;
-  const user = JSON.parse(localStorage.getItem('user') as string);
+  const res = await Axios.get(me, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const user = res.data.data;
+  console.log('checking user', res.data);
+
   if (!token && !user) {
     dispatch(logout());
   } else {
@@ -98,6 +105,5 @@ export const authCheckState = () => async (dispatch: Function) => {
 export const updateUser = (user: any) => async (dispatch: Function) => {
   dispatch(startAuth());
   const token = localStorage.getItem('token') as string;
-  localStorage.setItem('user', JSON.stringify(user));
   dispatch(successAuth(token, user));
 };
