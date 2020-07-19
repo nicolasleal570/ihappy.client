@@ -61,7 +61,7 @@ const organization = () => {
           </thead>
           <tbody>
             {schedule.map((el) => (
-              <tr>
+              <tr key={el._id}>
                 <td className="border px-4 py-2">{el._id}</td>
                 <td className="border px-4 py-2">{el.fecha}</td>
                 <td className="border px-4 py-2">

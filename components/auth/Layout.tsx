@@ -10,6 +10,7 @@ import { backendURL } from '../../utils/endpoints';
 import { initSocket, socketLogout } from '../../store/actions/socketAction';
 import MenuIcon from '@material-ui/icons/Menu';
 import Router from 'next/router';
+import { error } from 'console';
 
 interface LayoutProps {
   children: React.ReactChild | Array<React.ReactChild>;
@@ -19,7 +20,7 @@ interface LayoutProps {
 let socket: SocketIOClient.Socket;
 
 const Layout = ({ children, title = '' }: LayoutProps) => {
-  const { user, loading } = useSelector((state: any) => state.auth);
+  const { user, loading, error } = useSelector((state: any) => state.auth);
   const [incompleteProfile, setIncompleteProfile] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
@@ -64,6 +65,12 @@ const Layout = ({ children, title = '' }: LayoutProps) => {
     }
   }, [user]);
 
+  React.useEffect(() => {
+    if (!user && !loading) {
+      Router.push('/');
+    }
+  }, [user, loading, error]);
+
   // Adding new socket ID to the user
   const emitSetUserEvent = (userId: String) => {
     socket.emit('identity', userId);
@@ -78,18 +85,16 @@ const Layout = ({ children, title = '' }: LayoutProps) => {
     setMenuOpen(false);
   });
 
+  if (loading) {
+    return <AllScreenLoader />;
+  }
+
   return (
     <div
       className={`
       ${menuOpen || loading ? 'overflow-hidden h-screen' : ''}
     `}
     >
-      {loading && (
-        <div className="">
-          <AllScreenLoader />
-        </div>
-      )}
-
       <Navbar closeMenu={closeMenu} isOpen={menuOpen} openMenu={openMenu} />
 
       <div className="flex flex-col lg:flex-row text-gray-800 overflow-hidden">

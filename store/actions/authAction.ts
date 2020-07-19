@@ -87,14 +87,7 @@ export const logout = () => async (dispatch: Function) => {
 
 export const authCheckState = () => async (dispatch: Function) => {
   const token = localStorage.getItem('token') as string;
-  const res = await Axios.get(me, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const user = res.data.data;
-  console.log('checking user', res.data);
-
+  const user = JSON.parse(localStorage.getItem('user') as string);
   if (!token && !user) {
     dispatch(logout());
   } else {
