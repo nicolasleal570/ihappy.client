@@ -10,6 +10,10 @@ interface SendMessageProps {
 const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const [message, setMessage] = React.useState('');
 
+  React.useEffect(() => {
+    setMessage('');
+  }, [selectedChatId]);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
