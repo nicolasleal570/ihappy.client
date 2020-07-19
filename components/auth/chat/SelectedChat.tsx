@@ -39,13 +39,14 @@ const SelectedChat = ({
   React.useEffect(() => {
     if (socket) {
       socket.on('new message', (data: any) => {
-        const newMessages = [...messages, data.message];
-        setMessages(newMessages);
+        setMessages((prev) => [...prev, data.message]);
       });
     }
 
     return () => {
-      socket.off('new message');
+      if (socket) {
+        socket.off('new message');
+      }
     };
   }, [socket]);
 

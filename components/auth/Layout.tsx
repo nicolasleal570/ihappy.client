@@ -66,7 +66,7 @@ const Layout = ({ children, title = '' }: LayoutProps) => {
   }, [user]);
 
   React.useEffect(() => {
-    if (!user && !loading) {
+    if (!localStorage.getItem('token')) {
       Router.push('/');
     }
   }, [user, loading, error]);
@@ -85,7 +85,7 @@ const Layout = ({ children, title = '' }: LayoutProps) => {
     setMenuOpen(false);
   });
 
-  if (loading) {
+  if (loading || !user) {
     return <AllScreenLoader />;
   }
 

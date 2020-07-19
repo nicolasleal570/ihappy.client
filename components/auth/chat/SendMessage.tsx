@@ -13,6 +13,11 @@ const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!message) {
+      console.log('No message');
+      return;
+    }
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -26,8 +31,8 @@ const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
         content: message,
       };
 
-      const res = await Axios.post(postMessages, body, config);
       setMessage('');
+      const res = await Axios.post(postMessages, body, config);
     };
 
     sendData();
@@ -46,7 +51,14 @@ const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
           autoFocus
           autoComplete="off"
         />
-        <button className="px-4 py-2 bg-purple-700 border border-purple-700 rounded-r">
+        <button
+          className={` border-2 px-4 py-2 rounded-r ${
+            !message
+              ? 'border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+              : 'bg-purple-700 border-purple-700'
+          }`}
+          disabled={!message ? true : false}
+        >
           <svg
             width="21"
             height="21"
