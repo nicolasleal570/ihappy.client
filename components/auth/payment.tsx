@@ -15,6 +15,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import Router from 'next/router';
 interface PsychologistHeaderProps {
   psychologist: {
     first_name: string;
@@ -34,36 +35,10 @@ interface PsychologistHeaderProps {
   };
 }
 
-const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
-  const {
-    first_name,
-    last_name,
-    cedula,
-    address,
-    email,
-    username,
-    password,
-    slug,
-    role,
-    bio,
-    avatar,
-    created_at,
-    _id,
-    precioConsulta,
-  } = psychologist;
-
-  return (
-    <>
-      <div className="container ml-5">
-        <h1 className="font-bold capitalize text-2xl block w-full"></h1>
-      </div>
-    </>
-  );
-};
-
 export default function Payment({ slug }: any) {
   const [idUsuario, setIdUsuario] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [sendingMoney, setSendingMoney] = React.useState(false);
   const [infoPsicologo, setInfoPsicologo] = React.useState<any>(null);
   const { user, error } = useSelector((state: any) => state.auth);
   const [paymentDone, setPaymentDone] = React.useState('');
@@ -143,6 +118,7 @@ export default function Payment({ slug }: any) {
 
           try {
             const enviarDatos = async () => {
+              setSendingMoney(true);
               const config = {
                 headers: {
                   'Content-Type': 'application/json',
@@ -161,19 +137,18 @@ export default function Payment({ slug }: any) {
                   config
                 )
                 .then((res) => {
-                  {
-                    payment();
-                  }
-                  {
-                    onSubmit();
-                  }
+                  payment();
+                  onSubmit();
                   swal(
                     'Su pago ha sido exitoso',
                     'Gracias por confiar en iHappy!',
                     'success'
-                  );
+                  ).then((val) => {
+                    Router.push('/chat');
+                  });
                 })
                 .catch((err) => {
+                  setSendingMoney(false);
                   swal(
                     'Upss! Algo anda mal',
                     'La transacción no se ha logrado',
@@ -216,9 +191,16 @@ export default function Payment({ slug }: any) {
 
         <button
           onClick={(e) => handleSubmit}
-          className="w-full lg:w-auto py-2 my-4 bg-purple-700 text-white block shadow focus:outline-none py-2 px-4 rounded"
+          className={`
+            w-full lg:w-auto mx-auto block shadow focus:outline-none py-2 px-4 rounded mt-4
+            ${
+              sendingMoney
+                ? 'border-2 border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+                : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'
+            }
+          `}
           type="submit"
-          disabled={!stripe}
+          disabled={sendingMoney}
         >
           Pay
         </button>
@@ -260,7 +242,6 @@ export default function Payment({ slug }: any) {
                   />
                 </Elements>
                 {paymentDone === 'Success' && <h1></h1>}
-                <PsychologistHeader psychologist={infoPsicologo as any} />
               </div>
             </div>
           )}

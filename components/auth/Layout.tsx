@@ -13,12 +13,12 @@ import Router from 'next/router';
 
 interface LayoutProps {
   children: React.ReactChild | Array<React.ReactChild>;
-  title: String;
+  title?: string;
 }
 
 let socket: SocketIOClient.Socket;
 
-const Layout = ({ children, title }: LayoutProps) => {
+const Layout = ({ children, title = '' }: LayoutProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const [incompleteProfile, setIncompleteProfile] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -105,22 +105,23 @@ const Layout = ({ children, title }: LayoutProps) => {
           )}
 
           {/* Top Navbar */}
-          <div className="border-b border-gray-300 w-full flex justify-between items-center px-4 lg:px-6 py-2 text-gray-800 shadow-md">
-            <button
-              className="block lg:hidden text-purple-700 py-1 px-2 rounded focus:outline-none outline-none"
-              onClick={openMenu}
-            >
-              <MenuIcon style={{ fontSize: '1.50rem' }} />
-            </button>
+          {title !== '' && (
+            <div className="border-b border-gray-300 w-full flex justify-between items-center px-4 lg:px-6 py-2 text-gray-800">
+              <button
+                className="block lg:hidden text-purple-700 py-1 px-2 rounded focus:outline-none outline-none"
+                onClick={openMenu}
+              >
+                <MenuIcon style={{ fontSize: '1.50rem' }} />
+              </button>
 
-            <div className="flex flex-1 justify-center lg:justify-start items-center text-2xl capitalize">
-              <InfoIcon />
-              <p className=" px-2">{title}</p>
+              <div className="flex flex-1 justify-center lg:justify-start items-center text-2xl capitalize">
+                <InfoIcon />
+                <p className=" px-2">{title}</p>
+              </div>
+
+              {user && !loading && <UserDropdown />}
             </div>
-
-            {/* User dropdown */}
-            {user && !loading && <UserDropdown />}
-          </div>
+          )}
 
           {children}
         </div>
