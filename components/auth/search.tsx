@@ -62,18 +62,17 @@ function search() {
     getPsicologosFromAPI();
   }, []);
 
-  const option = specialty.map((element: any) => (
-    <option value={element._id} key={element._id}>
-      {' '}
-      {element.name}{' '}
+  const option = specialty.map((element: any, index) => (
+    <option value={element._id} key={index}>
+      {element.name}
     </option>
   ));
 
   const psica =
     psico.length > 0 ? (
-      psico.map((doctor: any) => (
+      psico.map((doctor: any, index) => (
         <DoctorCard
-          key={doctor._id}
+          key={index}
           firstName={doctor.first_name}
           lastName={doctor.last_name}
           username={doctor.username}

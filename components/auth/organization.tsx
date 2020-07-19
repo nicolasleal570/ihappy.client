@@ -50,7 +50,7 @@ const organization = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="w-screen overflow-x-scroll lg:overflow-auto text-left px-4 py-8 m-2">
+      <div className="w-screen overflow-x-scroll lg:overflow-auto text-left px-4 py-8">
         <table className="">
           <thead>
             <tr>
