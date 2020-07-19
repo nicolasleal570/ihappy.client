@@ -175,8 +175,8 @@ export default function Payment({ slug }: any) {
                 })
                 .catch((err) => {
                   swal(
-                    'Upss! Algo anda mal',
-                    'La transacción no se ha logrado',
+                    'Ups! Algo anda mal',
+                    'Transacción fallida',
                     'error'
                   );
                 });

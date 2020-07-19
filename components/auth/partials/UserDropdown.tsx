@@ -5,7 +5,7 @@ import Link from 'next/link';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { socketLogout } from '../../../store/actions/socketAction';
 import { logout } from '../../../store/actions/authAction';
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 const UserDropdown = () => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
@@ -49,17 +49,26 @@ const UserDropdown = () => {
           onClick={() => setIsOpen((isOpen) => !isOpen)}
           className="flex justify-between items-center focus:outline-none"
         >
-          {/*  */}
-          <div className="bg-purple-700 w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
+           
+            <div className="bg-purple-700 w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
             <img
               className="w-full h-full object-cover"
               src={user?.avatar}
               alt="profile"
             />
+          </div> 
+          {!user?.avatar && (
+            <div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center">
+            <AccountCircleIcon
+            className="rounded-full overflow-hidden flex justify-center items-center"
+            style={{ fill: '#a0aec0', fontSize: 50 }}
+          />
           </div>
+          )}
           <p className="hidden lg:block w-32 truncate px-2">
             {user?.first_name} {user?.last_name}
           </p>
+        
           <KeyboardArrowDownIcon className="text-lg" />
         </button>
 

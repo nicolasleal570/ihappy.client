@@ -12,7 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ForumIcon from '@material-ui/icons/Forum';
 import Link from 'next/link';
 import { Divider } from '@material-ui/core';
-import { getPacients, getDoctors, getSpecialty } from '../../utils/endpoints';
+import { getPacients, getDoctorsAdmin, getSpecialty } from '../../utils/endpoints';
 import AdminCard from './partials/AdminCard';
 import { BigLoader } from '../Loader';
 
@@ -37,7 +37,7 @@ const Psicologos = () => {
             }
         }
 
-        Axios.get(getDoctors(), config)
+        Axios.get(getDoctorsAdmin(), config)
             .then(response => {
                 const data_role = response.data.data;
 

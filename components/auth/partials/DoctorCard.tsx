@@ -10,6 +10,7 @@ interface DoctorCardProps {
     avatar: string
     role?: any
     slug: string
+    disabled: boolean
 }
 
 const DoctorCard = ({
@@ -20,9 +21,16 @@ const DoctorCard = ({
     role,
     avatar,
     slug,
+    disabled
+    
 }: DoctorCardProps) => {
+    
     return (
+        
+      
+    
         <div className="relative w-full bg-white rounded shadow-md border border-gray-300">
+            
             {/* Avatar */}
             <div className="px-4 pt-4">
                 <div className="mx-auto bg-purple-700 w-16 h-16 rounded-full overflow-hidden flex justify-center items-center">
@@ -57,7 +65,9 @@ const DoctorCard = ({
                     <a className="text-center px-3 py-1 text-sm bg-purple-700 rounded text-white">Ver Perfil</a>
                 </Link>
             </div>
+           
         </div>
+    
     )
 }
 

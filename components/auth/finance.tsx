@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CountUp from 'react-countup';
 import { getFacturas, putFacturaByPsicoPaid } from '../../utils/endpoints';
 import Axios from 'axios';
 import swal from 'sweetalert';
+
 
 
 const finance = () => {
@@ -16,6 +17,8 @@ const finance = () => {
   const [config, setConfig] = React.useState<any>()
   const [card, setCard] = React.useState<boolean>(false)
   const [psicoID, setPsicoID] = React.useState<any>()
+  const [psicologosUnicos, setPsicologosUnicos] = React.useState<any>()
+
   React.useEffect(() => {
 
 
@@ -48,19 +51,23 @@ const finance = () => {
         setMoney(total);
 
         setStats(data_role);
+      
       })
       .catch((e) => {
         // Podemos mostrar los errores en la consola
       });
-  }, []);
+      
+   
 
+    }, []);
 
+  
   const payPsico = () => {
 
     Axios.put(putFacturaByPsicoPaid(slug),
       {
         paid: true,
-        psicoID:psicoID
+        psicoID: psicoID
       },
       config)
       .then(response => {
@@ -89,7 +96,38 @@ const finance = () => {
     setAux(true)
     setSlug(e.target.value)
   }
+  
+  var psicologosApagar
 
+  const eliminarDuplicados = () => {
+    
+    const solicitanPago = stats.filter((psycosToPay:any)=>{
+      if(psycosToPay.requestToPay && !psycosToPay.paid)
+        return psycosToPay.requestToPay
+    })
+ 
+    const psicologos= solicitanPago.map((psicologos:any)=> {
+      return {
+        psicologo: psicologos.psicologo.username,
+        slug: psicologos.psicologo.slug,
+        avatar: psicologos.psicologo.avatar,
+        first_name: psicologos.psicologo.first_name,
+        last_name: psicologos.psicologo.last_name,
+        monto: psicologos.total
+      }
+    })
+    
+    const psicologosUnicos2 = psicologos.filter((thing:any, index:any, self:any) =>
+      index === self.findIndex((t) => (
+      t.slug === thing.slug && t.psicologo === thing.psicologo
+  ))
+)
+  console.log(psicologosUnicos2)
+  psicologosApagar = psicologosUnicos2
+   
+}
+eliminarDuplicados()
+  
   return (
     <div className="flex flex-col ml-10 h-full">
       <h1 className='text-4xl mt-10 font-bold'>Ganancias</h1>
@@ -113,6 +151,8 @@ const finance = () => {
           <thead>
             <tr>
               <th className="w-1/5 px-4 py-2">Orden</th>
+              <th className="w-1/5 px-4 py-2">psicologo</th>
+              <th className="w-1/5 px-4 py-2">usuario</th>
               <th className="w-1/5 px-4 py-2">Total</th>
               <th className="w-1/5 px-4 py-2">A pagar</th>
               <th className='w-1/5 px-4 py-2'>Pagado</th>
@@ -147,13 +187,12 @@ const finance = () => {
                         focus:bg-white'
         onChange={onChange}>
         <option>Selecciona</option>
-        {stats.map((el) => (
+        { psicologosApagar && psicologosApagar.map((el:any) => (
           <>
-            {el.requestToPay && !el.paid && (
-              <option value={el.psicologo.slug} key={el.psicologo.slug} >
-                {el.psicologo.username}
+          
+              <option value={el.slug} key={el.psicologo.slug}>
+                {el.psicologo}
               </option>
-            )}
           </>
         ))}
       </select>
@@ -162,7 +201,7 @@ const finance = () => {
         <div className=''>
           {stats.map((el) => (
             <>
-              {el.psicologo.slug === slug && (
+              {el.psicologo.slug === slug && !el.paid && (
                 <div className='max-w-lg h-32 bg-gray-100 mt-5 justify-left shadow-md rounded-md'>
                   {aux && (
                     <>
@@ -212,5 +251,6 @@ const finance = () => {
 
   );
 };
+
 
 export default finance;
