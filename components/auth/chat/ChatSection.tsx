@@ -14,11 +14,8 @@ const ChatSection = () => {
   const [selectedChat, setSelectedChat] = React.useState<any>(null);
   const [loadingChats, setLoadingChats] = React.useState(false);
 
-  let _mounted = false;
-
   React.useEffect(() => {
-    _mounted = true;
-    if (user && !loading && _mounted) {
+    if (user && !loading) {
       const getChats = async () => {
         try {
           setLoadingChats(true);
@@ -38,22 +35,14 @@ const ChatSection = () => {
 
       getChats();
     }
-
-    return () => {
-      _mounted = false;
-    };
   }, [user, loading]);
 
   React.useEffect(() => {
-    if (socket && chats.length > 0 && _mounted) {
+    if (socket && chats.length > 0) {
       chats.map((room) => {
         socket.emit('subscribe', room._id);
       });
     }
-
-    return () => {
-      _mounted = false;
-    };
   }, [chats, socket]);
 
   const onChangeConversation = (e: any, chatId: string) => {
@@ -61,9 +50,15 @@ const ChatSection = () => {
     setSelectedChat(chat);
   };
 
+  const changeChatList = (chatIdToDelete: string) => {
+    const newChatList = chats.filter((elem) => elem._id !== chatIdToDelete);
+    setChats(newChatList);
+    setSelectedChat(null);
+  };
+
   // Update if new messages are sent or recieve
   React.useEffect(() => {
-    if (socket && _mounted) {
+    if (socket) {
       socket.on('new message', (data: any) => {
         const { conversation: chat } = data;
         const newChats = chats.filter(
@@ -77,18 +72,10 @@ const ChatSection = () => {
         setChats(chatUpdated);
       });
     }
-
-    return () => {
-      _mounted = false;
-    };
   }, [socket, chats]);
 
   return (
-    <div
-      className={`flex ${
-        selectedChat ? 'overflow-hidden h-screen w-screen' : ''
-      }`}
-    >
+    <div className="flex">
       {/* Conversation list */}
       {user && !loading && (
         <>
@@ -101,7 +88,13 @@ const ChatSection = () => {
           />
 
           {/* Selected chat */}
-          <SelectedChat chat={selectedChat} setSelectedChat={setSelectedChat} />
+          {!loadingChats ? (
+            <SelectedChat
+              chat={selectedChat}
+              setSelectedChat={setSelectedChat}
+              changeChatList={changeChatList}
+            />
+          ) : null}
         </>
       )}
     </div>

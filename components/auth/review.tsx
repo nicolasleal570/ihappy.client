@@ -47,7 +47,6 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
   const { user, loading } = useSelector((state: any) => state.auth);
 
   return (
-    
     <div className="py-4">
       <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
         <img src={avatar} className="w-full h-full object-cover" alt="Avatar" />
@@ -89,8 +88,8 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 };
 
 export default function Reviews({ slug }: any) {
-  const [reviews, setReviews] = React.useState<any>([]);
-  const [psychologist, setPsychologist] = React.useState<any>();
+  const [reviews, setReviews] = React.useState<Array<any>>([]);
+  const [psychologist, setPsychologist] = React.useState(null);
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [sendingComment, setSendingComment] = React.useState(false);
@@ -108,11 +107,11 @@ export default function Reviews({ slug }: any) {
         if (slug) {
           const res = await axios.get(getReviews(slug + ''), config);
           setReviews(res.data.data.reviews);
+          console.log('reviews', res.data.data.reviews);
           setPsychologist(res.data.data.psychologist);
           setLoading(false);
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     };
 
     loadData();
@@ -142,15 +141,13 @@ export default function Reviews({ slug }: any) {
           setComment('');
           setSendingComment(false);
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     };
 
     sendData();
   };
 
   return (
-    
     <div className="flex">
       {loading && (
         <div className="w-full h-screen flex justify-center items-center overflow-hidden">
@@ -212,29 +209,44 @@ export default function Reviews({ slug }: any) {
               className="overflow-y-auto custom-scroll"
               style={{ maxHeight: '400px' }}
             >
-              {reviews.map((review: any, index: number) => (
-                <div
-                  key={review._id}
-                  className={`w-full border-b border-gray-300 flex px-6 py-2 ${
-                    index % 2 === 0 ? 'bg-gray-200' : 'bg-white'
-                  }`}
-                >
-                  <div className="flex-none bg-purple-700 w-12 h-12 rounded-full shadow-lg overflow-hidden mr-4">
-                    <img
-                      src={review.user.avatar}
-                      alt="avatar"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="flex-1 text-font text-xl font-bold">{`${review.user.first_name} ${review.user.last_name}`}</h3>
-                    <p className="text-base">{review.content}</p>
-                    <p className="text-xs text-gray-500 mt-3">
-                      {moment(review.created_at).fromNow()}
-                    </p>
-                  </div>
+              {reviews.length === 0 && (
+                <div className="bg-gray-100 w-full flex flex-col justify-center items-center p-6">
+                  <img
+                    src="/assets/icons/empty.svg"
+                    className="w-48 h-48"
+                    alt="Empty State"
+                  />
+                  <p className="text-xl font-light text-gray-800 uppercase pt-4 px-6 text-center">
+                    No hay nada por aquí. Se el primero en redactar una reseña
+                    de tu doctor!
+                  </p>
                 </div>
-              ))}
+              )}
+
+              {reviews.length > 0 &&
+                reviews.map((review: any, index: number) => (
+                  <div
+                    key={review._id}
+                    className={`w-full border-b border-gray-300 flex px-6 py-2 ${
+                      index % 2 === 0 ? 'bg-gray-200' : 'bg-white'
+                    }`}
+                  >
+                    <div className="flex-none bg-purple-700 w-12 h-12 rounded-full shadow-lg overflow-hidden mr-4">
+                      <img
+                        src={review.user.avatar}
+                        alt="avatar"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="flex-1 text-font text-xl font-bold">{`${review.user.first_name} ${review.user.last_name}`}</h3>
+                      <p className="text-base">{review.content}</p>
+                      <p className="text-xs text-gray-500 mt-3">
+                        {moment(review.created_at).fromNow()}
+                      </p>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
           <form
@@ -271,6 +283,5 @@ export default function Reviews({ slug }: any) {
      
       )}
     </div>
-    
   );
 }

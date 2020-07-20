@@ -7,6 +7,7 @@ import SidebarLink from './partials/SidebarLink';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import ForumIcon from '@material-ui/icons/Forum';
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
@@ -131,6 +132,10 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
               ]}
             >
               <AccountBalanceIcon className="text-white" />
+            </SidebarLink>
+
+            <SidebarLink title="Test" url="/test">
+              <ReceiptIcon className="text-white" />
             </SidebarLink>
 
             <SidebarLink title="Search" url="/search">

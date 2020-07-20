@@ -50,7 +50,7 @@ const organization = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="w-screen overflow-x-scroll lg:overflow-auto text-left px-4 py-8 m-2">
+      <div className="w-screen overflow-x-scroll lg:overflow-auto text-left px-4 py-8">
         <table className="">
           <thead>
             <tr>
@@ -61,7 +61,7 @@ const organization = () => {
           </thead>
           <tbody>
             {schedule.map((el) => (
-              <tr>
+              <tr key={el._id}>
                 <td className="border px-4 py-2">{el._id}</td>
                 <td className="border px-4 py-2">{el.fecha}</td>
                 <td className="border px-4 py-2">

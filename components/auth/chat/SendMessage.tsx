@@ -10,8 +10,17 @@ interface SendMessageProps {
 const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const [message, setMessage] = React.useState('');
 
+  React.useEffect(() => {
+    setMessage('');
+  }, [selectedChatId]);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!message) {
+      console.log('No message');
+      return;
+    }
 
     const config = {
       headers: {
@@ -26,19 +35,15 @@ const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
         content: message,
       };
 
-      const res = await Axios.post(postMessages, body, config);
       setMessage('');
+      const res = await Axios.post(postMessages, body, config);
     };
 
     sendData();
   };
 
   return (
-    <form
-      className="absolute bottom-0 right-0 w-full bg-white"
-      method="POST"
-      onSubmit={onSubmit}
-    >
+    <form className="w-full" method="POST" onSubmit={onSubmit}>
       <div className="border-l border-t border-gray-300 px-6 py-4 w-full flex">
         <input
           type="text"
@@ -47,8 +52,17 @@ const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
           id="email"
           onChange={(e) => setMessage(e.target.value)}
           value={message}
+          autoFocus
+          autoComplete="off"
         />
-        <button className="px-4 py-2 bg-purple-700 border border-purple-700 rounded-r">
+        <button
+          className={` border-2 px-4 py-2 rounded-r ${
+            !message
+              ? 'border-gray-400 bg-gray-400 text-gray-600 cursor-not-allowed'
+              : 'bg-purple-700 border-purple-700'
+          }`}
+          disabled={!message ? true : false}
+        >
           <svg
             width="21"
             height="21"

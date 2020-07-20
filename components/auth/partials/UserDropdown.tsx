@@ -16,29 +16,15 @@ const UserDropdown = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  let _mounted = false;
-
-  React.useEffect(() => {
-    _mounted = true;
-    return () => {
-      _mounted = false;
-    };
-  }, []);
-
   const emitLogoutEvent = () => {
-    if (_mounted) {
-      socket.emit('logout', user._id);
-      dispatch(socketLogout());
-    }
+    socket.emit('logout', user._id);
+    dispatch(socketLogout());
   };
 
   const handleLogout = () => {
-    if (_mounted) {
-      dispatch(logout());
-      emitLogoutEvent();
-      socket.close();
-      router.push('/');
-    }
+    dispatch(logout());
+    emitLogoutEvent();
+    socket.close();
   };
 
   return (

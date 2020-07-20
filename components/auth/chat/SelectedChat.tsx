@@ -7,6 +7,7 @@ import SendMessage from './SendMessage';
 import { conversationStatus } from '../../../utils/endpoints';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { BigLoader } from '../../Loader';
 
 interface SelectedChatProps {
   chat: {
@@ -15,19 +16,23 @@ interface SelectedChatProps {
     last_message: string;
     last_time: string;
   };
+  changeChatList: (chatIdToDelete: string) => void;
   setSelectedChat: (value: any) => void;
 }
 
-const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
-  const { user } = useSelector((state: any) => state.auth);
+const SelectedChat = ({
+  chat,
+  setSelectedChat,
+  changeChatList,
+}: SelectedChatProps) => {
+  const { user, loading } = useSelector((state: any) => state.auth);
   const [messages, setMessages] = React.useState<Array<any>>([]);
   const [recipientUser, setRecipientUser] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState(false);
   const [borrarChat, setBorrarChat] = React.useState(false);
-  const [sendPendiente, setSendPendiente] = React.useState(false);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(
     (state: any) => state.socket
   );
+  const [loadingMessages, setLoadingMessages] = React.useState(false);
   const boxRef = React.createRef<HTMLDivElement>();
 
   // Update if new messages are sent or recieve
@@ -37,11 +42,18 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
         setMessages((prev) => [...prev, data.message]);
       });
     }
+
+    return () => {
+      if (socket) {
+        socket.off('new message');
+      }
+    };
   }, [socket]);
 
   React.useEffect(() => {
     if (chat) {
       const getData = async () => {
+        setLoadingMessages(true);
         const config = {
           headers: {
             'Content-Type': 'application/json',
@@ -52,6 +64,7 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
         const res = await Axios.get(getMessages(chat._id), config);
         const data = res.data.data;
         setMessages(data);
+        setLoadingMessages(false);
       };
 
       getData();
@@ -72,7 +85,6 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    setSendPendiente(true);
     Axios.put(
       conversationStatus(chat._id),
       {
@@ -81,15 +93,12 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
       config
     )
       .then((res) => {
-        if (!loading) {
-          setSendPendiente(false);
-        }
+        changeChatList(chat._id);
       })
-      .catch((err) => {
-        setSendPendiente(false);
-      });
+      .catch((err) => {});
   };
   const onHandle = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (borrarChat) {
       eliminarChat();
     }
@@ -104,9 +113,9 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
   let chatView = null;
   if (chat && recipientUser) {
     chatView = (
-      <div className="fixed top-0 left-0 w-full bg-white z-40 lg:z-auto lg:relative h-screen overflow-hidden lg:overflow-auto">
+      <div className="fixed top-0 left-0 w-full flex flex-col bg-white z-40 lg:z-auto lg:relative h-screen overflow-hidden lg:overflow-auto">
         {/* Top bar */}
-        <div className="flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l">
+        <div className="bg-white flex flex-row items-center w-full py-2 border-b border-gray-300 shadow-sm border-l">
           <button
             className="pl-2 block lg:hidden focus:outline-none"
             type="button"
@@ -115,7 +124,11 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
             <ArrowBackIcon style={{ fill: '#6b46c1', fontSize: 30 }} />
           </button>
           <div className="flex-none rounded-full w-12 h-12 lg:w-16 lg:h-16 bg-purple-400 overflow-hidden ml-4">
-            <img src={recipientUser.avatar} alt={recipientUser.first_name} />
+            <img
+              src={recipientUser.avatar}
+              alt={recipientUser.first_name}
+              className="w-full h-full object-cover"
+            />
           </div>
           <h1 className="text-xl lg:text-2xl font-semibold p-4 capitalize">
             {recipientUser.first_name} {recipientUser.last_name}
@@ -136,10 +149,13 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
 
         {/* Messages */}
         <div
-          className="h-screen lg:h-full p-6 border-l border-gray-300 overflow-y-auto custom-scroll pb-40"
+          className="flex-1 lg:chat-xl p-6 border-l border-gray-300 overflow-y-auto custom-scroll"
           ref={boxRef}
         >
+          {loadingMessages && <BigLoader />}
+
           {!loading &&
+            !loadingMessages &&
             messages.map((message: any) => {
               //   Para saber quien escribe el mensaje
               const writtenByMe = message.sender === user._id;
@@ -168,8 +184,14 @@ const SelectedChat = ({ chat, setSelectedChat }: SelectedChatProps) => {
   } else {
     chatView = (
       <div className="bg-purple-200 w-full h-screen hidden lg:flex flex-col justify-center items-center">
-        <img src="/assets/icons/empty.svg" className="w-48 h-48" alt="Empty State"/>
-        <p className="text-xl font-light text-gray-800 uppercase py-4 px-6 text-center">No hay nada por aquí. Selecciona un chat y comienza tu sesión.</p>
+        <img
+          src="/assets/icons/empty.svg"
+          className="w-48 h-48"
+          alt="Empty State"
+        />
+        <p className="text-xl font-light text-gray-800 uppercase py-4 px-6 text-center">
+          No hay nada por aquí. Selecciona un chat y comienza tu sesión.
+        </p>
       </div>
     );
   }

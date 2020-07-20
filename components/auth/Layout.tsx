@@ -10,16 +10,17 @@ import { backendURL } from '../../utils/endpoints';
 import { initSocket, socketLogout } from '../../store/actions/socketAction';
 import MenuIcon from '@material-ui/icons/Menu';
 import Router from 'next/router';
+import { error } from 'console';
 
 interface LayoutProps {
   children: React.ReactChild | Array<React.ReactChild>;
-  title: String;
+  title?: string;
 }
 
 let socket: SocketIOClient.Socket;
 
-const Layout = ({ children, title }: LayoutProps) => {
-  const { user, loading } = useSelector((state: any) => state.auth);
+const Layout = ({ children, title = '' }: LayoutProps) => {
+  const { user, loading, error } = useSelector((state: any) => state.auth);
   const [incompleteProfile, setIncompleteProfile] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
@@ -64,6 +65,12 @@ const Layout = ({ children, title }: LayoutProps) => {
     }
   }, [user]);
 
+  React.useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      Router.push('/');
+    }
+  }, [user, loading, error]);
+
   // Adding new socket ID to the user
   const emitSetUserEvent = (userId: String) => {
     socket.emit('identity', userId);
@@ -78,18 +85,16 @@ const Layout = ({ children, title }: LayoutProps) => {
     setMenuOpen(false);
   });
 
+  if (loading || !user) {
+    return <AllScreenLoader />;
+  }
+
   return (
     <div
       className={`
       ${menuOpen || loading ? 'overflow-hidden h-screen' : ''}
     `}
     >
-      {loading && (
-        <div className="">
-          <AllScreenLoader />
-        </div>
-      )}
-
       <Navbar closeMenu={closeMenu} isOpen={menuOpen} openMenu={openMenu} />
 
       <div className="flex flex-col lg:flex-row text-gray-800 overflow-hidden">
@@ -105,22 +110,23 @@ const Layout = ({ children, title }: LayoutProps) => {
           )}
 
           {/* Top Navbar */}
-          <div className="border-b border-gray-300 w-full flex justify-between items-center px-4 lg:px-6 py-2 text-gray-800 shadow-md">
-            <button
-              className="block lg:hidden text-purple-700 py-1 px-2 rounded focus:outline-none outline-none"
-              onClick={openMenu}
-            >
-              <MenuIcon style={{ fontSize: '1.50rem' }} />
-            </button>
+          {title !== '' && (
+            <div className="border-b border-gray-300 w-full flex justify-between items-center px-4 lg:px-6 py-2 text-gray-800">
+              <button
+                className="block lg:hidden text-purple-700 py-1 px-2 rounded focus:outline-none outline-none"
+                onClick={openMenu}
+              >
+                <MenuIcon style={{ fontSize: '1.50rem' }} />
+              </button>
 
-            <div className="flex flex-1 justify-center lg:justify-start items-center text-2xl capitalize">
-              <InfoIcon />
-              <p className=" px-2">{title}</p>
+              <div className="flex flex-1 justify-center lg:justify-start items-center text-2xl capitalize">
+                <InfoIcon />
+                <p className=" px-2">{title}</p>
+              </div>
+
+              {user && !loading && <UserDropdown />}
             </div>
-
-            {/* User dropdown */}
-            {user && !loading && <UserDropdown />}
-          </div>
+          )}
 
           {children}
         </div>

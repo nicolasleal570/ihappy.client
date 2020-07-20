@@ -25,36 +25,15 @@ const AboutCard = ({ title, subtitle, imgUrl }: AboutCardProps) => (
 interface DoctorCardProps {
   title: String;
   description: String;
-  starsCount: number;
   avatar: string;
 }
 
-const DoctorCard = ({
-  title,
-  description,
-  starsCount,
-  avatar,
-}: DoctorCardProps) => {
-  let rating = [...Array(5).fill(null)];
-  let starsIcon: Array<any> = [];
-  rating.forEach((value, index) => {
-    if (starsCount <= index) {
-      starsIcon.push(<li key={index}></li>);
-    } else {
-      starsIcon.push(
-        <li key={index}>
-          <img src="/assets/icons/star-full.svg" alt="Stars" />
-        </li>
-      );
-    }
-  });
-
+const DoctorCard = ({ title, description, avatar }: DoctorCardProps) => {
   return (
     <div className="bg-gray-200 text-gray-800 p-4 rounded mb-6 flex border border-gray-400 shadow-sm">
       <div className="flex-1">
         <h1 className="font-bold capitalize text-xl">{title}</h1>
         <p className="mt-3 mb-4 leading-none">{description}</p>
-        <ul className="flex">{starsIcon}</ul>
       </div>
       <div className="flex-none">
         <div className="px-4 pt-4">
@@ -147,7 +126,6 @@ const Header = () => {
                 key={el._id}
                 title={el.first_name}
                 description={el.bio}
-                starsCount={4}
                 avatar={el.avatar}
               />
             ))}
