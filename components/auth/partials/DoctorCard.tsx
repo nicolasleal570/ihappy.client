@@ -10,7 +10,6 @@ interface DoctorCardProps {
     avatar: string
     role?: any
     slug: string
-    disabled: boolean
 }
 
 const DoctorCard = ({
@@ -20,8 +19,7 @@ const DoctorCard = ({
     specialities,
     role,
     avatar,
-    slug,
-    disabled
+    slug
     
 }: DoctorCardProps) => {
     

@@ -3,6 +3,7 @@ import CountUp from 'react-countup';
 import { getFacturas, putFacturaByPsicoPaid } from '../../utils/endpoints';
 import Axios from 'axios';
 import swal from 'sweetalert';
+import psicologos from '../../pages/finance';
 
 
 
@@ -17,7 +18,7 @@ const finance = () => {
   const [config, setConfig] = React.useState<any>()
   const [card, setCard] = React.useState<boolean>(false)
   const [psicoID, setPsicoID] = React.useState<any>()
-  const [psicologosUnicos, setPsicologosUnicos] = React.useState<any>()
+  const [arr, setArr] = React.useState<any[]>([])
 
   React.useEffect(() => {
 
@@ -57,9 +58,9 @@ const finance = () => {
         // Podemos mostrar los errores en la consola
       });
       
-   
-
-    }, []);
+      eliminarDuplicados()
+      
+    }, [stats]);
 
   
   const payPsico = () => {
@@ -97,15 +98,15 @@ const finance = () => {
     setSlug(e.target.value)
   }
   
-  var psicologosApagar
+  var psicologosApagar:any
 
   const eliminarDuplicados = () => {
+    console.log(stats)
+    const solicitanPago = stats.filter((el:any)=>{
+      if(el.paid===false && el.requestToPay){
+        return el
+    }});
     
-    const solicitanPago = stats.filter((psycosToPay:any)=>{
-      if(psycosToPay.requestToPay && !psycosToPay.paid)
-        return psycosToPay.requestToPay
-    })
- 
     const psicologos= solicitanPago.map((psicologos:any)=> {
       return {
         psicologo: psicologos.psicologo.username,
@@ -116,17 +117,18 @@ const finance = () => {
         monto: psicologos.total
       }
     })
-    
+   
     const psicologosUnicos2 = psicologos.filter((thing:any, index:any, self:any) =>
-      index === self.findIndex((t) => (
+      index === self.findIndex((t:any) => (
       t.slug === thing.slug && t.psicologo === thing.psicologo
   ))
 )
-  console.log(psicologosUnicos2)
-  psicologosApagar = psicologosUnicos2
+ psicologosApagar = psicologosUnicos2
+  // console.log(psicologosApagar)
+  setArr(psicologosApagar)
    
 }
-eliminarDuplicados()
+
   
   return (
     <div className="flex flex-col ml-10 h-full">
@@ -187,10 +189,11 @@ eliminarDuplicados()
                         focus:bg-white'
         onChange={onChange}>
         <option>Selecciona</option>
-        { psicologosApagar && psicologosApagar.map((el:any) => (
+        
+        { arr && arr.map((el:any) => (
           <>
-          
-              <option value={el.slug} key={el.psicologo.slug}>
+         
+              <option value={el.slug} key={el.slug}>
                 {el.psicologo}
               </option>
           </>

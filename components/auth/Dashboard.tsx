@@ -60,7 +60,6 @@ export default function Dashboard() {
                 slug={doctor.slug}
                 role={doctor.role}
                 specialities={doctor.speciality}
-                disabled = {doctor.disabled}
               />
             ))}
         </div>
