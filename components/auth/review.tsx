@@ -89,7 +89,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = React.useState<Array<any>>([]);
-  const [psychologist, setPsychologist] = React.useState(null);
+  const [psychologist, setPsychologist] = React.useState<any>();
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [sendingComment, setSendingComment] = React.useState(false);
