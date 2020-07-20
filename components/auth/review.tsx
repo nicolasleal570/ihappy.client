@@ -5,6 +5,7 @@ import moment from 'moment';
 import { BigLoader } from '../Loader';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 interface PsychologistHeaderProps {
   psychologist: {
     first_name: string;
@@ -89,7 +90,7 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
 
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = React.useState<any>([]);
-  const [psychologist, setPsychologist] = React.useState(null);
+  const [psychologist, setPsychologist] = React.useState<any>();
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [sendingComment, setSendingComment] = React.useState(false);
@@ -157,9 +158,49 @@ export default function Reviews({ slug }: any) {
         </div>
       )}
       {!loading && (
+        <>
+        {psychologist.disabled && (
         <div className="w-full relative flex flex-col">
           {/* Medico Bio */}
-          <PsychologistHeader psychologist={psychologist as any} />
+          <div className="py-4">
+      <div className=" w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
+       {<AccountCircleIcon style={{ fill: '#D3D3D3', fontSize: 130 }}/>}
+      </div>
+      <div className="flex pt-4">
+        <div className="flex-1 px-6">
+          
+            <h3 className="font-bold text-4xl text-center block w-full">User not found</h3>
+        
+          <p className="text-center text-gray-500">@iHappyUser</p>
+          <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
+          </p>
+          <p className="absolute hidden lg:block px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
+          </p>
+          <div className="flex justify-center py-2">
+            
+              
+                <button
+                  className={`
+                    'w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-gray-300 text-gray-200 `}
+                >
+                  Chatear!
+                </button>
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+          {/* Comments */}
+          <hr />
+        </div>
+        )}
+          <div>
+            
+           {!psychologist.disabled && (
+             <div>
+               {/* Medico Bio */}
+               <PsychologistHeader psychologist={psychologist as any} />
           {/* Comments */}
           <hr />
           <div className="">
@@ -224,6 +265,10 @@ export default function Reviews({ slug }: any) {
             </button>
           </form>
         </div>
+           )}
+       </div>
+        </>
+     
       )}
     </div>
     
