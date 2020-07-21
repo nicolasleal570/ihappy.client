@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-interface NavbarProps {
+type NavbarProps = {
   openMenu: () => void;
   closeMenu: () => void;
   isOpen: boolean;

@@ -4,7 +4,7 @@ import { getDoctorsHome } from '../../../utils/endpoints';
 
 import Axios from 'axios';
 
-interface AboutCardProps {
+type AboutCardProps = {
   title: String;
   subtitle: String;
   imgUrl: string;

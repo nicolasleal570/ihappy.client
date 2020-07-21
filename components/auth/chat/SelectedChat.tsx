@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { BigLoader } from '../../Loader';
 
-interface SelectedChatProps {
+type SelectedChatProps = {
   chat: {
     _id: string;
     participants: Array<any>;

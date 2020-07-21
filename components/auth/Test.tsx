@@ -5,7 +5,7 @@ import DoctorCard from './partials/DoctorCard';
 import { BigLoader, AllScreenLoader } from '../Loader';
 
 const Test = () => {
-  interface Psychologists {
+  type Psychologists = {
     name: String;
     imgUrl: string;
   }

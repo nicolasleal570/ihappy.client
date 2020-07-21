@@ -4,7 +4,7 @@ import Axios from 'axios';
 import { disable } from '../../../utils/endpoints';
 import AuthLayout from '../Layout';
 
-interface DoctorCardProps {
+type DoctorCardProps = {
   firstName: string;
   lastName: string;
   username: string;

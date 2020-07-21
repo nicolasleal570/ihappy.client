@@ -11,13 +11,17 @@ import { conversationStatus } from '../../../utils/endpoints';
 import ClearIcon from '@material-ui/icons/Clear';
 import { BigLoader } from '../../Loader';
 
-interface ChatListProps {
+type ChatListProps = {
   chats: Array<any>;
   onChangeConversation: (e: any, chatId: string) => void;
   userId: string;
   selectedChatId: string;
   loadingChats: boolean;
 }
+/**
+ * Esta es el componente que contiene la lista del chat
+ * @visibleName Lista del chat
+ */
 
 const ChatList = ({
   chats,

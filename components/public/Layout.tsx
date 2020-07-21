@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 
-interface LayoutProps {
+type LayoutProps = {
     children: React.ReactChild | Array<React.ReactChild>;
 }
 

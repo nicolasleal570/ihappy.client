@@ -1,6 +1,6 @@
 import React, { ChangeEvent, forwardRef, useImperativeHandle } from 'react';
 
-interface InputFieldProps {
+type InputFieldProps = {
   placeholder: string;
   name: string;
   type: string;

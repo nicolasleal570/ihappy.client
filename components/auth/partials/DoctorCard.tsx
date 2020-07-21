@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-interface DoctorCardProps {
+type DoctorCardProps = {
   firstName: string;
   lastName: string;
   username: string;

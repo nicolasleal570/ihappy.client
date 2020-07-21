@@ -5,7 +5,7 @@ import moment from 'moment';
 import { BigLoader } from '../Loader';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-interface PsychologistHeaderProps {
+type PsychologistHeaderProps  = {
   psychologist: {
     first_name: string;
     last_name: string;

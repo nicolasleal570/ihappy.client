@@ -3,7 +3,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Link from 'next/link';
 
-interface SidebarDropdownProps {
+type SidebarDropdownProps = {
   title: String;
   url?: string;
   isDropdown?: Boolean;

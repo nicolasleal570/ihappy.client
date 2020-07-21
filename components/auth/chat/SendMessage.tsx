@@ -3,7 +3,7 @@ import { SOCKET_START } from '../../../store/actionTypes';
 import { postMessages } from '../../../utils/endpoints';
 import Axios from 'axios';
 
-interface SendMessageProps {
+type SendMessageProps = {
   selectedChatId: string;
   userId: string;
 }

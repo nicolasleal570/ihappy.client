@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Router from 'next/router';
 import { error } from 'console';
 
-interface LayoutProps {
+type LayoutProps = {
   children: React.ReactChild | Array<React.ReactChild>;
   title?: string;
 }

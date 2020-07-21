@@ -1,6 +1,6 @@
 import React, { ChangeEvent, forwardRef, useImperativeHandle } from 'react';
 
-interface SelectFieldDynamicProps {
+type SelectFieldDynamicProps = {
   placeholder: string;
   name: string;
   type: string;

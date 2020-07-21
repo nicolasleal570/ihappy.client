@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface AlertProps {
+type AlertProps = {
     title: String;
     description: String;
     type: 'warning' | 'danger' | 'info' | 'success';

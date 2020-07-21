@@ -16,7 +16,7 @@ import {
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import Router from 'next/router';
-interface PsychologistHeaderProps {
+type PsychologistHeaderProps = {
   psychologist: {
     first_name: string;
     last_name: string;
