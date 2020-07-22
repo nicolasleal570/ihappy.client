@@ -9,6 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
+
+
+/**
+ * Este componente incluye todo lo que tiene que ver con el perfil del usuario, cambiar la imagen, etc.
+ * @VisibleName Profile
+ */
 export default function Profile() {
   const [equipo, setEquipo] = React.useState(null);
   const [nombre, setNombre] = React.useState('');

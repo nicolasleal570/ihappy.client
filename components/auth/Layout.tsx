@@ -19,6 +19,10 @@ type LayoutProps = {
 
 let socket: SocketIOClient.Socket;
 
+/**
+ * Este componente es el que contiene el Layout de la PWA, contiene el sidebar, la barra de arriba y los componentes que van variando dependiendo de las acciones.
+ * @visibleName Layout
+ */
 const Layout = ({ children, title = '' }: LayoutProps) => {
   const { user, loading, error } = useSelector((state: any) => state.auth);
   const [incompleteProfile, setIncompleteProfile] = React.useState(false);

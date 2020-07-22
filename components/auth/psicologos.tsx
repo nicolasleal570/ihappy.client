@@ -17,7 +17,10 @@ import AdminCard from './partials/AdminCard';
 import { BigLoader } from '../Loader';
 
 
-
+/**
+ * Este componente permite buscar y deshabilitar psicologos.
+ * @VisibleName Psicologos
+ */
 
 const Psicologos = () => {
 

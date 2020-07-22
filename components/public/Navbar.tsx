@@ -1,5 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+
+/**
+ * Este componente contiene el navbar de la pagina antes de haber iniciado sesion.
+ * @VisibleName NavbarHome
+ */
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 

@@ -4,6 +4,10 @@ import Axios from 'axios';
 import DoctorCard from './partials/DoctorCard';
 import { BigLoader, AllScreenLoader } from '../Loader';
 
+/**
+ * Este componente contiene el test que realizamos para recomendar la especialidad de psicologos
+ * @visibleName Test 
+ */
 const Test = () => {
   type Psychologists = {
     name: String;

@@ -86,6 +86,11 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
   );
 };
 
+/**
+ * Este componente permite añadir reviews a los psicologos
+ * @visibleName Reviews 
+ */
+
 export default function Reviews({ slug }: any) {
   const [reviews, setReviews] = React.useState<Array<any>>([]);
   const [psychologist, setPsychologist] = React.useState(null);

@@ -6,6 +6,11 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { socketLogout } from '../../../store/actions/socketAction';
 import { logout } from '../../../store/actions/authAction';
 
+
+/**
+ * Este componente es el dropdown del usuario logeado, arriba a la derecha.
+ * @visibleName UserDropdown
+ */
 const UserDropdown = () => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(

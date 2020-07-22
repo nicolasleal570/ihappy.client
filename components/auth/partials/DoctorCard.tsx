@@ -11,6 +11,10 @@ type DoctorCardProps = {
   slug: string;
 }
 
+/**
+ * Este componente es la tarjeta de los dosctores, que incluye su nombre, especialidades e imagen.
+ * @visibleName DoctorCard
+ */
 const DoctorCard = ({
   firstName,
   lastName,

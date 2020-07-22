@@ -11,6 +11,10 @@ import swal from 'sweetalert';
 import Emoji from './partials/Emoji';
 import { BigLoader } from '../Loader';
 
+/**
+ * Este componente muestra las factruas de los usuarios.
+ * @visibleName mostrarFactura
+ */
 export default function mostrarFactura() {
   const [ganancias, setGanacias] = React.useState<any>(0);
   const [gastado, setGastado] = React.useState<any>(null);

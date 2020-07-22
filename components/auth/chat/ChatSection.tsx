@@ -5,6 +5,12 @@ import { getConversations } from '../../../utils/endpoints';
 import ChatList from './ChatList';
 import SelectedChat from './SelectedChat';
 
+
+/**
+ * Este componente reune el componente de Lista de Chat y SelectedChat para los chats
+ * @visibleName ChatSection
+ */
+
 const ChatSection = () => {
   const { user, loading } = useSelector((state: any) => state.auth);
   const { socket }: { socket: SocketIOClient.Socket } = useSelector(

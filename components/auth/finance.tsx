@@ -4,7 +4,6 @@ import { getFacturas, putFacturaByPsicoPaid } from '../../utils/endpoints';
 import Axios from 'axios';
 import swal from 'sweetalert';
 
-
 const finance = () => {
   let numo: number;
 

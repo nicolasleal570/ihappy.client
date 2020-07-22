@@ -6,6 +6,11 @@ import DoctorCard from './partials/DoctorCard';
 import SearchIcon from '@material-ui/icons/Search';
 import { BigLoader } from '../Loader';
 
+
+/**
+ * Este componente permite buscar psicologs
+ * @visibleName search 
+ */
 function search() {
   const [specialty, setSpecialty] = React.useState<Array<any>>([]); //Este trae todas las especialidades
   const [lookFor, setLookFor] = React.useState<any>(''); //Este indica cual es la que quiere el usuario

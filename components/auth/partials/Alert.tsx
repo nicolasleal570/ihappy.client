@@ -6,6 +6,10 @@ type AlertProps = {
     type: 'warning' | 'danger' | 'info' | 'success';
 }
 
+/**
+ * Este componente es una alerta
+ * @visibleName Alerta
+ */
 const Alert = ({ title, description }: AlertProps) => {
     return (
         <div className="bg-yellow-400 border-b border-t border-yellow-600 w-full text-gray-800 flex">

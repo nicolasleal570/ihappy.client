@@ -16,6 +16,10 @@ import { getPacients, getDoctors, getSpecialty } from '../../utils/endpoints';
 import AdminCard from './partials/AdminCard';
 import { BigLoader } from '../Loader';
 
+/**
+ * Este componente permite buscar y deshabilitar usuarios.
+ * @VisibleName Users
+ */
 const Users = () => {
   const [pacientes, setPacientes] = React.useState<Array<any>>([]);
   const [specialty, setSpecialty] = React.useState<Array<any>>([]); //Este trae todas las especialidades

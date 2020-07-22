@@ -1,5 +1,8 @@
 import React from 'react';
-
+/**
+ * Este componente contiene una animacion de un loader.
+ * @VisibleName BigLoader
+ */
 export const BigLoader = () => {
   return (
     <div className="py-2 px-5 flex items-center flex-col">
@@ -15,7 +18,10 @@ export const BigLoader = () => {
     </div>
   );
 };
-
+/**
+ * Este componente contiene una animacion de un loader.
+ * @VisibleName AllScreenLoader
+ */
 export const AllScreenLoader = () => (
   <div
     className="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center overflow-hidden"

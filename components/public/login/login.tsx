@@ -5,6 +5,10 @@ import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import InputField from '../../auth/partials/InputField';
 
+/**
+ * Este componente contiene el login de la pagina.
+ * @VisibleName login
+ */
 export default function login() {
   const [data, setData] = React.useState<{ email: string; password: string }>({
     email: '',

@@ -7,6 +7,10 @@ import {
 } from '../../utils/endpoints';
 import Axios from 'axios';
 
+/**
+ * Este componente muestra los stats
+ * @visibleName stats 
+ */
 const stats = () => {
   const [doctors, setDoctors] = React.useState<Array<any>>([]);
   const [pacients, setPacients] = React.useState<Array<any>>([]);

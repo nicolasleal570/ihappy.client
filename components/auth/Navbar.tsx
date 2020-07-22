@@ -18,6 +18,10 @@ type NavbarProps = {
   closeMenu: () => void;
   isOpen: boolean;
 }
+/**
+ * Este componente es el que contiene el navbar con los links para navegar por la PWA.
+ * @visibleName Navbar
+ */
 const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
   const closeMenuAnimation = () => {
     if (isOpen) {

@@ -7,6 +7,11 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import swal from 'sweetalert';
+
+/**
+ * Este componente contiene el FAQ de la pagina.
+ * @VisibleName FAQ
+ */
 export default function FAQ() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

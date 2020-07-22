@@ -5,6 +5,11 @@ import { getDoctors } from '../../utils/endpoints';
 import DoctorCard from './partials/DoctorCard';
 import { BigLoader } from '../Loader';
 
+
+/**
+ * Este componente es el que contiene el Dashboard.
+ * @visibleName Dashboard
+ */
 export default function Dashboard() {
   const [loading, setLoading] = React.useState(false);
   const [doctors, setDoctors] = React.useState<Array<any>>([]);

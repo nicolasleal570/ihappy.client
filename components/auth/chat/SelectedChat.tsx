@@ -9,6 +9,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { BigLoader } from '../../Loader';
 
+
+/**
+ * Este componente contiene el componente SendMessage y es el que tiene el chat seleccionado
+ * @visibleName Chat seleccionado
+ */
+
 type SelectedChatProps = {
   chat: {
     _id: string;

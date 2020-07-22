@@ -10,7 +10,10 @@ type SidebarDropdownProps = {
   options?: Array<{ url: string; name: string }>;
   children: React.ReactChild;
 }
-
+/**
+ * Este componente es el dropdown del sidebar.
+ * @visibleName SidebarDropdown
+ */
 const SidebarDropdown = ({
   title,
   url = '',

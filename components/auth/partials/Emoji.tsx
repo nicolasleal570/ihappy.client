@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Este componente es una imagen o emoji.
+ * @visibleName Emoji.
+ */
 const Emoji = (props:any) => (
     <span
         className="emoji"

@@ -10,6 +10,7 @@ type AboutCardProps = {
   imgUrl: string;
 }
 
+
 const AboutCard = ({ title, subtitle, imgUrl }: AboutCardProps) => (
   <div className="bg-gray-200 text-gray-800 p-4 rounded mb-6 border border-gray-400 shadow-sm">
     <div className="flex">
@@ -27,6 +28,7 @@ interface DoctorCardProps {
   description: String;
   avatar: string;
 }
+
 
 const DoctorCard = ({ title, description, avatar }: DoctorCardProps) => {
   return (
@@ -46,6 +48,10 @@ const DoctorCard = ({ title, description, avatar }: DoctorCardProps) => {
   );
 };
 
+/**
+ * Este componente contiene el header o home de la pagina.
+ * @VisibleName Header
+ */
 const Header = () => {
   const [doctors, setDoctors] = React.useState<Array<any>>([]); //Este trae todas las especialidades
 

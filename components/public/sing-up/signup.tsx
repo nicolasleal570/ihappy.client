@@ -8,6 +8,10 @@ import { signupUser, authCheckState } from '../../../store/actions/authAction';
 import InputField from '../../auth/partials/InputField';
 import SelectFieldDynamic from '../../auth/partials/SelectField';
 
+/**
+ * Este componente contiene el registro de la pagina.
+ * @VisibleName signup
+ */
 export default function signup() {
   const [data, setData] = React.useState<{
     email: string;

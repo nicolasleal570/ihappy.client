@@ -16,6 +16,10 @@ type InputFieldProps = {
   disabled?: boolean;
 }
 
+/**
+ * Este componente es un input de email.
+ * @visibleName InputField
+ */
 const InputField = forwardRef(
   (
     {

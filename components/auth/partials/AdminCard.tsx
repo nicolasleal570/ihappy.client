@@ -26,6 +26,11 @@ const handleClick = (slug: string) => {
     .catch((err) => {});
 };
 
+
+/**
+ * Este componente contiene la tarjeta de "admin" la cual incluye el nombre, imagen y un boton para deshabilitar el psicologos/usario
+ * @visibleName Tarjeta de admin
+ */
 const AdminCard = ({
   firstName,
   lastName,

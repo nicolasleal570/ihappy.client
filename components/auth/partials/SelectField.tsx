@@ -15,6 +15,10 @@ type SelectFieldDynamicProps = {
   inputChange: (name: string, value: any) => void;
 }
 
+/**
+ * Este componente es un select dinamico.
+ * @visibleName SelectFieldDynamic
+ */
 const SelectFieldDynamic = forwardRef(
   (
     {

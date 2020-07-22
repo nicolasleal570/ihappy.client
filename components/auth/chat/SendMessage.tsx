@@ -3,10 +3,17 @@ import { SOCKET_START } from '../../../store/actionTypes';
 import { postMessages } from '../../../utils/endpoints';
 import Axios from 'axios';
 
+
+
 type SendMessageProps = {
   selectedChatId: string;
   userId: string;
 }
+
+/**
+ * Este componente son los mensajes que son enviados como tal.
+ * @visibleName SendMessage
+ */
 const SendMessage = ({ selectedChatId, userId }: SendMessageProps) => {
   const [message, setMessage] = React.useState('');
 
