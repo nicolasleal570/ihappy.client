@@ -482,7 +482,7 @@ const Test = () => {
                 <div className=" col-start-4">
                   <button
                     type="submit"
-                    className=" border-black h-10 w-24 text-center transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4"
+                    className=" border-black h-10 w-24 text-center text-white transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4"
                   >
                     Enviar
                   </button>

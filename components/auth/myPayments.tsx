@@ -208,10 +208,12 @@ export default function mostrarFactura() {
               ></img>
             </div>
           )}
+       
           {role === 'usuario' && (
-            <div>
-              <h1 className="text-4xl font-bold">Gastos</h1>
+             <div className="w-full px-4 lg:px-10">
+               <h1 className="text-4xl font-bold">Gastos</h1>
               <hr className="border bg-purple-700 w-64"></hr>
+              <div className="bg-gray-100 py-2 px-2 mt-3 rounded-lg shadow-md max-w-xl">
               <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
               <h1 className="text-2xl">
                 Consultas realizadas: {consultasUser}
@@ -221,8 +223,10 @@ export default function mostrarFactura() {
                 Esperemos que su tiempo en iHappy, haya sido de mejoras{' '}
                 <Emoji symbol="💪"></Emoji>
               </h4>
+              </div>
             </div>
           )}
+     
         </div>
       ) : (
         <BigLoader />

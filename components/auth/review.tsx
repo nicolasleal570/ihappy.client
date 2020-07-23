@@ -6,6 +6,8 @@ import { BigLoader } from '../Loader';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+
 interface PsychologistHeaderProps {
   psychologist: {
     first_name: string;
@@ -16,16 +18,16 @@ interface PsychologistHeaderProps {
     username: string;
     password: string;
     slug: string;
-    role: string;
+    role: any;
     bio: string;
     avatar: string;
     created_at: any;
     _id: any;
     precioConsulta: any;
-  };
+  },
 }
 
-const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
+const PsychologistHeader = ({ psychologist } : PsychologistHeaderProps) => {
   const {
     first_name,
     last_name,
@@ -42,12 +44,12 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
     _id,
     precioConsulta,
   } = psychologist;
+ 
   const [requestConversation, setRequestConversation] = React.useState(false);
-
   const { user, loading } = useSelector((state: any) => state.auth);
-
+ 
   return (
-    <div className="py-4">
+    <div className="py-4 w-full">
       <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
         <img src={avatar} className="w-full h-full object-cover" alt="Avatar" />
       </div>
@@ -60,11 +62,15 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
           <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
             {bio}
           </p>
-          <p className="absolute hidden lg:block px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
-            Precio de consulta: {precioConsulta}$
+          { precioConsulta && role.identification === 'psicologo' && (
+            
+          <p className="absolute lg:block px-3 text-base justify-center text-md shadow-md font-semibold bg-gray-200">
+           <FiberManualRecordIcon style={{fontSize:10 , fill: '#805ad5'}}/> Precio de consulta: {precioConsulta}$
           </p>
-          <div className="flex justify-center py-2">
-            {user._id != psychologist._id && (
+  
+          )}
+          <div className="flex justify-center py-2 mt-10">
+            {user._id != psychologist._id && precioConsulta && (
               <Link href={`/payment/${slug}`}>
                 <button
                   className={`
@@ -80,6 +86,15 @@ const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
                 </button>
               </Link>
             )}
+            {!precioConsulta && (
+              <div className=''>
+                <div className='flex flex-col'>
+              <span className='w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200 text-center cursor-not-allowed'>No disponible</span>
+              <p className='text-gray-600 text-base text-xs'>El psicologo no tiene precio de consulta</p>
+              </div>
+            
+            </div>
+            )}
           </div>
         </div>
       </div>
@@ -93,7 +108,6 @@ export default function Reviews({ slug }: any) {
   const [comment, setComment] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [sendingComment, setSendingComment] = React.useState(false);
-
   // Making request to get reviews of psychologist
   React.useEffect(() => {
     const config = {
@@ -109,6 +123,7 @@ export default function Reviews({ slug }: any) {
           setReviews(res.data.data.reviews);
           console.log('reviews', res.data.data.reviews);
           setPsychologist(res.data.data.psychologist);
+          console.log(res.data.data.psychologist)
           setLoading(false);
         }
       } catch (err) {}
@@ -148,14 +163,14 @@ export default function Reviews({ slug }: any) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       {loading && (
         <div className="w-full h-screen flex justify-center items-center overflow-hidden">
           <BigLoader />
         </div>
       )}
       {!loading && (
-        <>
+        <div className='w-full'>
         {psychologist.disabled && (
         <div className="w-full relative flex flex-col">
           {/* Medico Bio */}
@@ -197,7 +212,7 @@ export default function Reviews({ slug }: any) {
            {!psychologist.disabled && (
              <div>
                {/* Medico Bio */}
-               <PsychologistHeader psychologist={psychologist as any} />
+               <PsychologistHeader psychologist={psychologist as any } />
           {/* Comments */}
           <hr />
           <div className="">
@@ -279,7 +294,7 @@ export default function Reviews({ slug }: any) {
         </div>
            )}
        </div>
-        </>
+        </div>
      
       )}
     </div>
