@@ -197,7 +197,11 @@ export default function FAQ() {
               </form>
             </div>
             <div className="hidden mt-10 lg:flex flex-row items-center">
-              <img src="/assets/img/help.svg" className="max-w-xl" />
+              <img
+                src="/assets/img/help.svg"
+                className="max-w-xl"
+                alt="Computer boy"
+              />
             </div>
           </div>
         </div>

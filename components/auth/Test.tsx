@@ -14,7 +14,7 @@ const Test = () => {
     <div className="container">
       <div className="flex flex-col">
         <img src={imgUrl} className="w-48 ml-10" alt="Doctors" />
-        <h3 className="font-bold capitalize ml-20">{name}</h3>
+        <h1 className="font-bold capitalize ml-20">{name}</h1>
       </div>
     </div>
   );
@@ -482,7 +482,7 @@ const Test = () => {
                 <div className=" col-start-4">
                   <button
                     type="submit"
-                    className=" border-black h-10 w-24 text-center text-white transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4"
+                    className=" h-10 w-24 text-center text-white transition duration-300 ease-in-out bg-purple-600 hover:bg-purple-800 hover:border-purple-800 border-2 border-purple-600 rounded cursor-pointer mr-4"
                   >
                     Enviar
                   </button>

@@ -15,7 +15,7 @@ const AboutCard = ({ title, subtitle, imgUrl }: AboutCardProps) => (
     <div className="flex">
       <img src={imgUrl} className="" alt="Doctors" />
       <div className="">
-        <h3 className="font-bold capitalize">{title}</h3>
+        <h1 className="font-bold capitalize">{title}</h1>
         <p>{subtitle}</p>
       </div>
     </div>
@@ -23,7 +23,7 @@ const AboutCard = ({ title, subtitle, imgUrl }: AboutCardProps) => (
 );
 
 interface DoctorCardProps {
-  title: String;
+  title: string;
   description: String;
   avatar: string;
 }
@@ -38,7 +38,11 @@ const DoctorCard = ({ title, description, avatar }: DoctorCardProps) => {
       <div className="flex-none">
         <div className="px-4 pt-4">
           <div className="mx-auto bg-purple-700 w-16 h-16 rounded-full overflow-hidden flex justify-center items-center">
-            <img src={avatar} className="w-full h-full object-cover" />
+            <img
+              src={avatar}
+              className="w-full h-full object-cover"
+              alt={title}
+            />
           </div>
         </div>
       </div>

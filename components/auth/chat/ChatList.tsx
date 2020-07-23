@@ -112,7 +112,7 @@ const ChatList = ({
           Conversaciones
         </h1>
         <div className="flex flex-col items-start">
-          <h3 className="text-2xl p-4">No tienes ningún chat</h3>
+          <h1 className="text-2xl p-4">No tienes ningún chat</h1>
           <Link href="/search">
             <a className="w-full lg:w-auto ml-5 shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200">
               Busca profesionales
@@ -159,7 +159,7 @@ const ChatList = ({
                         </div>
 
                         <div className="w-full flex-1 ml-2">
-                          <h3 className="text-lg lg:text-sm font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                          <h1 className="text-lg lg:text-sm font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h1>
                           {!chat.last_message && (
                             <p className="text-gray-500">No hay mensajes aún</p>
                           )}
@@ -234,7 +234,7 @@ const ChatList = ({
                       </div>
 
                       <div className="w-full flex-1 ml-2 py-4">
-                        <h3 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        <h1 className="text-lg font-semibold capitalize">{`${participants[0].first_name} ${participants[0].last_name}`}</h1>
                         {!chat.last_message && chat.pendiente && (
                           <p className="text-gray-500">
                             Esperando que psicologo acepte petición
@@ -272,7 +272,7 @@ const ChatList = ({
                         />
                       </div>
                       <div className="w-full flex-1 ml-2">
-                        <h3 className="text-lg lg:text-2xl font-semibold capitalize mr-4">{`${participants[0].first_name} ${participants[0].last_name}`}</h3>
+                        <h1 className="text-lg lg:text-2xl font-semibold capitalize mr-4">{`${participants[0].first_name} ${participants[0].last_name}`}</h1>
                         {!chat.last_message && (
                           <p className="text-gray-500">No hay mensajes aún</p>
                         )}
