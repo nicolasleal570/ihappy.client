@@ -16,6 +16,7 @@ import {
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import Router from 'next/router';
+
 interface PsychologistHeaderProps {
   psychologist: {
     first_name: string;
@@ -156,7 +157,6 @@ export default function Payment({ slug }: any) {
                   );
                 });
             };
-
             enviarDatos();
           } catch (error) {}
         }
