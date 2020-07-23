@@ -98,5 +98,6 @@ export const authCheckState = () => async (dispatch: Function) => {
 export const updateUser = (user: any) => async (dispatch: Function) => {
   dispatch(startAuth());
   const token = localStorage.getItem('token') as string;
+  localStorage.setItem("user",JSON.stringify(user));
   dispatch(successAuth(token, user));
 };

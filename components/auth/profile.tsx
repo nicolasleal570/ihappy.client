@@ -92,6 +92,7 @@ export default function Profile() {
     });
   };
   var especialidades: any;
+
   const actualizarEspecialidades = () => {
     if (loadSpecialities) {
       loadSpecialities.map(
@@ -136,6 +137,7 @@ export default function Profile() {
         config
       )
       .then((res) => {
+        console.log(res.data.data)
         dispatch(updateUser(res.data.data));
         setSuccess(true);
         const notification = () => {
@@ -217,10 +219,12 @@ export default function Profile() {
   };
 
   const handleChange = (event: any) => {
+    //Hace un arreglo a partir de las opciones elegidas con el nombre de las especialidades
     var selectedSpecialities = Array.from(
       event.target.selectedOptions,
       (item: any) => item.text
     );
+    //Hace un arreglo a partir de las opciones elegidas pero agarra el id de cada una
     var selectedSpecialitiesIds = Array.from(
       event.target.selectedOptions,
       (item: any) => item.value
@@ -230,11 +234,14 @@ export default function Profile() {
     setSpecialitiesIds(selectedSpecialitiesIds);
     setQuitarEspecialidades(false);
   };
+
   const clearAll = (event: any) => {
+    //Eliminar especialidades
     event.preventDefault();
     setQuitarEspecialidades(true);
     event.preventDefault();
   };
+
   return (
     <div className="w-2/3 mr-10 lg:w-full lg:h-full ml-10 mt-10">
       <h1 className="text-gray-900 text-3xl font-bold">Perfil</h1>
