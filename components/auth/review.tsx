@@ -24,10 +24,10 @@ interface PsychologistHeaderProps {
     created_at: any;
     _id: any;
     precioConsulta: any;
-  },
+  };
 }
 
-const PsychologistHeader = ({ psychologist } : PsychologistHeaderProps) => {
+const PsychologistHeader = ({ psychologist }: PsychologistHeaderProps) => {
   const {
     first_name,
     last_name,
@@ -44,10 +44,10 @@ const PsychologistHeader = ({ psychologist } : PsychologistHeaderProps) => {
     _id,
     precioConsulta,
   } = psychologist;
- 
+
   const [requestConversation, setRequestConversation] = React.useState(false);
   const { user, loading } = useSelector((state: any) => state.auth);
- 
+
   return (
     <div className="py-4 w-full">
       <div className="bg-purple-700 w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
@@ -56,18 +56,19 @@ const PsychologistHeader = ({ psychologist } : PsychologistHeaderProps) => {
       <div className="flex pt-4">
         <div className="flex-1 px-6">
           {first_name && last_name && (
-            <h3 className="font-bold capitalize text-4xl text-center block w-full">{`${first_name} ${last_name}`}</h3>
+            <h1 className="font-bold capitalize text-4xl text-center block w-full">{`${first_name} ${last_name}`}</h1>
           )}
           <p className="text-center text-gray-500">@{username}</p>
           <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
             {bio}
           </p>
-          { precioConsulta && role.identification === 'psicologo' && (
-            
-          <p className="absolute lg:block px-3 text-base justify-center text-md shadow-md font-semibold bg-gray-200">
-           <FiberManualRecordIcon style={{fontSize:10 , fill: '#805ad5'}}/> Precio de consulta: {precioConsulta}$
-          </p>
-  
+          {precioConsulta && role.identification === 'psicologo' && (
+            <p className="absolute lg:block px-3 text-base justify-center text-md shadow-md font-semibold bg-gray-200">
+              <FiberManualRecordIcon
+                style={{ fontSize: 10, fill: '#805ad5' }}
+              />{' '}
+              Precio de consulta: {precioConsulta}$
+            </p>
           )}
           <div className="flex justify-center py-2 mt-10">
             {user._id != psychologist._id && precioConsulta && (
@@ -87,13 +88,16 @@ const PsychologistHeader = ({ psychologist } : PsychologistHeaderProps) => {
               </Link>
             )}
             {!precioConsulta && (
-              <div className=''>
-                <div className='flex flex-col'>
-              <span className='w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200 text-center cursor-not-allowed'>No disponible</span>
-              <p className='text-gray-600 text-base text-xs'>El psicologo no tiene precio de consulta</p>
+              <div className="">
+                <div className="flex flex-col">
+                  <span className="w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-purple-500 text-gray-200 text-center cursor-not-allowed">
+                    No disponible
+                  </span>
+                  <p className="text-gray-600 text-base ">
+                    El psicologo no tiene precio de consulta
+                  </p>
+                </div>
               </div>
-            
-            </div>
             )}
           </div>
         </div>
@@ -123,7 +127,7 @@ export default function Reviews({ slug }: any) {
           setReviews(res.data.data.reviews);
           console.log('reviews', res.data.data.reviews);
           setPsychologist(res.data.data.psychologist);
-          console.log(res.data.data.psychologist)
+          console.log(res.data.data.psychologist);
           setLoading(false);
         }
       } catch (err) {}
@@ -170,115 +174,113 @@ export default function Reviews({ slug }: any) {
         </div>
       )}
       {!loading && (
-        <div className='w-full'>
-        {psychologist.disabled && (
-        <div className="w-full relative flex flex-col">
-          {/* Medico Bio */}
-          <div className="py-4">
-      <div className=" w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
-       {<AccountCircleIcon style={{ fill: '#D3D3D3', fontSize: 130 }}/>}
-      </div>
-      <div className="flex pt-4">
-        <div className="flex-1 px-6">
-          
-            <h3 className="font-bold text-4xl text-center block w-full">User not found</h3>
-        
-          <p className="text-center text-gray-500">@iHappyUser</p>
-          <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded">
-          </p>
-          <p className="absolute hidden lg:block px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500">
-          </p>
-          <div className="flex justify-center py-2">
-            
-              
-                <button
-                  className={`
-                    'w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-gray-300 text-gray-200 `}
-                >
-                  Chatear!
-                </button>
-              
-            
-          </div>
-        </div>
-      </div>
-    </div>
-          {/* Comments */}
-          <hr />
-        </div>
-        )}
-          <div>
-            
-           {!psychologist.disabled && (
-             <div>
-               {/* Medico Bio */}
-               <PsychologistHeader psychologist={psychologist as any } />
-          {/* Comments */}
-          <hr />
-          <div className="">
-            <h1 className="font-bold text-5xl text-center py-10 tracking-wide border-b border-400-gray leading-none px-6 uppercase">
-              Reseñas
-            </h1>
-            {/* Comentarios */}
-            <div
-              className="overflow-y-auto custom-scroll"
-              style={{ maxHeight: '400px' }}
-            >
-              {reviews.length === 0 && (
-                <div className="bg-gray-100 w-full flex flex-col justify-center items-center p-6">
-                  <img
-                    src="/assets/icons/empty.svg"
-                    className="w-48 h-48"
-                    alt="Empty State"
-                  />
-                  <p className="text-xl font-light text-gray-800 uppercase pt-4 px-6 text-center">
-                    No hay nada por aquí. Se el primero en redactar una reseña
-                    de tu doctor!
-                  </p>
+        <div className="w-full">
+          {psychologist.disabled && (
+            <div className="w-full relative flex flex-col">
+              {/* Medico Bio */}
+              <div className="py-4">
+                <div className=" w-32 h-32 mx-auto rounded-full shadow-lg overflow-hidden">
+                  {
+                    <AccountCircleIcon
+                      style={{ fill: '#D3D3D3', fontSize: 130 }}
+                    />
+                  }
                 </div>
-              )}
+                <div className="flex pt-4">
+                  <div className="flex-1 px-6">
+                    <h1 className="font-bold text-4xl text-center block w-full">
+                      User not found
+                    </h1>
 
-              {reviews.length > 0 &&
-                reviews.map((review: any, index: number) => (
-                  <div
-                    key={review._id}
-                    className={`w-full border-b border-gray-300 flex px-6 py-2 ${
-                      index % 2 === 0 ? 'bg-gray-200' : 'bg-white'
-                    }`}
-                  >
-                    <div className="flex-none bg-purple-700 w-12 h-12 rounded-full shadow-lg overflow-hidden mr-4">
-                      <img
-                        src={review.user.avatar}
-                        alt="avatar"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="flex-1 text-font text-xl font-bold">{`${review.user.first_name} ${review.user.last_name}`}</h3>
-                      <p className="text-base">{review.content}</p>
-                      <p className="text-xs text-gray-500 mt-3">
-                        {moment(review.created_at).fromNow()}
-                      </p>
+                    <p className="text-center text-gray-500">@iHappyUser</p>
+                    <p className="text-justify my-4 border-l-4 border-purple-700 pl-4 rounded"></p>
+                    <p className="absolute hidden lg:block px-3 font-semibold bg-purple-200 rounded border-2 border-purple-500"></p>
+                    <div className="flex justify-center py-2">
+                      <button
+                        className={`
+                    'w-full lg:w-auto shadow focus:outline-none py-2 px-2 rounded bg-gray-300 text-gray-200 `}
+                      >
+                        Chatear!
+                      </button>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+              {/* Comments */}
+              <hr />
             </div>
-          </div>
-          <form
-            className="w-full border-t border-gray-400 bg-white flex py-6 px-6 h-24"
-            method="POST"
-            onSubmit={sendComment}
-          >
-            <textarea
-              placeholder="Escribe una reseña para el doctor..."
-              className="flex-1 inline-block p-2 transition duration-300 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded "
-              style={{ minHeight: '48px' }}
-              onChange={(e) => setComment(e.target.value)}
-              value={comment}
-            ></textarea>
-            <button
-              type="submit"
-              className={`
+          )}
+          <div>
+            {!psychologist.disabled && (
+              <div>
+                {/* Medico Bio */}
+                <PsychologistHeader psychologist={psychologist as any} />
+                {/* Comments */}
+                <hr />
+                <div className="">
+                  <h1 className="font-bold text-5xl text-center py-10 tracking-wide border-b border-400-gray leading-none px-6 uppercase">
+                    Reseñas
+                  </h1>
+                  {/* Comentarios */}
+                  <div
+                    className="overflow-y-auto custom-scroll"
+                    style={{ maxHeight: '400px' }}
+                  >
+                    {reviews.length === 0 && (
+                      <div className="bg-gray-100 w-full flex flex-col justify-center items-center p-6">
+                        <img
+                          src="/assets/icons/empty.svg"
+                          className="w-48 h-48"
+                          alt="Empty State"
+                        />
+                        <p className="text-xl font-light text-gray-800 uppercase pt-4 px-6 text-center">
+                          No hay nada por aquí. Se el primero en redactar una
+                          reseña de tu doctor!
+                        </p>
+                      </div>
+                    )}
+
+                    {reviews.length > 0 &&
+                      reviews.map((review: any, index: number) => (
+                        <div
+                          key={review._id}
+                          className={`w-full border-b border-gray-300 flex px-6 py-2 ${
+                            index % 2 === 0 ? 'bg-gray-200' : 'bg-white'
+                          }`}
+                        >
+                          <div className="flex-none bg-purple-700 w-12 h-12 rounded-full shadow-lg overflow-hidden mr-4">
+                            <img
+                              src={review.user.avatar}
+                              alt="avatar"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h2 className="flex-1 text-font text-xl font-bold">{`${review.user.first_name} ${review.user.last_name}`}</h2>
+                            <p className="text-base">{review.content}</p>
+                            <p className="text-xs text-gray-500 mt-3">
+                              {moment(review.created_at).fromNow()}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <form
+                  className="w-full border-t border-gray-400 bg-white flex py-6 px-6 h-24"
+                  method="POST"
+                  onSubmit={sendComment}
+                >
+                  <textarea
+                    placeholder="Escribe una reseña para el doctor..."
+                    className="flex-1 inline-block p-2 transition duration-300 ease-in-out bg-transparent border-2 border-purple-600 hover:bg-transparent hover:border-purple-800 rounded "
+                    style={{ minHeight: '48px' }}
+                    onChange={(e) => setComment(e.target.value)}
+                    value={comment}
+                  ></textarea>
+                  <button
+                    type="submit"
+                    className={`
                             inline-block px-4 py-2 transition duration-300 ease-in-out rounded cursor-pointer ml-2 h-12
                             ${
                               sendingComment
@@ -286,16 +288,15 @@ export default function Reviews({ slug }: any) {
                                 : 'border-2 border-purple-600 hover:bg-purple-800 hover:border-purple-800 bg-purple-600 text-white cursor-pointer'
                             }
                             `}
-              disabled={sendingComment}
-            >
-              Comentar
-            </button>
-          </form>
+                    disabled={sendingComment}
+                  >
+                    Comentar
+                  </button>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
-           )}
-       </div>
-        </div>
-     
       )}
     </div>
   );

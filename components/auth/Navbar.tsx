@@ -66,7 +66,7 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
         </div>
         <Link href="/dashboard">
           <div className="cursor-pointer flex items-center bg-purple-700 lg:px-4 lg:pt-4 lg:pb-10 px-2 my-6">
-            <img src="/favicon.png" className="w-12 mr-1" />
+            <img src="/favicon.png" className="w-12 mr-1" alt="Logo" />
             <span className="cursor-pointer font-bold text-4xl tracking-tight text-white">
               iHappy
             </span>
@@ -123,10 +123,7 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
               </SidebarLink>
             )}
 
-            <SidebarLink
-              title="Payments"
-              url="/payment"
-            >
+            <SidebarLink title="Payments" url="/payment">
               <AccountBalanceIcon className="text-white" />
             </SidebarLink>
 

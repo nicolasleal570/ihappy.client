@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link href="/">
           <div className="flex items-center">
-            <img src="/favicon.png" className="w-8 mr-1" />
+            <img src="/favicon.png" className="w-8 mr-1" alt="Logo" />
             <span className="cursor-pointer font-bold text-xl tracking-tight">
               iHappy
             </span>
