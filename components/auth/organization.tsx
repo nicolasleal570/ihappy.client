@@ -72,14 +72,6 @@ const organization = () => {
           </tbody>
         </table>
       </div>
-
-      <div className="flex text-4xl text-left  px-4 py-8 m-2">
-        <h1 className="underline">Finalizadas vs Activas</h1>
-      </div>
-
-      <div className="flex justify-center  px-4 py-8 m-2">
-        <Doughnut data={data} />
-      </div>
     </div>
   );
 };

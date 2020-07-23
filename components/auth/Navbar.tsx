@@ -125,11 +125,7 @@ const Navbar = ({ openMenu, closeMenu, isOpen }: NavbarProps) => {
 
             <SidebarLink
               title="Payments"
-              isDropdown
-              options={[
-                { url: '/payment', name: 'See All' },
-                { url: '/payment', name: 'Manage Payments' },
-              ]}
+              url="/payment"
             >
               <AccountBalanceIcon className="text-white" />
             </SidebarLink>
