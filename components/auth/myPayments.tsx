@@ -35,7 +35,7 @@ export default function mostrarFactura() {
       // obtenerDatos()
       setRole(user.role.identification);
       setLoggedID(user._id);
-
+      setSlug(user.slug)
       const obtenerDatos = () => {
         const config = {
           headers: {
@@ -44,6 +44,7 @@ export default function mostrarFactura() {
         };
         //Obtenemos las facturas
         setLoadingFacturasPsyco(true);
+        setSlug(user.slug)
         Axios.get(getFacturasByPsico(user.slug), config)
           .then((response) => {
             const data = response.data.data;
@@ -131,7 +132,7 @@ export default function mostrarFactura() {
   } else if (role === 'usuario') {
     calcularGanaciasUsario();
   }
-
+  
   const solicitarPago = () => {
     const config = {
       headers: {
@@ -140,13 +141,15 @@ export default function mostrarFactura() {
     };
 
     Axios.put(
-      putFacturaByPsico(slug),
+      putFacturaByPsico(user.slug),
+    
       {
         requestToPay: true,
         psicoID: loggedID,
       },
       config
     )
+
       .then((response) => {
         swal(
           'Recibimos tu solicitud para retirar fondos',
