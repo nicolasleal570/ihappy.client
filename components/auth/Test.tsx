@@ -268,7 +268,7 @@ const Test = () => {
     <form onSubmit={onSubmit}>
       <div
         className="grid grid-cols-6 grid-rows-6 gap-3 bg-cover bg-center bg-no-repeat h-screen"
-        style={{ backgroundImage: `url('/assets/img/fototest.jpg')` }}
+        style={{ backgroundImage: `url('/assets/img/fototest.webp')` }}
       >
         <div className="col-span-6"></div>
         <div className="grid grid-cols-6 grid-rows-5 gap-3  col-span-6 row-span-5">

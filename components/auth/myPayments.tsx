@@ -35,7 +35,7 @@ export default function mostrarFactura() {
       // obtenerDatos()
       setRole(user.role.identification);
       setLoggedID(user._id);
-      setSlug(user.slug)
+      setSlug(user.slug);
       const obtenerDatos = () => {
         const config = {
           headers: {
@@ -44,7 +44,7 @@ export default function mostrarFactura() {
         };
         //Obtenemos las facturas
         setLoadingFacturasPsyco(true);
-        setSlug(user.slug)
+        setSlug(user.slug);
         Axios.get(getFacturasByPsico(user.slug), config)
           .then((response) => {
             const data = response.data.data;
@@ -132,7 +132,7 @@ export default function mostrarFactura() {
   } else if (role === 'usuario') {
     calcularGanaciasUsario();
   }
-  
+
   const solicitarPago = () => {
     const config = {
       headers: {
@@ -142,7 +142,7 @@ export default function mostrarFactura() {
 
     Axios.put(
       putFacturaByPsico(user.slug),
-    
+
       {
         requestToPay: true,
         psicoID: loggedID,
@@ -206,30 +206,29 @@ export default function mostrarFactura() {
               </form>
               <img
                 className="w-48 mt-5 h-18"
-                src="/assets/img/stripe.png"
+                src="/assets/img/stripe.webp"
                 alt="stripe"
               ></img>
             </div>
           )}
-       
+
           {role === 'usuario' && (
-             <div className="w-full px-4 lg:px-10">
-               <h1 className="text-4xl font-bold">Gastos</h1>
+            <div className="w-full px-4 lg:px-10">
+              <h1 className="text-4xl font-bold">Gastos</h1>
               <hr className="border bg-purple-700 w-64"></hr>
               <div className="bg-gray-100 py-2 px-2 mt-3 rounded-lg shadow-md max-w-xl">
-              <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
-              <h1 className="text-2xl">
-                Consultas realizadas: {consultasUser}
-              </h1>
+                <h1 className="text-2xl mt-5">Totales: ${ganancias}</h1>
+                <h1 className="text-2xl">
+                  Consultas realizadas: {consultasUser}
+                </h1>
 
-              <h4 className="mt-5">
-                Esperemos que su tiempo en iHappy, haya sido de mejoras{' '}
-                <Emoji symbol="💪"></Emoji>
-              </h4>
+                <h4 className="mt-5">
+                  Esperemos que su tiempo en iHappy, haya sido de mejoras{' '}
+                  <Emoji symbol="💪"></Emoji>
+                </h4>
               </div>
             </div>
           )}
-     
         </div>
       ) : (
         <BigLoader />

@@ -74,7 +74,7 @@ const Header = () => {
       <div
         className="absolute top-0 w-full h-full bg-center bg-no-repeat bg-cover"
         style={{
-          backgroundImage: `url('/assets/img/home-bg.png')`,
+          backgroundImage: `url('/assets/img/home-bg.webp')`,
         }}
       >
         {/* Content */}
