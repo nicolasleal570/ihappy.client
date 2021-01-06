@@ -21,7 +21,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/socket.io-client": "^1.4.33",
     "@wellyshen/use-web-animations": "^0.3.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.3",
     "countup.js": "^2.0.5",
     "moment": "^2.26.0",
